@@ -6,6 +6,7 @@ export const CommentCreate = ({ postId }) => {
 
   const submitComment = async (event) => {
     event.preventDefault();
+    if (comment === '') return; // no empty submits
     await axios.post(`http://localhost:5002/posts/${postId}/comments`, {
       content: comment,
     });

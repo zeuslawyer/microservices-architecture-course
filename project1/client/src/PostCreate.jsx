@@ -6,6 +6,8 @@ export const PostCreate = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if (title === '') return; // no empty submits
+
     await axios.post('http://localhost:5001/posts', { title });
     setTitle('');
   };

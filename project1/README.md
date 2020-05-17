@@ -17,4 +17,4 @@ This is a made-from-scratch react front end, with multiple backend services (sep
 - the `Posts` service is on port `5001`
 - the `Comments` service is on port `5002`
 - the `React` front end app is on port `3000`
-- the `Event Bus` service is on port `5005`
+- the `Event Bus` service is on port `5005`. Event objects have two properties : `type` and `data`.
