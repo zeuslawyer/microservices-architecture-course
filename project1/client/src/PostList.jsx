@@ -16,6 +16,10 @@ export const PostList = () => {
     fetch();
   }, []);
 
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  console.log('Timezone baby:', tz);
+
   return (
     <div className='d-flex flex-row flex-wrap justify-content-between'>
       {Object.values(posts).map((post) => (
