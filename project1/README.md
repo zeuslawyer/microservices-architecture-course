@@ -12,7 +12,7 @@ Each project represents a discrete chunk of code, and stages in the learning jou
 
 #### `Project 1`
 
-This is a made-from-scratch react front end, with multiple backend services (separated out to mimic microserves). The app is meant to simulate a blog/NewsFeed type scenario with Posts and Comments.
+This is a made-from-scratch react front end, with multiple backend services (separated out to mimic microserves). The app is meant to simulate a blog/NewsFeed type scenario with Posts and Comments. It is **extremely** basic and crude, and only intended to illustrate the challenges in true production-grade challenges presented by microservices.
 
 - the `React` front end app is on port `3000`
 - the `Posts` service is on port `5001`. It receives posts and it emits events into the event bus. It also receives events from the event bus.

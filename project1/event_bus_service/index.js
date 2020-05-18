@@ -12,8 +12,13 @@ const PORTS = {
   QUERY: 5004,
 };
 
+// db
+const events = []; // will behave like a stack
+
+/* distributes all events to the various other services, for handling if necessary */
 app.post('/events', (req, res) => {
   const event = req.body; // the entire body will be the event object
+  events.push(event);
 
   // emit events to all services
   axios.post(`http://localhost:${PORTS.POSTS}/events`, event); // post service
@@ -21,8 +26,18 @@ app.post('/events', (req, res) => {
   axios.post(`http://localhost:${PORTS.COMMENT_MOD}/events`, event); // comment moderation service
   axios.post(`http://localhost:${PORTS.QUERY}/events`, event); // query service
 
-  console.log(`${new Date().toLocaleTimeString()} - EVENT EMITTED: `, event);
+  console.log(
+    `${new Date().toLocaleTimeString()} - EVENT EMITTED: `,
+    event.type
+  );
   res.send({ status: 'OK' });
+});
+
+/*  endpoint for services to retrieve all events passed through the event bus.
+    needed where a service goes offline and then has to "catch up" and sync its db with events in the events bus
+*/
+app.get('/events', (req, res) => {
+  res.send(events);
 });
 
 app.listen(PORTS.EVENT_BUS, () => {

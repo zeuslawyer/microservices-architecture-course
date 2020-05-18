@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const axios = require('axios').default;
 const cors = require('cors');
 
+const { handleEvents } = require('./helpers');
+
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
@@ -12,7 +14,7 @@ const PORT = 5004;
 // database
 const posts = {};
 
-/* query posts + comments */
+/* route for queries from front end for posts + comments */
 app.get('/posts', (req, res) => {
   res.send(posts);
 });
@@ -21,45 +23,19 @@ app.get('/posts', (req, res) => {
 app.post('/events', (req, res) => {
   const { type, data } = req.body;
 
-  let resp; // response to be returned
-
-  // handle event and update database
-  if (type === 'PostCreated') {
-    const { id, title } = data; // post data shape
-    posts[id] = {
-      id,
-      title,
-      comments: [], // initialise  comments as query data shape includes comments prop
-    };
-    resp = posts[id];
-  }
-
-  if (type === 'CommentCreated') {
-    const { postId, id, content, status } = data; // comment data shape
-    posts[postId].comments.push({
-      id,
-      content,
-      status,
-    });
-    resp = posts[postId];
-  }
-
-  if (type === 'CommentUpdated') {
-    const { postId, id, status, content } = data; // comment data shape
-
-    // find and update comment in db
-    const comment = posts[postId].comments.find((comment) => comment.id === id);
-
-    // update properties of the comment
-    comment.status = status;
-    comment.content = content;
-
-    resp = posts[postId];
-  }
+  const resp = handleEvents(type, data, posts);
 
   res.send(resp || 'null');
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.info(`Query Service listening on port ${PORT}!`);
+
+  // get array of all events from event bus (to handle missed events due to downtime etc)
+  const res = await axios.get('http://localhost:5005/events');
+
+  for (const event of res.data) {
+    console.log('processing missed event...', event.type);
+    handleEvents(event.type, event.data, posts);
+  }
 });
