@@ -14,12 +14,12 @@ Each project represents a discrete chunk of code, and stages in the learning jou
 
 This is a made-from-scratch react front end, with multiple backend services (separated out to mimic microserves). The app is meant to simulate a blog/NewsFeed type scenario with Posts and Comments.
 
-- the `Posts` service is on port `5001`
-- the `Comments` service is on port `5002`
 - the `React` front end app is on port `3000`
-- the `Event Bus` service is on port `5005`. Event objects have two
-  properties : `type` and `data`.
-- the `Query` service is on port `5004`
+- the `Posts` service is on port `5001`. It receives posts and it emits events into the event bus. It also receives events from the event bus.
+- the `Comments` service is on port `5002`. It receives comments and emits events into the event bus. It also receives events from the event bus.
+- the `Query` service is on port `5004`. It fetches data for the Front End. It joins `Posts` and `Comments` and returns them. It receives events from the event bus.
+- the `Comment Moderator` service is on port `5003`. It receives events from the event bus. It moderates the `status` flag on `Comments` and emits an event that notifies subscribers that comments have been updated. The `Query` service listens for this update to update the presentation layer with updated comment data.
+- the `Event Bus` service is on port `5005`. Event objects have two properties : `type` and `data`. The event data also publishes events to the other 3 services.
 
 All services that recieve post requests emit events into the Event Bus. The event bus then emits it out to all subscribing services.
 The `Query` service protects against failures of the `Posts` and `Comments` service by receiving all relevant events, and persisting in its own database.

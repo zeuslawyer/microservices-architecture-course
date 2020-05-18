@@ -47,7 +47,6 @@ app.post('/events', (req, res) => {
     resp = posts[postId];
   }
 
-  console.log('QUERY:', resp || 'null');
   res.send(resp || 'null');
 });
 
