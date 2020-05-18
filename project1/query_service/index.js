@@ -8,10 +8,6 @@ app.use(bodyParser.json());
 app.use(cors());
 
 const PORT = 5004;
-const EVENT_TYPES = {
-  POST_CREATED: 'PostCreated',
-  COMMENT_CREATED: 'CommentCreated',
-};
 
 // database
 const posts = {};
@@ -21,14 +17,14 @@ app.get('/posts', (req, res) => {
   res.send(posts);
 });
 
-/* receive events from event bus */
+/* handle events received from event bus */
 app.post('/events', (req, res) => {
   const { type, data } = req.body;
 
   let resp; // response to be returned
 
-  // persist in database
-  if (type === EVENT_TYPES.POST_CREATED) {
+  // handle event and update database
+  if (type === 'PostCreated') {
     const { id, title } = data; // post data shape
     posts[id] = {
       id,
@@ -38,12 +34,26 @@ app.post('/events', (req, res) => {
     resp = posts[id];
   }
 
-  if (type === EVENT_TYPES.COMMENT_CREATED) {
-    const { id, postId, content } = data; // comment data shape
+  if (type === 'CommentCreated') {
+    const { postId, id, content, status } = data; // comment data shape
     posts[postId].comments.push({
       id,
       content,
+      status,
     });
+    resp = posts[postId];
+  }
+
+  if (type === 'CommentUpdated') {
+    const { postId, id, status, content } = data; // comment data shape
+
+    // find and update comment in db
+    const comment = posts[postId].comments.find((comment) => comment.id === id);
+
+    // update properties of the comment
+    comment.status = status;
+    comment.content = content;
+
     resp = posts[postId];
   }
 

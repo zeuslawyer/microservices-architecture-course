@@ -16,7 +16,7 @@ This is a made-from-scratch react front end, with multiple backend services (sep
 
 - the `React` front end app is on port `3000`
 - the `Posts` service is on port `5001`. It receives posts and it emits events into the event bus. It also receives events from the event bus.
-- the `Comments` service is on port `5002`. It receives comments and emits events into the event bus. It also receives events from the event bus.
+- the `Comments` service is on port `5002`. It receives comments and emits `CommentCreated` events into the event bus. It also receives events from the event bus. Comments are sent to the `Moderator` service, which moderates it and emits it back with `status` to `CommentModerated`. Then the `Comments` service updates its database, and emits with `CommentUpdated` through the event bus, to be picked up by the `Query` Service.
 - the `Query` service is on port `5004`. It fetches data for the Front End. It joins `Posts` and `Comments` and returns them. It receives events from the event bus.
 - the `Comment Moderator` service is on port `5003`. It receives events from the event bus. It moderates the `status` flag on `Comments` and emits an event that notifies subscribers that comments have been updated. The `Query` service listens for this update to update the presentation layer with updated comment data.
 - the `Event Bus` service is on port `5005`. Event objects have two properties : `type` and `data`. The event data also publishes events to the other 3 services.

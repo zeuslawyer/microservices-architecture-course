@@ -31,10 +31,13 @@ app.post('/posts/:id/comments', async (req, res) => {
 
   // persist
   if (!commentsByPostId[postId]) commentsByPostId[postId] = [];
+
   const comment = {
     id: commentId,
     content,
+    status: 'pending',
   };
+
   commentsByPostId[postId].push(comment);
 
   // emit event to event bus
@@ -47,12 +50,30 @@ app.post('/posts/:id/comments', async (req, res) => {
 });
 
 /* receive events from event bus */
-app.post('/events', (req, res) => {
+app.post('/events', async (req, res) => {
+  const { type, data } = req.body;
   console.log(
-    `Comments Service Received Event at ${new Date().toLocaleTimeString()}-`,
-    req.body.type
+    `Comments Service Received Event at ${new Date().toLocaleTimeString()}- ${type}.`
   );
-  res.send({});
+
+  if (type === 'CommentModerated') {
+    // update comment in db
+    const { postId, id, status, content } = data;
+
+    // find and update the comment in db
+    const comment = commentsByPostId[postId].find(
+      (comment) => comment.id === id
+    );
+    comment.status = status;
+
+    // emit update event to event bus
+    await axios.post('http://localhost:5005/events', {
+      type: 'CommentUpdated',
+      data: { postId, id, content, status },
+    });
+  }
+
+  res.send('OK');
 });
 
 app.listen(PORT, () => {
