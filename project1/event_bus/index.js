@@ -9,9 +9,10 @@ const PORT = 5005;
 app.post('/events', (req, res) => {
   const event = req.body; // the entire body will be the event object
 
+  // emit events to all services
   axios.post('http://localhost:5001/events', event); // post service
   axios.post('http://localhost:5002/events', event); // comment service
-  // axios.post('http://localhost:5003/events', event);
+  axios.post('http://localhost:5004/events', event); // query service
 
   console.log(
     `${new Date().toLocaleTimeString()} - EVENT WAS EMITTED: `,

@@ -37,7 +37,7 @@ app.post('/posts/:id/comments', async (req, res) => {
   };
   commentsByPostId[postId].push(comment);
 
-  // emit event
+  // emit event to event bus
   await axios.post('http://localhost:5005/events', {
     type: 'CommentCreated',
     data: { postId, ...comment },
@@ -46,8 +46,7 @@ app.post('/posts/:id/comments', async (req, res) => {
   res.status(201).send(commentsByPostId[postId]);
 });
 
-/* receive events */
-
+/* receive events from event bus */
 app.post('/events', (req, res) => {
   console.log(
     `Comments Service Received Event at ${new Date().toLocaleTimeString()}-`,

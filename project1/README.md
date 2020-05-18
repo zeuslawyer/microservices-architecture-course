@@ -20,3 +20,8 @@ This is a made-from-scratch react front end, with multiple backend services (sep
 - the `Event Bus` service is on port `5005`. Event objects have two
   properties : `type` and `data`.
 - the `Query` service is on port `5004`
+
+All services that recieve post requests emit events into the Event Bus. The event bus then emits it out to all subscribing services.
+The `Query` service protects against failures of the `Posts` and `Comments` service by receiving all relevant events, and persisting in its own database.
+
+The Front End queries all posts and attached comments from the `Query` service, rather than directly from the `Post` and `Comments` service; however, the actual posting of new comments goes into those services directly. **Thus reads and writes are handled by different services**.

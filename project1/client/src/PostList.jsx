@@ -9,16 +9,12 @@ export const PostList = () => {
 
   React.useEffect(() => {
     async function fetch() {
-      const resp = await axios.get('http://localhost:5001/posts');
-      setPosts(resp.data);
+      const res = await axios.get('http://localhost:5004/posts');
+      setPosts(res.data);
     }
 
     fetch();
   }, []);
-
-  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-
-  console.log('Timezone baby:', tz);
 
   return (
     <div className='d-flex flex-row flex-wrap justify-content-between'>
@@ -30,7 +26,7 @@ export const PostList = () => {
         >
           <div className='card-body'>
             <h3>{post.title}</h3>
-            <CommentList postId={post.id} />
+            <CommentList comments={post.comments} />
             <CommentCreate postId={post.id} />
           </div>
         </div>
