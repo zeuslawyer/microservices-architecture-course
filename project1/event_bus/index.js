@@ -13,7 +13,10 @@ app.post('/events', (req, res) => {
   axios.post('http://localhost:5002/events', event); // comment service
   // axios.post('http://localhost:5003/events', event);
 
-  console.log('EVENT EMITTED: ', event);
+  console.log(
+    `${new Date().toLocaleTimeString()} - EVENT WAS EMITTED: `,
+    event
+  );
   res.send({ status: 'OK' });
 });
 

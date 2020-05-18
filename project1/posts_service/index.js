@@ -33,7 +33,10 @@ app.post('/posts', async (req, res) => {
 });
 
 app.post('/events', (req, res) => {
-  console.log('Post Service Received Event', req.body.type);
+  console.log(
+    `Comments Service Received Event at ${new Date().toLocaleTimeString()}-`,
+    req.body.type
+  );
   res.send({});
 });
 

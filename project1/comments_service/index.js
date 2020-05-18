@@ -49,7 +49,10 @@ app.post('/posts/:id/comments', async (req, res) => {
 /* receive events */
 
 app.post('/events', (req, res) => {
-  console.log('Comments Service Received Event', req.body.type);
+  console.log(
+    `Comments Service Received Event at ${new Date().toLocaleTimeString()}-`,
+    req.body.type
+  );
   res.send({});
 });
 
