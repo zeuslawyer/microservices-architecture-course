@@ -25,3 +25,17 @@ All services that recieve post requests emit events into the Event Bus. The even
 The `Query` service protects against failures of the `Posts` and `Comments` service by receiving all relevant events, and persisting in its own database.
 
 The Front End queries all posts and attached comments from the `Query` service, rather than directly from the `Post` and `Comments` service; however, the actual posting of new comments goes into those services directly. **Thus reads and writes are handled by different services**.
+
+## `DOCKER CLI commands`
+
+#### `Container and Image management`
+
+- list all containers `docker container ls -a`
+- list all images `docker images` or `docker image ls`
+- To stop all running containers use the `docker container stop` command followed by a list of all containers IDs. `docker container stop $(docker container ls -aq)`
+- remove all stopped containers, all dangling images, and all unused networks `docker system prune`
+- remove images by reference to their ID `docker image rm 75835a67d134 2a4cca5ac898`
+
+#### `running Docker images`
+
+- to run a locally available image (or download an image from Docker Hub and then run it locally) use `docker run <image name>`
