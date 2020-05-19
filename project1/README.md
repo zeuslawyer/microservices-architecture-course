@@ -1,6 +1,6 @@
 ## `MICROSERVICES`
 
-A course designed to understand
+A course designed to understand:
 
 - the challenges of data exchange in microservices
 - best practices with sync and async patterns to communicate between microservices
@@ -26,16 +26,16 @@ The `Query` service protects against failures of the `Posts` and `Comments` serv
 
 The Front End queries all posts and attached comments from the `Query` service, rather than directly from the `Post` and `Comments` service; however, the actual posting of new comments goes into those services directly. **Thus reads and writes are handled by different services**.
 
-## `DOCKER CLI commands`
+## `Docker CLI commands`
 
 #### `Container and Image management`
 
-- list all containers `docker container ls -a`
+- list all containers `docker container ls -a` or `docker ps --all`. List all _running_ containers: `docker ps`
+- stop running containers with `docker container stop` command followed by a list of all containers IDs. `docker container stop $(docker container ls -aq)` will stop _all_ running containers.
+- remove one or more containers by id with `docker container rm b4fade9f1784 <id2>`. Remove all stopped containers, all dangling images, and all unused networks `docker system prune`
 - list all images `docker images` or `docker image ls`
-- To stop all running containers use the `docker container stop` command followed by a list of all containers IDs. `docker container stop $(docker container ls -aq)`
-- remove all stopped containers, all dangling images, and all unused networks `docker system prune`
 - remove images by reference to their ID `docker image rm 75835a67d134 2a4cca5ac898`
 
 #### `running Docker images`
 
-- to run a locally available image (or download an image from Docker Hub and then run it locally) use `docker run <image name>`
+- to run a locally available image (or download an image from Docker Hub and then run it locally) use `docker run <image name> < [overridecommand] >`. The optional override command overrides the default command for the container.
