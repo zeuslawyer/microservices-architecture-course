@@ -28,6 +28,8 @@ The Front End queries all posts and attached comments from the `Query` service, 
 
 ## `Docker CLI commands`
 
+This section pertains to the folder `docker-redis`.
+
 #### `Container and Image management`
 
 - **list** all containers `docker container ls -a` or `docker ps --all`f. List all _running_ containers: `docker ps`
@@ -45,7 +47,10 @@ Note: `docker run` = `docker create` + `docker start`, from a given image.
 
 #### `creating docker images`
 
-An image requires that a `dockerfile` first be generated, and that defines the basic config/setup needed for our containerized app.
+An image requires that a `Dockerfile` first be generated, and that defines the basic config/setup needed for our containerized app.
+
+- from inside the folder which has the `Dockerfile` image, run `docker build .` After building the terminal will show `Succesfully built <<some image id>>`. Copy that id and do `docker run <<image id>>`.
+- the `Dockerfile` will have some basics commands like `FROM`, `RUN` and `CMD`. `FROM` indicates which docker "base image" to use. `RUN` issues the command we want to run while creating the docker image. `CMD` specifies what should be executed when the image is used to spawn a container.
 
 #### `container terminal/shell access`
 
