@@ -10,6 +10,8 @@ A course designed to understand:
 
 Each project represents a discrete chunk of code, and stages in the learning journey.
 
+Each stage of the course is also reflected in a branch, whose name should correlate with the folder associated with each stage in the course.
+
 #### `Project 1`
 
 This is a made-from-scratch react front end, with multiple backend services (separated out to mimic microservices). The app is meant to simulate a blog/NewsFeed type scenario with Posts and Comments. It is **extremely** basic and crude, and only intended to illustrate the challenges in true production-grade challenges presented by microservices.
@@ -50,6 +52,7 @@ Note: `docker run` = `docker create` + `docker start`, from a given image.
 An image requires that a `Dockerfile` first be generated, and that defines the basic config/setup needed for our containerized app.
 
 - from inside the folder which has the `Dockerfile` image, run `docker build .` After building the terminal will show `Succesfully built <<some image id>>`. Copy that id and do `docker run <<image id>>`.
+- to build with a name (aka tag) for the image, run `docker build -t zeuslawyer/<< project-name >>:latest .` With that we can generate the container with `docker run zeuslawyer/<< project-name >>`
 - the `Dockerfile` will have some basics commands like `FROM`, `RUN` and `CMD`. `FROM` indicates which docker "base image" to use. `RUN` issues the command we want to run while creating the docker image. `CMD` specifies what should be executed when the image is used to spawn a container.
 
 #### `container terminal/shell access`
