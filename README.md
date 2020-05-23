@@ -66,6 +66,8 @@ An image requires that a `Dockerfile` first be generated, and that defines the b
   COPY ./ ./
   ```
 
+- ignore files and filders from copy with a `.dockerignore` file.
+
 #### `container terminal shell access`
 
 - execute another command that is provided as input into the container `docker exec -it <<container id>> << command >>`. This attaches another process to a container _that is already running_. Useful for adding shell access to it.
