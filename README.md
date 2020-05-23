@@ -45,16 +45,18 @@ This section pertains to the folder `docker-redis`.
 Note: `docker run` = `docker create` + `docker start`, from a given image.
 
 - to run a locally available image (or download an image from Docker Hub and then run it locally) use `docker run <image name> < [override command] >`. The optional override command overrides the default command for the container.
-- to see the output of a container (without re-starting it) run `docker logs <container id>`. This is useful for inspecting, debuging and reviewing whats going on in containers.
+- to see the output of a container (without re-starting it) run `doc ker logs <container id>`. This is useful for inspecting, debuging and reviewing whats going on in containers.
+- to map system ports into ports inside the container (needed for incoming requests only), use `docker run -p [local host port] : [port in container] <image id>`
 
-#### `creating docker images`
+#### `Dockerfile - creating docker images`
 
 An image requires that a `Dockerfile` first be generated, and that defines the basic config/setup needed for our containerized app.
 
 - from inside the folder which has the `Dockerfile` image, run `docker build .` After building the terminal will show `Succesfully built <<some image id>>`. Copy that id and do `docker run <<image id>>`.
-- to build with a name (aka tag) for the image, run `docker build -t zeuslawyer/<< project-name >>:latest .` With that we can generate the container with `docker run zeuslawyer/<< project-name >>`
-- the `Dockerfile` will have some basics commands like `FROM`, `RUN` and `CMD`. `FROM` indicates which docker "base image" to use. `RUN` issues the command we want to run while creating the docker image. `CMD` specifies what should be executed when the image is used to spawn a container.
+- to build with a name (aka tag) for the image, run `docker build -t zeuslawyer/<< project-name >>:latest .` With that we can generate the container with `docker run zeuslawyer/<< project-name >> .`. Don't forget the `.` at the end!
+- the `Dockerfile` will have some basics commands like `FROM`, `RUN` and `CMD`. `FROM` indicates which docker "base image" . and version to use - e.g. `FROM node:10.20.1-jessie-slim` . `RUN` issues the command we want to run while creating the docker image. `CMD` specifies what should be executed when the image is used to spawn a container - e.g. `CMD ["npm", "start"]`.
 - to use an existing container, modify its filesystem and contents, and then generate an image out of that (usually its image -> container, but this is container -> modify -> image) we run the following: `docker commit -c 'CMD["<< override command that usually goes into Dockerfile >>"]' << container id >>`. So that is something like `docker commit -c 'CMD["redis-server"]' f70734b6a266`. That generates a new image, which you can then run with `docker run <...>`.
+- when creating the docker file you may need to specify that certain files from the local filesystem need to be copied over to the image. For that use `COPY <source path, relative to Dockerfile loc> <loc inside container>`. This often looks like `COPY ./ ./`
 
 #### `container terminal/shell access`
 
