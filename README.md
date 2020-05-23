@@ -63,4 +63,4 @@ An image requires that a `Dockerfile` first be generated, and that defines the b
 - execute another command that is provided as input into the container `docker exec -it <<container id>> << command >>`
 - **but** its better to open up a shell tunnel into the container's process. For that use `docker exec -it <<container id>> sh`. That will give us a `#` sign as a shell prompt
 - you can also startup a container from an image, and immediate tunnel into a shell process within it _without_ interacting with the underlying program. Do this with `docker run -it <<image name>> sh`. The `sh` at the end is what produces the command prompt inside.
-- exit with `ctrl d` or `ctrl c`
+- exit shell with `ctrl d`
