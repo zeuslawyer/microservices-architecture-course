@@ -46,7 +46,7 @@ Note: `docker run` = `docker create` + `docker start`, from a given image.
 
 - to run a locally available image (or download an image from Docker Hub and then run it locally) use `docker run <image name> < [override command] >`. The optional override command overrides the default command for the container.
 - to see the output of a container (without re-starting it) run `doc ker logs <container id>`. This is useful for inspecting, debuging and reviewing whats going on in containers.
-- to map system ports into ports inside the container (needed for incoming requests only), use `docker run -p [local host port] : [port in container] <image id>`
+- to map system ports into ports inside the container (needed for incoming requests only), use `docker run -it -p [local host port] : [port in container] <image id>`. The `-it` helps with terminal access [see this section](#container-terminal-shell-access) into the container, so that a `ctrl+c` stops the server.
 
 #### `Dockerfile - creating docker images`
 
@@ -58,9 +58,9 @@ An image requires that a `Dockerfile` first be generated, and that defines the b
 - to use an existing container, modify its filesystem and contents, and then generate an image out of that (usually its image -> container, but this is container -> modify -> image) we run the following: `docker commit -c 'CMD["<< override command that usually goes into Dockerfile >>"]' << container id >>`. So that is something like `docker commit -c 'CMD["redis-server"]' f70734b6a266`. That generates a new image, which you can then run with `docker run <...>`.
 - when creating the docker file you may need to specify that certain files from the local filesystem need to be copied over to the image. For that use `COPY <source path, relative to Dockerfile loc> <loc inside container>`. This often looks like `COPY ./ ./`
 
-#### `container terminal/shell access`
+#### `container terminal shell access`
 
 - execute another command that is provided as input into the container `docker exec -it <<container id>> << command >>`
 - **but** its better to open up a shell tunnel into the container's process. For that use `docker exec -it <<container id>> sh`. That will give us a `#` sign as a shell prompt
-- you can also startup a container from an image, and immediate tunnel into a shell process within it _without_ interacting with the underlying program. Do this with `docker run -it <<image name>> sh`.
+- you can also startup a container from an image, and immediate tunnel into a shell process within it _without_ interacting with the underlying program. Do this with `docker run -it <<image name>> sh`. The `sh` at the end is what produces the command prompt inside.
 - exit with `ctrl d` or `ctrl c`
