@@ -1,11 +1,16 @@
 # specify base image and specific version
 FROM node:10.20.1-alpine
 
-# copy files from local context into the container
+# set working directory
+WORKDIR /usr/app
+
+# copy deps and install deps
+COPY ./package.json ./
+RUN yarn install
+
+#  copy the code files
 COPY ./ ./
 
-# install deps from the package.json
-RUN yarn install
 
 #  setup default command
 CMD ["yarn", "start"] 

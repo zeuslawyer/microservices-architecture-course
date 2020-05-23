@@ -50,17 +50,25 @@ Note: `docker run` = `docker create` + `docker start`, from a given image.
 
 #### `Dockerfile - creating docker images`
 
-An image requires that a `Dockerfile` first be generated, and that defines the basic config/setup needed for our containerized app.
+An image requires that a `Dockerfile` first be generated, and that defines the basic config/setup needed for our containerized app. Each step inside a Dockerfile is cached, and so changes trigger a re-run of _all_ steps that come on and after the changed one, but not preceding steps.
 
 - from inside the folder which has the `Dockerfile` image, run `docker build .` After building the terminal will show `Succesfully built <<some image id>>`. Copy that id and do `docker run <<image id>>`.
 - to build with a name (aka tag) for the image, run `docker build -t zeuslawyer/<< project-name >>:latest .` With that we can generate the container with `docker run zeuslawyer/<< project-name >> .`. Don't forget the `.` at the end!
 - the `Dockerfile` will have some basics commands like `FROM`, `RUN` and `CMD`. `FROM` indicates which docker "base image" . and version to use - e.g. `FROM node:10.20.1-jessie-slim` . `RUN` issues the command we want to run while creating the docker image. `CMD` specifies what should be executed when the image is used to spawn a container - e.g. `CMD ["npm", "start"]`.
 - to use an existing container, modify its filesystem and contents, and then generate an image out of that (usually its image -> container, but this is container -> modify -> image) we run the following: `docker commit -c 'CMD["<< override command that usually goes into Dockerfile >>"]' << container id >>`. So that is something like `docker commit -c 'CMD["redis-server"]' f70734b6a266`. That generates a new image, which you can then run with `docker run <...>`.
-- when creating the docker file you may need to specify that certain files from the local filesystem need to be copied over to the image. For that use `COPY <source path, relative to Dockerfile loc> <loc inside container>`. This often looks like `COPY ./ ./`
+- set the working directory inside the container relateive to its current position by adding `WORKDIR /usr/app`. This directory will be visible when you do a `ls` from inside a container's shell ([shell access](#container-terminal-shell-access)). When you access the container via the shell it will go directly to the WORKDIR.
+- when creating the docker file you may need to specify that certain files from the local filesystem need to be copied over to the image. For that use `COPY <source path - relative to Dockerfile> <WORKDIRr>`. This is often broken into two steps - first copying the `package.json` and then copying the main code. This is so that changes to the code dont trigger a rebuild and reinstall of all the dependencies, as the cache tracks what has changed. so two separate copy commands separates the cache and it only rebuilds stuff that is changed. This often looks like
+
+  ```Dockerfile
+  COPY ./package.json ./
+  RUN yarn install
+
+  COPY ./ ./
+  ```
 
 #### `container terminal shell access`
 
-- execute another command that is provided as input into the container `docker exec -it <<container id>> << command >>`
+- execute another command that is provided as input into the container `docker exec -it <<container id>> << command >>`. This attaches another process to a container _that is already running_. Useful for adding shell access to it.
 - **but** its better to open up a shell tunnel into the container's process. For that use `docker exec -it <<container id>> sh`. That will give us a `#` sign as a shell prompt
 - you can also startup a container from an image, and immediate tunnel into a shell process within it _without_ interacting with the underlying program. Do this with `docker run -it <<image name>> sh`. The `sh` at the end is what produces the command prompt inside.
-- exit shell with `ctrl d`
+- exit shell with `ctrl d` or `exit`
