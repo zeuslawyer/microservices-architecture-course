@@ -28,7 +28,7 @@ The `Query` service protects against failures of the `Posts` and `Comments` serv
 
 The Front End queries all posts and attached comments from the `Query` service, rather than directly from the `Post` and `Comments` service; however, the actual posting of new comments goes into those services directly. **Thus reads and writes are handled by different services**.
 
-## `Docker CLI commands`
+## `DOCKER`
 
 This section pertains to the folder `docker-redis`.
 
@@ -40,7 +40,7 @@ This section pertains to the folder `docker-redis`.
 - **list** all images `docker images` or `docker image ls`
 - **remove** images by reference to their ID `docker image rm 75835a67d134 2a4cca5ac898`
 
-#### `running Docker images`
+#### `running Docker containers (docker run)`
 
 Note: `docker run` = `docker create` + `docker start`, from a given image.
 
@@ -48,7 +48,7 @@ Note: `docker run` = `docker create` + `docker start`, from a given image.
 - to see the output of a container (without re-starting it) run `doc ker logs <container id>`. This is useful for inspecting, debuging and reviewing whats going on in containers.
 - to map system ports into ports inside the container (needed for incoming requests only), use `docker run -it -p [local host port] : [port in container] <image id>`. The `-it` helps with terminal access [see this section](#container-terminal-shell-access) into the container, so that a `ctrl+c` stops the server.
 
-#### `Dockerfile - creating docker images`
+#### `Dockerfile - creating docker images (docker build)`
 
 An image requires that a `Dockerfile` first be generated, and that defines the basic config/setup needed for our containerized app. Each step inside a Dockerfile is cached, and so changes trigger a re-run of _all_ steps that come on and after the changed one, but not preceding steps.
 
@@ -74,3 +74,8 @@ An image requires that a `Dockerfile` first be generated, and that defines the b
 - **but** its better to open up a shell tunnel into the container's process. For that use `docker exec -it <<container id>> sh`. That will give us a `#` sign as a shell prompt
 - you can also startup a container from an image, and immediate tunnel into a shell process within it _without_ interacting with the underlying program. Do this with `docker run -it <<image name>> sh`. The `sh` at the end is what produces the command prompt inside.
 - exit shell with `ctrl d` or `exit`
+
+## `KUBERNETES`
+
+Key terms:
+![Kubernetes terms](kubeterms.png)
