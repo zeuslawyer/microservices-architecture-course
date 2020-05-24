@@ -86,15 +86,41 @@ An image requires that a `Dockerfile` first be generated, and that defines the b
 ![Config files overview](./img/kube-config.png)
 ![Config files explained](./img/kube-config-expl.png)
 
+##### Pod Config
+
 ```yaml
 apiVersion: v1
-kind: Pod  // create a pod
+kind: Pod # create a pod
 metadata:
-  name: posts  // with name posts
+  name: posts # with name posts
 spec:
   containers:
-    - name: posts  // has exactly one container in it, named posts
+    - name: posts # has exactly one container in it, named posts
       image: zeuslawyer/posts:0.0.1  // build using this image, with specific version. "latest" retrieves from docker hub by default
+```
+
+##### Deployment Config
+
+The `Deployment` is a Kube object type that manages pods and connectivity between pods.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-depl # name of deployment
+spec:
+  replicas: 1 # number of pods to spawn
+  selector: # select which pods this Deployment is in charge of managing
+    matchLabels:
+      app: posts
+  template: # specify which pods to work with
+    metadata:
+      labels:
+        app: posts
+    spec:
+      containers: # list of containers to create within the pod, with their config
+        - name: posts
+          image: zeuslawer/posts:0.0.1
 ```
 
 #### Kube Commands
@@ -102,4 +128,6 @@ spec:
 - In terminal, navigate to where the `.YAML` file is and then type in `kubectl apply -f posts.yaml`
 - to inspect pods running enter `kubectl get pods`
 
-![Config files overview](./img/kube-commands.png)
+![Kube Pod Commands](./img/kube-commands.png)
+
+![Kube Deployment Commands](./img/kube-dep-commands.png)
