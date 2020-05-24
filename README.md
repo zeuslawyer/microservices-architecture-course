@@ -45,7 +45,7 @@ This section pertains to the folder `docker-redis`.
 Note: `docker run` = `docker create` + `docker start`, from a given image.
 
 - to run a locally available image (or download an image from Docker Hub and then run it locally) use `docker run <image name> < [override command] >`. The optional override command overrides the default command for the container.
-- to see the output of a container (without re-starting it) run `doc ker logs <container id>`. This is useful for inspecting, debuging and reviewing whats going on in containers.
+- to see the output of a container (without re-starting it) run `docker logs <container id>`. This is useful for inspecting, debuging and reviewing whats going on in containers.
 - to map system ports into ports inside the container (needed for incoming requests only), use `docker run -it -p [local host port] : [port in container] <image id>`. The `-it` helps with terminal access [see this section](#container-terminal-shell-access) into the container, so that a `ctrl+c` stops the server.
 
 #### `Dockerfile - building docker images (docker build)`
@@ -105,9 +105,15 @@ spec:
 
 - To run a Kube Object (deployment, pod, service etc)In terminal, navigate to where the `.YAML` file is and then type in `kubectl apply -f posts.yaml`
 
-- to list the kube objects run `kubectl get <object type>`
+- to **list** the kube objects run `kubectl get <object type>`
 
-- to stop a given pod or deployment run `kubectl delete <object type> <id>`
+- to **stop** a given pod or deployment run `kubectl delete <object type> <id>`
+
+- to look at `console.log`s from files, get the pod id (`kubectl get pods`) and then run `kubectl logs <podId>`
+
+- Any time you make a change to the underlying files and need to **update** the `Deployment` you run `kubectl rollout restart deployment<depl name>`. But the docker image needs to be updated first and pushed to docker hub. See below:
+
+![](./img/kube-update-img-depl.png)
 
 ![Kube Pod Commands](./img/kube-commands.png)
 
@@ -138,7 +144,7 @@ spec:
     spec:
       containers: # list of containers to create within the pod, with their config
         - name: posts
-          image: zeuslawer/posts:latest
+          image: zeuslawyer/posts:latest
 ```
 
 ##### Kube Service Config
@@ -155,7 +161,7 @@ The `Service` is a Kube object type that manages networking and comms between po
 apiVersion: v1
 kind: Service # type of Kube object
 metadata:
-  name: post-srv # name of the Kube Service
+  name: post-srv # name of this Kube Service
 spec:
   type: NodePort # type of Kube Service being configured
   selector:

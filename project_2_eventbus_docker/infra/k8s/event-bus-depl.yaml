@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment # Type of Kube Object
+metadata:
+  name: event-bus-depl # Name of this Kube Deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-bus # name of the container: see spec below
+  template:
+    metadata:
+      labels:
+        app: event-bus # name of the container : see spec below
+    spec:
+      containers:
+        - name: event-bus
+          image: zeuslawyer/event-bus:latest
+---
+# add a Cluster IP service object to this event-bus deployment object
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-bus-clusterip # name of this Cluster IP Service.
+spec:
+  type: ClusterIP
+  selector:
+    app: event-bus
+  ports:
+    - name: event-bus
+      protocol: TCP
+      port: 5005
+      targetPort: 5005

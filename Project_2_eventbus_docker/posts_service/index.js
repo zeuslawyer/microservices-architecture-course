@@ -24,8 +24,8 @@ app.post('/posts', async (req, res) => {
   const post = { id, title };
   posts[id] = post;
 
-  // emit event to event bus
-  await axios.post('http://localhost:5005/events', {
+  // emit event to event bus at the kubernetes service UR
+  await axios.post('http://event-bus-clusterip:5005/events', {
     type: 'PostCreated',
     data: post,
   });
