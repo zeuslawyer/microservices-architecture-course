@@ -48,7 +48,7 @@ Note: `docker run` = `docker create` + `docker start`, from a given image.
 - to see the output of a container (without re-starting it) run `doc ker logs <container id>`. This is useful for inspecting, debuging and reviewing whats going on in containers.
 - to map system ports into ports inside the container (needed for incoming requests only), use `docker run -it -p [local host port] : [port in container] <image id>`. The `-it` helps with terminal access [see this section](#container-terminal-shell-access) into the container, so that a `ctrl+c` stops the server.
 
-#### `Dockerfile - creating docker images (docker build)`
+#### `Dockerfile - building docker images (docker build)`
 
 An image requires that a `Dockerfile` first be generated, and that defines the basic config/setup needed for our containerized app. Each step inside a Dockerfile is cached, and so changes trigger a re-run of _all_ steps that come on and after the changed one, but not preceding steps.
 
@@ -77,5 +77,29 @@ An image requires that a `Dockerfile` first be generated, and that defines the b
 
 ## `KUBERNETES`
 
-Key terms:
-![Kubernetes terms](kubeterms.png)
+#### Key terms:
+
+![Kubernetes terms](./img/kubeterms.png)
+
+#### Basics of config files
+
+![Config files overview](./img/kube-config.png)
+![Config files explained](./img/kube-config-expl.png)
+
+```yaml
+apiVersion: v1
+kind: Pod  // create a pod
+metadata:
+  name: posts  // with name posts
+spec:
+  containers:
+    - name: posts  // has exactly one container in it, named posts
+      image: zeuslawyer/posts:0.0.1  // build using this image, with specific version. "latest" retrieves from docker hub by default
+```
+
+#### Kube Commands
+
+- In terminal, navigate to where the `.YAML` file is and then type in `kubectl apply -f posts.yaml`
+- to inspect pods running enter `kubectl get pods`
+
+![Config files overview](./img/kube-commands.png)
