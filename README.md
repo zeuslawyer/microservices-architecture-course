@@ -105,9 +105,9 @@ spec:
 
 - To run a Kube Object (deployment, pod, service etc)In terminal, navigate to where the `.YAML` file is and then type in `kubectl apply -f posts.yaml`
 
-- to inspect pods running enter `kubectl get pods`
+- to list the kube objects run `kubectl get <object type>`
 
-- to stop a given pod or deployment run `kubectl delete <deployment / pod> <id>`
+- to stop a given pod or deployment run `kubectl delete <object type> <id>`
 
 ![Kube Pod Commands](./img/kube-commands.png)
 
@@ -166,3 +166,7 @@ spec:
       port: 5001 # port to open to income requests
       targetPort: 5001 # maps to the port on which the Post server is listening
 ```
+
+- run `kubectl get services` to see the services objects
+- run the service by calling `kubectl apply -f posts-srv.yaml` from inside the `infra/k8s` directory
+- run `k describe service <service name>` to get metadata about a given service

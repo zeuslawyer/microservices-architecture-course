@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service # type of Kube object
 metadata:
-  name: post-srv # name of the Kube Service
+  name: posts-srv # name of the Kube Service
 spec:
   type: NodePort # type of Kube Service being configured
   selector:
-    app: post-srv # name of the container to  expose via NodePort service
+    app: posts-srv # name of the container to  expose via NodePort service
   ports: # array of ports to expose
     - name: posts
       protocol: TCP
