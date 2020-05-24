@@ -79,7 +79,8 @@ An image requires that a `Dockerfile` first be generated, and that defines the b
 
 #### Key terms:
 
-![Kubernetes terms](./img/kubeterms.png)
+- there are 4 main "Objects" in the Kube world - the pod, container, [service](#kube-service-config) and [deployment](#deployment-config). Every Kube cluster has one or more nodes, and each node has these objects in it.
+  ![Kubernetes terms](./img/kubeterms.png)
 
 #### Basics of config files
 
@@ -98,6 +99,22 @@ spec:
     - name: posts # has exactly one container in it, named posts
       image: zeuslawyer/posts:0.0.1  // build using this image, with specific version. "latest" retrieves from docker hub by default
 ```
+
+#### Kube Commands
+
+- To run a Kube Object (deployment, pod, service etc)In terminal, navigate to where the `.YAML` file is and then type in `kubectl apply -f posts.yaml`
+
+- to inspect pods running enter `kubectl get pods`
+
+- to stop a given pod or deployment run `kubectl delete <deployment / pod> <id>`
+
+![Kube Pod Commands](./img/kube-commands.png)
+
+![Kube Deployment Commands](./img/kube-dep-commands.png)
+
+- update the underlying docker image for a Deployment. To push to docker hub use `docker push zeuslawyer/<docker-image name>`.
+
+![Update Underling Docker Image](./img/kube-update-image.png)
 
 ##### Deployment Config
 
@@ -120,14 +137,11 @@ spec:
     spec:
       containers: # list of containers to create within the pod, with their config
         - name: posts
-          image: zeuslawer/posts:0.0.1
+          image: zeuslawer/posts:latest
 ```
 
-#### Kube Commands
+##### Kube Service Config
 
-- In terminal, navigate to where the `.YAML` file is and then type in `kubectl apply -f posts.yaml`
-- to inspect pods running enter `kubectl get pods`
+The `Service` is a Kube object type that manages networking and comms between pods, clusters (internal and external comms) etc.
 
-![Kube Pod Commands](./img/kube-commands.png)
-
-![Kube Deployment Commands](./img/kube-dep-commands.png)
+![Service Types](./img/kube-services.png)

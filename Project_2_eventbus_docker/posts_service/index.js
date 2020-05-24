@@ -43,5 +43,5 @@ app.post('/events', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.info(`Posts Service listening on port ${PORT}!`);
+  console.info(`Posts Service now listening on port ${PORT}!`);
 });
