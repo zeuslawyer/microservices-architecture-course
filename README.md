@@ -80,6 +80,7 @@ An image requires that a `Dockerfile` first be generated, and that defines the b
 #### Key terms:
 
 - there are 4 main "Objects" in the Kube world - the pod, container, [service](#kube-service-config) and [deployment](#deployment-config). Every Kube cluster has one or more nodes, and each node has these objects in it.
+- **all** objects in the kube world are necessarily defined using a config file.  
   ![Kubernetes terms](./img/kubeterms.png)
 
 #### Basics of config files
@@ -145,3 +146,23 @@ spec:
 The `Service` is a Kube object type that manages networking and comms between pods, clusters (internal and external comms) etc.
 
 ![Service Types](./img/kube-services.png)
+
+![Kube Service Port Mapping](./img/kube-port-mapping.png)
+
+##### sample config file `posts-serv.yaml`
+
+```yaml
+apiVersion: v1
+kind: Service # type of Kube object
+metadata:
+  name: post-srv # name of the Kube Service
+spec:
+  type: NodePort # type of Kube Service being configured
+  selector:
+    app: post-srv # name of the container to  expose via NodePort service
+  ports: # array of ports to expose
+    - name: posts
+      protocol: TCP
+      port: 5001 # port to open to income requests
+      targetPort: 5001 # maps to the port on which the Post server is listening
+```

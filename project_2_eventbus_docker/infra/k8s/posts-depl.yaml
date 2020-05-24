@@ -1,17 +1,17 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: Deployment # Type of Kube Object
 metadata:
-  name: posts-depl
+  name: posts-depl # Name of Kube Deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: posts
+      app: posts # name of the container: see spec below
   template:
     metadata:
       labels:
-        app: posts
+        app: posts # name of the container : see spec below
     spec:
       containers:
         - name: posts
-          image: zeuslawyer/posts:latest
+          image: zeuslawyer/posts:latest # docker image to use for the container, with the version chosen
