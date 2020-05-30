@@ -4,12 +4,25 @@ metadata:
   name: ingress-nginx-srv
   annotations: # tells the ingress controller we will feed it some routing rules
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   rules:
     - host: posts.com # set in the /etc/hosts file on local machine to route requests to this domain to localhost
       http:
-        paths:
-          - path: /posts # the path in the posts service that will receive data
+        paths: # this specifies the routing config for a nginx
+          - path: /posts/create # the path in the posts service that will receive data
             backend:
               serviceName: posts-clusterip # the ipcluster service that handle io for this service
               servicePort: 5001 # port for the posts ipcluster service
+          - path: /posts # query service
+            backend:
+              serviceName: query-clusterip # the ipcluster service that handle io for this service
+              servicePort: 5004
+          - path: /posts/?(.*)/comments # add comments service at an :id
+            backend:
+              serviceName: comments-clusterip # the ipcluster service that handle io for this service
+              servicePort: 5002
+          - path: /?(.*) # react application root path. Needs regex wildcard for SPA routing.  Put it last as as specificity overrides
+            backend:
+              serviceName: client-clusterip
+              servicePort: 3000

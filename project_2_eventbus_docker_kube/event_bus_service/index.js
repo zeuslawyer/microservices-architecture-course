@@ -21,10 +21,14 @@ app.post('/events', (req, res) => {
   events.push(event);
 
   // emit events to all services
-  axios.post(`http://posts-clusterip:${PORTS.POSTS}/events`, event); // post service  at Kubernetes Service URL
-  axios.post(`http://posts-clusterip:${PORTS.COMMENTS}/events`, event); // comment service
-  axios.post(`http://posts-clusterip:${PORTS.COMMENT_MOD}/events`, event); // comment moderation service
-  axios.post(`http://posts-clusterip:${PORTS.QUERY}/events`, event); // query service
+  try {
+    axios.post(`http://posts-clusterip:${PORTS.POSTS}/events`, event); // post service  at Kubernetes Service URL
+    axios.post(`http://posts-clusterip:${PORTS.COMMENTS}/events`, event); // comment service
+    axios.post(`http://posts-clusterip:${PORTS.COMMENT_MOD}/events`, event); // comment moderation service
+    axios.post(`http://posts-clusterip:${PORTS.QUERY}/events`, event); // query service
+  } catch (error) {
+    console.log('****ERROR IN EVENT BUS ****  ', error);
+  }
 
   console.log(
     `${new Date().toLocaleTimeString()} - EVENT EMITTED: `,

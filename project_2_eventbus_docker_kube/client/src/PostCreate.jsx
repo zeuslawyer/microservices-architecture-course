@@ -8,7 +8,7 @@ export const PostCreate = () => {
     event.preventDefault();
     if (title === '') return; // no empty submits
 
-    await axios.post('http://posts.com/posts', { title });
+    await axios.post('http://posts.com/posts/create', { title });
     setTitle('');
   };
 

@@ -111,7 +111,7 @@ spec:
 
 - to look at `console.log`s from files, get the pod id (`kubectl get pods`) and then run `kubectl logs <podId>`
 
-- Any time you make a change to the underlying files and need to **update** the `Deployment` you run `kubectl rollout restart deployment<depl name>`. But the docker image needs to be updated first and pushed to docker hub. See below:
+- Any time you make a change to the underlying files and need to **update** / restart the Kubernetes Pod (`Deployment`) you run `kubectl rollout restart deployment<depl name>`. But the docker image needs to be updated first and pushed to docker hub. See below:
 
 ![](./img/kube-update-img-depl.png)
 
