@@ -9,7 +9,7 @@ export const PostList = () => {
 
   React.useEffect(() => {
     async function fetch() {
-      const res = await axios.get('http://localhost:5004/posts');
+      const res = await axios.get('http://posts.com/posts');
       setPosts(res.data);
     }
 
