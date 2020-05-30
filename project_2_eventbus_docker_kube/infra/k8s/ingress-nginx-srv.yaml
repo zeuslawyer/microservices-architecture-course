@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-nginx-srv
+  annotations: # tells the ingress controller we will feed it some routing rules
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    - host: posts.com # set in the /etc/hosts file on local machine to route requests to this domain to localhost
+      http:
+        paths:
+          - path: /posts # the path in the posts service that will receive data
+            backend:
+              serviceName: posts-clusterip # the ipcluster service that handle io for this service
+              servicePort: 5001 # port for the posts ipcluster service
