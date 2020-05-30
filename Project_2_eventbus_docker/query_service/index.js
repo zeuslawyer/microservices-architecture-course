@@ -32,7 +32,7 @@ app.listen(PORT, async () => {
   console.info(`Query Service listening on port ${PORT}!`);
 
   // get array of all events from event bus (to handle missed events due to downtime etc)
-  const res = await axios.get('http://localhost:5005/event s');
+  const res = await axios.get('http://event-bus-clusterip:5005/events');
 
   for (const event of res.data) {
     console.log('processing missed event...', event.type);

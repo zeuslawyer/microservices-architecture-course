@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: query-depl
+spec:
+  selector:
+    matchLabels:
+      app: query
+  template:
+    metadata:
+      labels:
+        app: query
+    spec:
+      containers:
+        - name: query
+          image: zeuslawyer/query
+---
+# Add a ClusterIP Service for this post deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: query-clusterip # name of this Cluster IP Service.
+spec:
+  type: ClusterIP
+  selector:
+    app: query
+  ports:
+    - name: query
+      port: 5004
+      protocol: TCP
+      targetPort: 5004

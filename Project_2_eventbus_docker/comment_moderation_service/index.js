@@ -30,7 +30,7 @@ app.post('/events', async (req, res) => {
       );
 
     // emit updated comment to event bus
-    await axios.post('http://localhost:5005/events', {
+    await axios.post('http://event-bus-clusterip:5005/events', {
       type: 'CommentModerated',
       data: {
         ...data,
