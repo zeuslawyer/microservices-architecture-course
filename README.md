@@ -66,3 +66,21 @@ Build a [stubhub.com](stubhub.com) clone using microservices and event-driven ar
 ##### `App Services`
 
 ![App Services](./img/stubhub-services.png)
+
+##### `Key Steps - using the Auth Service as an example`
+
+To set up Docker and Kube for a given (auth, by example) service follow these steps:
+
+**Docker**
+
+1. You need a Docker image for the service. So create a `Dockerfile` in the root of the service folder
+2. Create the `dockerignore` and ignore `node_modules` and others
+3. run `docker build zeuslawyer/<image name> .`
+4.
+
+**Kubernetes**
+
+1. Create a Kube Deployment (which creates a set of pods that runs the auth service.)
+2. create an `infra/k8s` path inside the project `root folder` and inside there create the config file `auth-depl.yaml`
+3. In the project `root folder` create the `skaffold.yaml` configuration file to use Skaffold devtools. Point it to the necessary deployments that skaffold must monitor and manage.
+4. run `skaffold dev` from the project `root folder` and check terminal outputs.

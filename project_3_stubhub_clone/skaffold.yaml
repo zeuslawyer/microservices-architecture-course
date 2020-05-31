@@ -1,0 +1,18 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/* # tell skaffold to watch the config files for kube
+build:
+  local:
+    push: false # auto-push changes to image to dockerhub?
+  artifacts: # names of the image that Skaffold must maintain
+    - image: zeuslawyer/project3-auth
+      context: auth # name of the directory to find the Dockerfile in
+      docker:
+        dockerfile: Dockerfile # file to build image from
+      sync:
+        manual:
+          - src: 'src/**/*.ts' # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
+            dest: .
