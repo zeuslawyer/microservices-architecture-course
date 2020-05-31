@@ -1,0 +1,58 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/* # tell skaffold to watch the config files for kube
+build:
+  local:
+    push: false # auto-push changes to image to dockerhub?
+  artifacts: # names of the image that Skaffold must maintain
+    - image: zeuslawyer/react-client
+      context: client # name of the directory to find the Dockerfile in
+      docker:
+        dockerFile: Dockerfile # file to build image from
+      sync:
+        manual:
+          - src: 'src/**/*.js' # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
+            dest: .
+    - image: zeuslawyer/comments
+      context: comments_service # name of the directory to find the Dockerfile in
+      docker:
+        dockerFile: Dockerfile # file to build image from
+      sync:
+        manual:
+          - src: '*.js' # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
+            dest: .
+    - image: zeuslawyer/event-bus
+      context: event_bus_service # name of the directory to find the Dockerfile in
+      docker:
+        dockerFile: Dockerfile # file to build image from
+      sync:
+        manual:
+          - src: '*.js' # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
+            dest: .
+    - image: zeuslawyer/moderation
+      context: comment_moderation_service # name of the directory to find the Dockerfile in
+      docker:
+        dockerFile: Dockerfile # file to build image from
+      sync:
+        manual:
+          - src: '*.js' # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
+            dest: .
+    - image: zeuslawyer/posts
+      context: posts_service # name of the directory to find the Dockerfile in
+      docker:
+        dockerFile: Dockerfile # file to build image from
+      sync:
+        manual:
+          - src: '*.js' # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
+            dest: .
+    - image: zeuslawyer/query
+      context: query_service # name of the directory to find the Dockerfile in
+      docker:
+        dockerFile: Dockerfile # file to build image from
+      sync:
+        manual:
+          - src: '*.js' # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
+            dest: .

@@ -42,7 +42,7 @@ This section pertains to the folder `docker-redis`.
 
 #### `running Docker containers (docker run)`
 
-Note: `docker run` = `docker create` + `docker start`, from a given image.
+Note: `docker run` = `docker create` + `docker start`, from a given image. `docker create` creates the image, and `docker start` executes the default or other command.
 
 - to run a locally available image (or download an image from Docker Hub and then run it locally) use `docker run <image name> < [override command] >`. The optional override command overrides the default command for the container.
 - to see the output of a container (without re-starting it) run `docker logs <container id>`. This is useful for inspecting, debuging and reviewing whats going on in containers.
