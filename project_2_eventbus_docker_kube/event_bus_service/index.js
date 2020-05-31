@@ -18,17 +18,17 @@ const events = []; // will behave like a stack
 /* distributes all events to the various other services, for handling if necessary */
 app.post('/events', (req, res) => {
   const event = req.body; // the entire body will be the event object
+
   events.push(event);
 
   // emit events to all services
-  try {
-    axios.post(`http://posts-clusterip:${PORTS.POSTS}/events`, event); // post service  at Kubernetes Service URL
-    axios.post(`http://posts-clusterip:${PORTS.COMMENTS}/events`, event); // comment service
-    axios.post(`http://posts-clusterip:${PORTS.COMMENT_MOD}/events`, event); // comment moderation service
-    axios.post(`http://posts-clusterip:${PORTS.QUERY}/events`, event); // query service
-  } catch (error) {
-    console.log('****ERROR IN EVENT BUS ****  ', error);
-  }
+  axios.post(`http://posts-clusterip:${PORTS.POSTS}/events`, event); // post service  at Kubernetes Service URL
+  axios.post(`http://comments-clusterip:${PORTS.COMMENTS}/events`, event); // comment service
+  axios.post(
+    `http://comment-moderation-clusterip:${PORTS.COMMENT_MOD}/events`,
+    event
+  ); // comment moderation service
+  axios.post(`http://query-clusterip:${PORTS.QUERY}/events`, event); // query service
 
   console.log(
     `${new Date().toLocaleTimeString()} - EVENT EMITTED: `,
