@@ -76,7 +76,7 @@ To set up Docker and Kube for a given (auth, by example) service follow these st
 1. You need a Docker image for the service. So create a `Dockerfile` in the root of the service folder
 2. Create the `dockerignore` and ignore `node_modules` and others
 3. run `docker build zeuslawyer/<image name> .`
-4.
+4. Check that you have the `ingress-nginx` controller for network i/o running on docker. you can run `docker ps --all` to check if its running. Otherwise install it from `kubernetes.github.io/ingress-nginx`
 
 **Kubernetes**
 
@@ -84,3 +84,6 @@ To set up Docker and Kube for a given (auth, by example) service follow these st
 2. create an `infra/k8s` path inside the project `root folder` and inside there create the config file `auth-depl.yaml`
 3. In the project `root folder` create the `skaffold.yaml` configuration file to use Skaffold devtools. Point it to the necessary deployments that skaffold must monitor and manage.
 4. run `skaffold dev` from the project `root folder` and check terminal outputs.
+5. Consider the two ways to allow an outside network request (from browser) to get inside the Kube pod and hit the service. The two ways to do this are using a Kube NodePort service object or a service like the `ingress-nginx`. If the `ingress-nginx` instance is still running in docker, then create a new `ingress-nginx-srv.yaml` file
+6. In this file if you're changing the host, then update `/etc/hosts` on the machine to enable redirects to that host domain that you've chosen.
+7. Upon navigation there will be a security error in chrome because `ingress-nginx` expects https by default. Get around this by typing anywhere in browser `thisisunsafe`

@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request } from 'express';
 import bodyParser from 'body-parser';
 
 const PORT = 3010;
@@ -9,6 +9,10 @@ app.get('/', (req, res) => {
   res.json({});
 });
 
+app.get('/api/users/currentuser', (req: Request, res) => {
+  res.send(`Auth service received request on the path ${req.path}`);
+});
+
 app.listen(PORT, () => {
-  console.info('Auth Service Listening On Port ', PORT);
+  console.info('Auth Service Listening On Port', PORT);
 });

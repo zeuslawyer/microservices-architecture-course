@@ -7,7 +7,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   rules:
-    - host: posts.com # set in the /etc/hosts file on local machine to route requests to this domain to localhost
+    - host: posts.zp # set in the /etc/hosts file on local machine to route requests to this domain to localhost
       http:
         paths: # this specifies the routing config for a nginx
           - path: /posts/create # the path in the posts service that will receive data
