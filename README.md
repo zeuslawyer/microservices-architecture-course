@@ -9,13 +9,12 @@ A course designed to understand:
 ## `TECHNOLOGY STACK`
 
 - JavaScript & TypeScript
-- Docker
-- Kubernetes
-- Skaffold
-- ReactJs
-- NodeJs
-- Express
-- Google Cloud Platform - Kubernetes,
+- Docker, Kubernetes, Skaffold
+- ReactJs / NextJs (server-side rendering)
+- NodeJs, Express, MongoDb
+- Redis
+- Google Cloud Platform - Kubernetes
+- custom NPM module/library called `common`
 
 ## `FOLDER STRUCTURE`
 
@@ -38,3 +37,31 @@ All services that recieve post requests emit events into the Event Bus. The even
 The `Query` service protects against failures of the `Posts` and `Comments` service by receiving all relevant events, and persisting in its own database.
 
 The Front End queries all posts and attached comments from the `Query` service, rather than directly from the `Post` and `Comments` service; however, the actual posting of new comments goes into those services directly. **Thus reads and writes are handled by different services**.
+
+#### `Project 2`
+
+Containerizes `Project 1`. Adds kubernetes and ends with adding Skaffold as a dev tool.
+
+#### `Project 3`
+
+Build a [stubhub.com](stubhub.com) clone using microservices and event-driven architecture
+
+##### `App Overview`
+
+![App Overview](./img/stubhub-overview.png)
+
+##### `App Design`
+
+![App Overview](./img/stubhub-design.png)
+
+##### `App Objects(Resources)`
+
+![App Events](./img/stubhub-resources.png)
+
+##### `App Events`
+
+![App Events](./img/stubhub-events.png)
+
+##### `App Services`
+
+![App Services](./img/stubhub-services.png)
