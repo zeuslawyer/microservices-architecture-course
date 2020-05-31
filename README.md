@@ -15,6 +15,7 @@ A course designed to understand:
 - Redis
 - Google Cloud Platform - Kubernetes
 - custom NPM module/library called `common`
+- NATS streaming event-bus
 
 ## `FOLDER STRUCTURE`
 
