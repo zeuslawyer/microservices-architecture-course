@@ -11,7 +11,7 @@ build:
     - image: zeuslawyer/react-client
       context: client # name of the directory to find the Dockerfile in
       docker:
-        dockerFile: Dockerfile # file to build image from
+        dockerfile: Dockerfile # file to build image from
       sync:
         manual:
           - src: 'src/**/*.js' # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
@@ -19,7 +19,7 @@ build:
     - image: zeuslawyer/comments
       context: comments_service # name of the directory to find the Dockerfile in
       docker:
-        dockerFile: Dockerfile # file to build image from
+        dockerfile: Dockerfile # file to build image from
       sync:
         manual:
           - src: '*.js' # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
@@ -27,7 +27,7 @@ build:
     - image: zeuslawyer/event-bus
       context: event_bus_service # name of the directory to find the Dockerfile in
       docker:
-        dockerFile: Dockerfile # file to build image from
+        dockerfile: Dockerfile # file to build image from
       sync:
         manual:
           - src: '*.js' # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
@@ -35,7 +35,7 @@ build:
     - image: zeuslawyer/moderation
       context: comment_moderation_service # name of the directory to find the Dockerfile in
       docker:
-        dockerFile: Dockerfile # file to build image from
+        dockerfile: Dockerfile # file to build image from
       sync:
         manual:
           - src: '*.js' # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
@@ -43,7 +43,7 @@ build:
     - image: zeuslawyer/posts
       context: posts_service # name of the directory to find the Dockerfile in
       docker:
-        dockerFile: Dockerfile # file to build image from
+        dockerfile: Dockerfile # file to build image from
       sync:
         manual:
           - src: '*.js' # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
@@ -51,7 +51,7 @@ build:
     - image: zeuslawyer/query
       context: query_service # name of the directory to find the Dockerfile in
       docker:
-        dockerFile: Dockerfile # file to build image from
+        dockerfile: Dockerfile # file to build image from
       sync:
         manual:
           - src: '*.js' # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
