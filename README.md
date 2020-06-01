@@ -83,7 +83,7 @@ To set up Docker and Kube for a given (auth, by example) service follow these st
 1. Create a Kube Deployment (which creates a set of pods that runs the auth service.)
 2. create an `infra/k8s` path inside the project `root folder` and inside there create the config file `auth-depl.yaml`
 3. In the project `root folder` create the `skaffold.yaml` configuration file to use Skaffold devtools. Point it to the necessary deployments that skaffold must monitor and manage.
-4. run `skaffold dev` from the project `root folder` and check terminal outputs.
+4. run `skaffold dev` from the project `root folder` and check terminal outputs. Skaffold will monitor the synced files for changes and push them directly into the pod. Unsynced file changes will cause the image to rebuild.
 5. Consider the two ways to allow an outside network request (from browser) to get inside the Kube pod and hit the service. The two ways to do this are using a Kube NodePort service object or a service like the `ingress-nginx`. If the `ingress-nginx` instance is still running in docker, then create a new `ingress-nginx-srv.yaml` file
 6. In this file if you're changing the host, then update `/etc/hosts` on the machine to enable redirects to that host domain that you've chosen.
 7. Upon navigation there will be a security error in chrome because `ingress-nginx` expects https by default. Get around this by typing anywhere in browser `thisisunsafe`
@@ -114,7 +114,9 @@ To set up Docker and Kube for a given (auth, by example) service follow these st
 7. configure ingress-nginx as the ingress controller + loadbalancer in the GKE cluster. Follow the deployment instructions in https://kubernetes.github.io/ingress-nginx/deploy/#gce-gke. Ensure your local Docker context is set to GKE! Running this command will also provision a GCP Load Balancer for the cluster. In Cloud Console go to Networking > Network Services > Load Balancing and see the instance. Click on the Load Balancer to get the IP Address and Port for the Load Balancer.
 8. update `/etc/hosts` to point to GKE cluster - using the IP address of the Load Balancer from the previous setp.
 9. restart skaffold. This will take the `*-depl.yaml` config files and deploy them to GKE. If working, the terminal should show the deployments being started, and the services' console.logs should show up.
-   **_NOTE_** if you get an error message like this from running skaffold
+
+<hr />
+**_NOTE_** if you get an error message like this from running skaffold
 
 ```
 exiting dev mode because first build failed: couldn't build "us.gcr.io/eastern-team-278907/auth": creating bucket if not exists: getting bucket "eastern-team-278907_cloudbuild": Get "https://storage.googleapis.com/storage/v1/b/eastern-team-278907_cloudbuild?alt=json&prettyPrint=false&projection=full": oauth2: cannot fetch token: 400 Bad Request
@@ -132,3 +134,5 @@ gcloud auth application-default revoke
 gcloud auth application-default login
 // source : https://thornelabs.net/posts/resolve-google-cloud-api-oauth2-cannot-fetch-token-invalid-grant-error.html
 ```
+
+<hr />

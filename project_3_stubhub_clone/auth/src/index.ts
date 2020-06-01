@@ -1,5 +1,10 @@
-import express, { Request } from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
+
+import { currentUserRouter } from './routes/currentUser';
+import { signinRouter } from './routes/signin';
+import { signoutRouter } from './routes/signout';
+import { signupRouter } from './routes/signup';
 
 const PORT = 3010;
 const app = express();
@@ -9,9 +14,10 @@ app.get('/test-path', (req, res) => {
   res.json({});
 });
 
-app.get('/api/users/currentuser', (req: Request, res) => {
-  res.send(`Auth service received GET request on the path ${req.path}`);
-});
+app.use(currentUserRouter);
+app.use(signinRouter);
+app.use(signupRouter);
+app.use(signoutRouter);
 
 app.listen(PORT, () => {
   console.info('Auth Service Listening On Port', PORT);
