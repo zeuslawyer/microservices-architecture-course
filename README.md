@@ -92,10 +92,24 @@ To set up Docker and Kube for a given (auth, by example) service follow these st
 
 1. CReate a new project in console.cloud.google.com and create a new GKE instance, an associate it with region closest. choose the lowest configurations and from Node Pool choose a share GPU low end machine.
 2. Login via terminal using gcloud, and choose the right account using `gcloud auth login`. ensure the region is set to match the one chosen on cloud.console.
-3. Strategy is to retain use of Docker Desktop, while spinning up cluster in GCP. So set the context (folder context) for the cluster in GKE by using `gcloud container clusters get-credentials <Project Name (NOT id)>`. You can get the project Id by listing out the configurations using `gcloud config configurations list`
+3. Strategy is to retain use of Docker Desktop, while spinning up cluster in GCP. So set the context (folder context) for the cluster in GKE by using `gcloud container clusters get-credentials <Cluster Name (NOT project name or project id)>`. You can get the project Id by listing out the configurations using `gcloud config configurations list`
 4. verify that the cluster contexct has been set on GKE by clicking the docker desktop taskbar icon, clicking Kubernetes and checking whether a GKE context is there.
 5. Enable Google cloud build to build images using the Dockerfile in codebase
-6. update the `skaffold.yaml` file to configure it with Google Cloud Build / gcloud
-7. configure ingress-nginx in the GKE cluster
-8. update `/etc/hosts` to point to GKE cluster
-9. restart skaffold
+6. update the `skaffold.yaml` file to configure it with Google Cloud Build / gcloud.
+   It should now have this under the build section:
+
+   ```yaml
+   build:
+     # local:
+     #   push: false # auto-push changes to image to dockerhub?
+     googleCloudBuild:
+       projectId: eastern-team-278907
+     artifacts: # names of the image that Skaffold must maintain
+       - image: us.gcr.io/<project Id>/<Dockerfile folder> # standard google cloud project name + project directory
+   ```
+
+   Use this image name to update the relevant `*-depl.yaml` file's image reference too.
+
+7. configure ingress-nginx as the ingress controller + loadbalancer in the GKE cluster. Follow the deployment instructions in https://kubernetes.github.io/ingress-nginx/deploy/#gce-gke. Ensure your local Docker context is set to GKE! Running this command will also provision a GCP Load Balancer for the cluster. In Cloud Console go to Networking > Network Services > Load Balancing and see the instance. Click on the Load Balancer to get the IP Address and Port for the Load Balancer.
+8. update `/etc/hosts` to point to GKE cluster - using the IP address of the Load Balancer from the previous setp.
+9. restart skaffold. This will take the `*-depl.yaml` config files and deploy them to GKE. If working, the terminal should show the deployments being started, and the services' console.logs should show up.

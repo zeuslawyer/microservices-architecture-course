@@ -4,12 +4,16 @@ metadata:
   name: ingress-stubhub-srv
   annotations: # tells the ingress controller we will feed it some routing rules
     kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/use-regex: 'true' # regex needed as ingress doesnt handle path variables except with regex
+    nginx.ingress.kubernetes.io/use-regex: "true" # regex needed as ingress doesnt handle path variables except with regex
 spec:
   rules:
     - host: mystubhub.zp # set in the /etc/hosts file on local machine to route requests to this domain to localhost
       http:
         paths: # this specifies the routing config for a nginx
+          - path: /test-path # the path in the posts service that will receive data
+            backend:
+              serviceName: auth-clusterip # the ipcluster service that handle io for this service
+              servicePort: 3010 # port for the auth service
           - path: /api/users/?(.*) # the path in the posts service that will receive data
             backend:
               serviceName: auth-clusterip # the ipcluster service that handle io for this service

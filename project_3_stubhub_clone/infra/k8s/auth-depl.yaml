@@ -14,7 +14,7 @@ spec:
     spec:
       containers: # array of containers inside a pod
         - name: auth
-          image: zeuslawyer/project3-auth
+          image: us.gcr.io/eastern-team-278907/auth
 ---
 apiVersion: v1
 kind: Service

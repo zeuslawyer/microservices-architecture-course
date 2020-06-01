@@ -5,14 +5,16 @@ deploy:
     manifests:
       - ./infra/k8s/* # tell skaffold to watch the config files for kube
 build:
-  local:
-    push: false # auto-push changes to image to dockerhub?
+  # local:
+  #   push: false # auto-push changes to image to dockerhub?
+  googleCloudBuild:
+    projectId: eastern-team-278907
   artifacts: # names of the image that Skaffold must maintain
-    - image: zeuslawyer/project3-auth
+    - image: us.gcr.io/eastern-team-278907/auth # standard google cloud project name + project directory
       context: auth # name of the directory to find the Dockerfile in
       docker:
         dockerfile: Dockerfile # file to build image from
       sync:
         manual:
-          - src: 'src/**/*.ts' # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
+          - src: "src/**/*.ts" # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
             dest: .

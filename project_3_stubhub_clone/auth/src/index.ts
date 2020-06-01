@@ -5,7 +5,7 @@ const PORT = 3010;
 const app = express();
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
+app.get('/test-path', (req, res) => {
   res.json({});
 });
 
