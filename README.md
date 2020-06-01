@@ -9,11 +9,11 @@ A course designed to understand:
 ## `TECHNOLOGY STACK`
 
 - JavaScript & TypeScript
-- Docker, Kubernetes, Skaffold
 - ReactJs / NextJs (server-side rendering)
 - NodeJs, Express, MongoDb
 - Redis
-- Google Cloud Platform - Kubernetes
+- Docker, Kubernetes, Skaffold
+- Google Cloud Platform (nitrous developments account) - Kubernetes, Google Cloud Build, Google Cloud VM,
 - custom NPM module/library called `common`
 - NATS streaming event-bus
 
@@ -87,3 +87,15 @@ To set up Docker and Kube for a given (auth, by example) service follow these st
 5. Consider the two ways to allow an outside network request (from browser) to get inside the Kube pod and hit the service. The two ways to do this are using a Kube NodePort service object or a service like the `ingress-nginx`. If the `ingress-nginx` instance is still running in docker, then create a new `ingress-nginx-srv.yaml` file
 6. In this file if you're changing the host, then update `/etc/hosts` on the machine to enable redirects to that host domain that you've chosen.
 7. Upon navigation there will be a security error in chrome because `ingress-nginx` expects https by default. Get around this by typing anywhere in browser `thisisunsafe`
+
+**Google Kubernetes Engine**
+
+1. CReate a new project in console.cloud.google.com and create a new GKE instance, an associate it with region closest. choose the lowest configurations and from Node Pool choose a share GPU low end machine.
+2. Login via terminal using gcloud, and choose the right account using `gcloud auth login`. ensure the region is set to match the one chosen on cloud.console.
+3. Strategy is to retain use of Docker Desktop, while spinning up cluster in GCP. So set the context (folder context) for the cluster in GKE by using `gcloud container clusters get-credentials <Project Name (NOT id)>`. You can get the project Id by listing out the configurations using `gcloud config configurations list`
+4. verify that the cluster contexct has been set on GKE by clicking the docker desktop taskbar icon, clicking Kubernetes and checking whether a GKE context is there.
+5. Enable Google cloud build to build images using the Dockerfile in codebase
+6. update the `skaffold.yaml` file to configure it with Google Cloud Build / gcloud
+7. configure ingress-nginx in the GKE cluster
+8. update `/etc/hosts` to point to GKE cluster
+9. restart skaffold

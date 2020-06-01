@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/users/currentuser', (req: Request, res) => {
-  res.send(`Auth service received request on the path ${req.path}`);
+  res.send(`Auth service received GET request on the path ${req.path}`);
 });
 
 app.listen(PORT, () => {
