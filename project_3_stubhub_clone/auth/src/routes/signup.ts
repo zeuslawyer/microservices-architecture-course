@@ -16,10 +16,12 @@ const validation = [
 router.post("/api/users/signup", validation, (req: Request, res: Response) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    return res.status(400).send(errors.array())
+    throw new Error("Invalid email or password.")
   }
 
   const { email, password } = req.body
+
+  throw new Error(` error with this lousy pwd ${password}`)
   res.send(
     `Sign up service received POST request on the path ${req.path} from ${email}`
   )
