@@ -2,6 +2,9 @@ import express, { Request, Response } from "express"
 import { body, validationResult } from "express-validator"
 const router = express.Router()
 
+import { RequestValidationError } from "../Errors/RequestValidationError"
+import { DatabaseConnectionError } from "../Errors/DatabaseConnectionError"
+
 // middleware validation array of funcs
 const validation = [
   body("email").isEmail().withMessage("Email must be valid."),
@@ -16,12 +19,12 @@ const validation = [
 router.post("/api/users/signup", validation, (req: Request, res: Response) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
-    throw new Error("Invalid email or password.")
+    throw new RequestValidationError(errors.array())
   }
 
   const { email, password } = req.body
 
-  throw new Error(` error with this lousy pwd ${password}`)
+  throw new DatabaseConnectionError()
   res.send(
     `Sign up service received POST request on the path ${req.path} from ${email}`
   )
