@@ -45,7 +45,8 @@ Containerizes `Project 1`. Adds kubernetes and ends with adding Skaffold as a de
 
 #### `Project 3`
 
-Build a [stubhub.com](stubhub.com) clone using microservices and event-driven architecture
+Build a [stubhub.com](stubhub.com) clone using microservices and event-driven architecture.
+To run the app, in the root folder for Project 3, run `skaffold dev`
 
 ##### `App Overview`
 

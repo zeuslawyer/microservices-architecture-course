@@ -1,11 +1,11 @@
-import { ValidationError } from "express-validator"
+import { ValidationError } from "express-validator";
 
 export class RequestValidationError extends Error {
   constructor(public errors: ValidationError[]) {
-    super()
+    super();
 
     // as we are extending a base class included in the language...
-    Object.setPrototypeOf(this, RequestValidationError.prototype)
+    Object.setPrototypeOf(this, RequestValidationError.prototype);
   }
 }
 

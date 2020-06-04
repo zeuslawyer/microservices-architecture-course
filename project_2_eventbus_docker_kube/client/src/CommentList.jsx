@@ -1,21 +1,21 @@
-import React from 'react';
+import React from "react";
 
 export const CommentList = ({ comments }) => {
   const renderComments = () => {
-    return comments.map((comment) => {
+    return comments.map(comment => {
       let content;
       let style;
 
-      if (comment.status === 'approved') content = comment.content;
+      if (comment.status === "approved") content = comment.content;
 
-      if (comment.status === 'pending') {
-        content = 'This comment is awaiting moderation.';
-        style = { fontStyle: 'italic' };
+      if (comment.status === "pending") {
+        content = "This comment is awaiting moderation.";
+        style = { fontStyle: "italic" };
       }
 
-      if (comment.status === 'rejected') {
-        content = 'This comment has been rejected.';
-        style = { fontStyle: 'italic' };
+      if (comment.status === "rejected") {
+        content = "This comment has been rejected.";
+        style = { fontStyle: "italic" };
       }
 
       return (

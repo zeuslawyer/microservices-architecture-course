@@ -1,15 +1,15 @@
 // reference: https://expressjs.com/en/guide/error-handling.html
 
-import { Request, Response, NextFunction } from "express"
-import { DatabaseConnectionError } from "../Errors/DatabaseConnectionError"
-import { RequestValidationError } from "../Errors/RequestValidationError"
+import { Request, Response, NextFunction } from "express";
+import { DatabaseConnectionError } from "../Errors/DatabaseConnectionError";
+import { RequestValidationError } from "../Errors/RequestValidationError";
 
 export interface Err {
-  message: string
-  field?: string
+  message: string;
+  field?: string;
 }
 export interface AppError {
-  errors: Err[] // errors is an array of error objects
+  errors: Err[]; // errors is an array of error objects
 }
 
 export const errorHandler = (
@@ -21,9 +21,9 @@ export const errorHandler = (
   if (err instanceof DatabaseConnectionError) {
     const error: AppError = {
       errors: [{ message: err.reason }]
-    }
+    };
 
-    return res.status(500).send(error as AppError)
+    return res.status(500).send(error as AppError);
   }
 
   if (err instanceof RequestValidationError) {
@@ -31,14 +31,14 @@ export const errorHandler = (
       return {
         message: e.msg,
         field: e.param
-      }
-    })
+      };
+    });
 
-    return res.status(400).send({ errors: formattedErrors } as AppError)
+    return res.status(400).send({ errors: formattedErrors } as AppError);
   }
 
   // else
   return res
     .status(400)
-    .send({ errors: [{ message: "Something went wrong. " }] } as AppError)
-}
+    .send({ errors: [{ message: "Something went wrong. " }] } as AppError);
+};
