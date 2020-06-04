@@ -16,18 +16,22 @@ const validation = [
     )
 ];
 
-router.post("/api/users/signup", validation, (req: Request, res: Response) => {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    throw new RequestValidationError(errors.array());
+router.post(
+  "/api/users/signup",
+  validation,
+  async (req: Request, res: Response) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      throw new RequestValidationError(errors.array());
+    }
+
+    const { email, password } = req.body;
+
+    throw new DatabaseConnectionError();
+    res.send(
+      `Sign up service received POST request on the path ${req.path} from ${email}`
+    );
   }
-
-  const { email, password } = req.body;
-
-  throw new DatabaseConnectionError();
-  res.send(
-    `Sign up service received POST request on the path ${req.path} from ${email}`
-  );
-});
+);
 
 export { router as signupRouter }; // rename router

@@ -1,4 +1,5 @@
 import express from "express";
+import "express-async-errors";
 import bodyParser from "body-parser";
 
 import { currentUserRouter } from "./routes/currentUser";
@@ -6,6 +7,7 @@ import { signinRouter } from "./routes/signin";
 import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
 import { errorHandler } from "./middleware/errorHandler";
+import { NotFoundError } from "./Errors/NotFoundError";
 
 const PORT = 3010;
 const app = express();
