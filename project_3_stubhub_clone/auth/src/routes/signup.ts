@@ -4,6 +4,7 @@ const router = express.Router();
 
 import { RequestValidationError } from "../Errors/RequestValidationError";
 import { User } from "../Models/User";
+import { BadRequestError } from "../Errors/BadRequestError";
 
 // middleware validation array of funcs
 const validation = [
@@ -31,8 +32,7 @@ router.post(
 
     // check if already registered
     if (existingUser) {
-      console.log("WARNING:   Email in use. Cannot create user.");
-      return res.send({});
+      throw new BadRequestError("Email is already registered.");
     }
 
     // else, create and save
