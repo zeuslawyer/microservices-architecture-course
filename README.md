@@ -137,3 +137,8 @@ gcloud auth application-default login
 ```
 
 <hr />
+
+** Mongo Db **
+Each service in this app gets its own mongo db instance to avoid sync communication between services (refer to [App Design](#app-design)). To set up Mongo DB, it will need to be in its own service which means its got to have its own pod (created and configured as a Kube Deployment).
+
+`const connect = async () =>{ mongoose.connect("mongodb://auth-mongo-clusterip:27017/auth", options, callback) }`, where `/auth` is the name of the db and mongoose will create that automatically. The uri includes the port specified in the `-depl.yaml` config file for the mongo db service attached to the auth service.
