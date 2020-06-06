@@ -1,4 +1,5 @@
 import mongoose, { MongooseDocument } from "mongoose";
+import { Password } from "../services/password";
 
 export interface UserAttrs {
   email: string;
@@ -30,6 +31,17 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+// pre save hook/middleware to hash password whenever mongo .save() api is called
+userSchema.pre("save", async function (done) {
+  // only hash if the password field of the Document has been modified
+  const doc = this; // since we are not using fat arrow func, this context is the Document
+  if (doc.isModified("password")) {
+    const hashed = await Password.toHash(doc.get("password"));
+    doc.set("password", hashed);
+  }
+});
+
+// custom method called build to add typing to mongo api
 userSchema.statics.build = (user: UserAttrs) => {
   return new User(user);
 };

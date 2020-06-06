@@ -5,6 +5,7 @@ const router = express.Router();
 import { RequestValidationError } from "../Errors/RequestValidationError";
 import { User } from "../Models/User";
 import { BadRequestError } from "../Errors/BadRequestError";
+import { Password } from "../services/password";
 
 // middleware validation array of funcs
 const validation = [
