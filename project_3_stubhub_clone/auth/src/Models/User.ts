@@ -39,6 +39,8 @@ userSchema.pre("save", async function (done) {
     const hashed = await Password.toHash(doc.get("password"));
     doc.set("password", hashed);
   }
+
+  done(); // must call this mongo method after async work is completed in mongo
 });
 
 // custom method called build to add typing to mongo api
