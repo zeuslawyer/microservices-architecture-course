@@ -3,7 +3,7 @@ import { body, validationResult } from "express-validator";
 const router = express.Router();
 
 import { RequestValidationError } from "../Errors/RequestValidationError";
-import { DatabaseConnectionError } from "../Errors/DatabaseConnectionError";
+import { User } from "../Models/User";
 
 // middleware validation array of funcs
 const validation = [
@@ -20,17 +20,29 @@ router.post(
   "/api/users/signup",
   validation,
   async (req: Request, res: Response) => {
+    // validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       throw new RequestValidationError(errors.array());
     }
 
     const { email, password } = req.body;
+    const existingUser = await User.findOne({ email });
 
-    throw new DatabaseConnectionError();
-    res.send(
-      `Sign up service received POST request on the path ${req.path} from ${email}`
-    );
+    // check if already registered
+    if (existingUser) {
+      console.log("WARNING:   Email in use. Cannot create user.");
+      return res.send({});
+    }
+
+    // else, create and save
+    const newUser = User.build({
+      email,
+      password
+    });
+
+    await newUser.save();
+    res.status(201).send(newUser);
   }
 );
 
