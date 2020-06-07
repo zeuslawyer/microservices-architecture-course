@@ -1,11 +1,12 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-const router = express.Router();
+import jwt from "jsonwebtoken";
 
 import { RequestValidationError } from "../Errors/RequestValidationError";
 import { User } from "../Models/User";
 import { BadRequestError } from "../Errors/BadRequestError";
-import { Password } from "../services/password";
+
+const router = express.Router();
 
 // middleware validation array of funcs
 const validation = [
@@ -43,6 +44,19 @@ router.post(
     });
 
     await newUser.save();
+
+    // generate and save JWT cookie session object
+    const userJwt = jwt.sign(
+      {
+        id: newUser.id,
+        email: newUser.email
+      },
+      "fake-key"
+    );
+
+    // @ts-ignore
+    req.session.jwt = userJwt;
+
     res.status(201).send(newUser);
   }
 );
