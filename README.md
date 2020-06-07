@@ -10,10 +10,10 @@ A course designed to understand:
 
 - JavaScript & TypeScript
 - ReactJs / NextJs (server-side rendering)
-- NodeJs, Express, MongoDb
-- Redis
+- NodeJs, Express, MongoDb/Mongoose
 - Docker, Kubernetes, Skaffold
 - Google Cloud Platform (nitrous developments account) - Kubernetes, Google Cloud Build, Google Cloud VM,
+- Redis
 - custom NPM module/library called `common`
 - NATS streaming event-bus
 

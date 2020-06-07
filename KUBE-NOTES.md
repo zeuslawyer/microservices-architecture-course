@@ -97,5 +97,30 @@ spec:
 ```
 
 - run `kubectl get services` to see the services objects
-- run the service by calling `kubectl apply -f posts-srv.yaml` from inside the `infra/k8s` directory
+- run the service by calling `kubectl apply -f posts-srv.yaml` from inside the `binfra/k8s` directory
 - run `k describe service <service name>` to get metadata about a given service
+
+##### Kubernetest Env Variable configuration through the Secrets object
+
+Kubernetes has an object type called Secret that stores secrets securely and makes them available to other pods/containers in the cluster , as env vars.
+
+- create a "generic" JWT secret with `kubectl create secret generic <<name of secret>> --from-literal=<KEY_NAME>=<KEY VALUE>`.
+- list available secrets by doing `kubectl get secrets`
+- update the config `-depl.yaml` file for each pod/container that needs to read the env var :
+
+  ```yaml
+  template: # the pod config starts here
+  metadata:
+    labels:
+      app: auth # name of the container this deployment relates to
+  spec:
+    containers: # array of containers inside a pod
+      - name: auth
+        image: zeuslawyer/project3-auth # us.gcr.io/eastern-team-278907/auth
+        env: # environment variables loaded from the kube secrets object
+          - name: JWT_KEY # name of the env variable. generally best to give it the same name as the key of the relevant env var
+            valueFrom:
+              secretKeyRef:
+                name: auth-jwt # name of the Kube secret object (not the key or env var)
+                key: JWT_KEY # KEY_NAME from the CLI command that creates the secret
+  ```
