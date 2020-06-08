@@ -122,5 +122,5 @@ Kubernetes has an object type called Secret that stores secrets securely and mak
             valueFrom:
               secretKeyRef:
                 name: auth-jwt # name of the Kube secret object (not the key or env var)
-                key: JWT_KEY # KEY_NAME from the CLI command that creates the secret
+                key: JWT_KEY # KEY_NAME from the CLI command that creates the secret. This property will be accessed on process.env inside the deployment/pod
   ```

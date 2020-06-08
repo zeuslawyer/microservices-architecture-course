@@ -32,6 +32,9 @@ app.get("/test-path", (req, res) => {
 });
 
 const init = async () => {
+  // check env vars
+  if (!process.env.JWT_KEY) throw new Error(" MISSING ENV VAR JWT_KEY ");
+
   // mongoose
   try {
     await mongoose.connect("mongodb://auth-mongo-clusterip:27017/auth", {

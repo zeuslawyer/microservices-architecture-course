@@ -20,16 +20,31 @@ interface UserInstance extends mongoose.Document {
   password: string;
 }
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String, // not typescript. Mongoose string
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
+// options to remove certain fields from the returned mongo doc
+const schemaopts: mongoose.SchemaOptions = {
+  toJSON: {
+    transform(doc, returned) {
+      returned.id = returned._id;
+      delete returned._id;
+      delete returned.password; // remove password field in returned object
+      delete returned.__v;
+    }
   }
-});
+};
+
+const userSchema = new mongoose.Schema(
+  {
+    email: {
+      type: String, // not typescript. Mongoose string
+      required: true
+    },
+    password: {
+      type: String,
+      required: true
+    }
+  },
+  schemaopts
+);
 
 // pre save hook/middleware to hash password whenever mongo .save() api is called
 userSchema.pre("save", async function (done) {

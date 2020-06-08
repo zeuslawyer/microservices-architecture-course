@@ -51,11 +51,12 @@ router.post(
         id: newUser.id,
         email: newUser.email
       },
-      "fake-key"
+      process.env.JWT_KEY!
     );
 
     // @ts-ignore
-    req.session.jwt = userJwt;
+    // apply the jwt to the session cookie
+    req.session.jwt = userJwt; // ! means we are sure we checked (check is in index.ts)
 
     res.status(201).send(newUser);
   }

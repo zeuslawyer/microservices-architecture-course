@@ -16,12 +16,12 @@ spec:
         - name: auth
           image: zeuslawyer/project3-auth
           env:
-            - name: JWT_KEY
+            - name: JWT_KEY # name of this env
               valueFrom:
-                  secretKeyRef:
-                    name: auth-jwt
-                    key: JWT_KEY
-                    
+                secretKeyRef:
+                  name: auth-jwt # name of the kube secret object created
+                  key: JWT_KEY # key name of the secret, which will be found on process.env inside the deployment
+
 ---
 apiVersion: v1
 kind: Service
