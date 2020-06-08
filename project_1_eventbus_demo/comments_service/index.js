@@ -52,9 +52,7 @@ app.post("/posts/:id/comments", async (req, res) => {
 /* receive events from event bus */
 app.post("/events", async (req, res) => {
   const { type, data } = req.body;
-  console.log(
-    `Comments Service Received Event at ${new Date().toLocaleTimeString()}- ${type}.`
-  );
+  console.log(`Comments Service Received Event at ${new Date().toLocaleTimeString()}- ${type}.`);
 
   if (type === "CommentModerated") {
     // update comment in db

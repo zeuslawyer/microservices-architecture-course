@@ -10,13 +10,8 @@ import { PasswordManager } from "../services/PasswordManager";
 const router = express.Router();
 
 const validation = [
-  body("email")
-    .isEmail()
-    .withMessage("Please provide a valid email address for signing in."),
-  body("password")
-    .trim()
-    .notEmpty()
-    .withMessage("Please provide your password to sign in.")
+  body("email").isEmail().withMessage("Please provide a valid email address for signing in."),
+  body("password").trim().notEmpty().withMessage("Please provide your password to sign in.")
 ];
 
 router.post(
@@ -28,13 +23,11 @@ router.post(
 
     // check if user exists
     const u = await User.findOne({ email });
-    if (u === null)
-      throw new BadRequestError(`No user with email ${email} found`);
+    if (u === null) throw new BadRequestError(`No user with email ${email} found`);
 
     // else check password
     const doesMatch = await PasswordManager.doesMatch(u.password, password);
-    if (!doesMatch)
-      throw new BadRequestError("You have entered an incorrect password");
+    if (!doesMatch) throw new BadRequestError("You have entered an incorrect password");
 
     // else all good, send session cookie with JWT
     // generate and save JWT cookie session object

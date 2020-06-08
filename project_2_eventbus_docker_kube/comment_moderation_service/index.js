@@ -16,18 +16,14 @@ app.post("/events", async (req, res) => {
     const { content } = data;
 
     const FILTERED_WORDS = ["terrorism", "racism"];
-    const hasFilteredWord = content
-      .split(" ")
-      .some(word => FILTERED_WORDS.includes(word.toLowerCase()));
+    const hasFilteredWord = content.split(" ").some(word => FILTERED_WORDS.includes(word.toLowerCase()));
     console.log("Has filtered word? ", hasFilteredWord);
 
     const status = hasFilteredWord ? "rejected" : "approved";
 
     // handle error in status setting
     if (status !== "rejected" && status !== "approved")
-      throw new Error(
-        `Comment moderator service error. Status of ${status} is not valid after moderation.  `
-      );
+      throw new Error(`Comment moderator service error. Status of ${status} is not valid after moderation.  `);
 
     // emit updated comment to event bus
     await axios.post("http://event-bus-clusterip:5005/events", {

@@ -23,12 +23,7 @@ export const PostCreate = () => {
           <label>
             <strong> Title: </strong>{" "}
           </label>
-          <input
-            className="form-control"
-            type="input"
-            value={title}
-            onChange={handleInput}
-          />
+          <input className="form-control" type="input" value={title} onChange={handleInput} />
         </div>
         <button className="btn btn-primary" onClick={handleSubmit}>
           {" "}

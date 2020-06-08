@@ -35,10 +35,7 @@ app.post("/posts", async (req, res) => {
 
 /* receive events from event bus */
 app.post("/events", (req, res) => {
-  console.log(
-    `Post Service Received Event at ${new Date().toLocaleTimeString()}-`,
-    req.body.type
-  );
+  console.log(`Post Service Received Event at ${new Date().toLocaleTimeString()}-`, req.body.type);
   res.send({});
 });
 

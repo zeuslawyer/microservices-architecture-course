@@ -24,16 +24,10 @@ app.post("/events", (req, res) => {
   // emit events to all services
   axios.post(`http://posts-clusterip:${PORTS.POSTS}/events`, event); // post service  at Kubernetes Service URL
   axios.post(`http://comments-clusterip:${PORTS.COMMENTS}/events`, event); // comment service
-  axios.post(
-    `http://comment-moderation-clusterip:${PORTS.COMMENT_MOD}/events`,
-    event
-  ); // comment moderation service
+  axios.post(`http://comment-moderation-clusterip:${PORTS.COMMENT_MOD}/events`, event); // comment moderation service
   axios.post(`http://query-clusterip:${PORTS.QUERY}/events`, event); // query service
 
-  console.log(
-    `${new Date().toLocaleTimeString()} - EVENT EMITTED: `,
-    event.type
-  );
+  console.log(`${new Date().toLocaleTimeString()} - EVENT EMITTED: `, event.type);
   res.send({ status: "OK" });
 });
 

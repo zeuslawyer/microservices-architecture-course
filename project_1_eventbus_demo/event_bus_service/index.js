@@ -26,10 +26,7 @@ app.post("/events", (req, res) => {
   axios.post(`http://localhost:${PORTS.COMMENT_MOD}/events`, event); // comment moderation service
   axios.post(`http://localhost:${PORTS.QUERY}/events`, event); // query service
 
-  console.log(
-    `${new Date().toLocaleTimeString()} - EVENT EMITTED: `,
-    event.type
-  );
+  console.log(`${new Date().toLocaleTimeString()} - EVENT EMITTED: `, event.type);
   res.send({ status: "OK" });
 });
 
