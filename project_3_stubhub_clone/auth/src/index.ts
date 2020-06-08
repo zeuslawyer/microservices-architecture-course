@@ -16,6 +16,7 @@ const app = express();
 app.set("trust proxy", true); // trust incoming nginx proxy requests
 app.use(bodyParser.json());
 app.use(
+  // add a session property to all req objects
   cookieSession({
     signed: false,
     secure: true // https only
