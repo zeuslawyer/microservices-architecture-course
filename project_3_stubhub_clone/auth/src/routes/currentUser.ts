@@ -1,5 +1,4 @@
 import express, { Request, Response } from "express";
-import jwt from "jsonwebtoken";
 
 import { setCurrentUser } from "../middleware/setCurrentUser";
 
@@ -11,7 +10,6 @@ const router = express.Router();
  */
 router.get("/api/users/currentuser", setCurrentUser, (req: Request, res: Response) => {
   // req.currentUser is set by the middleware.  Can be undefined if not logged in.abs
-
   res.send({ currentUser: req.currentUser || null });
 });
 
