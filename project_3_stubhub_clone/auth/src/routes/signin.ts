@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
-import { body, validationResult } from "express-validator";
-import { RequestValidationError } from "../Errors/RequestValidationError";
+import { body } from "express-validator";
+import { handleRequestValidation } from "../middleware/handleRequestValidation";
 
 const router = express.Router();
 
@@ -13,16 +13,12 @@ const validation = [
     .notEmpty()
     .withMessage("Please provide your password to sign in.")
 ];
+
 router.post(
   "/api/users/signin",
-  validation,
+  validation, // apply validation rules
+  handleRequestValidation, // run validation test
   async (req: Request, res: Response) => {
-    // handle validation errors on input
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw new RequestValidationError(errors.array());
-    }
-
     res.status(200);
   }
 );

@@ -1,10 +1,9 @@
 // reference: https://expressjs.com/en/guide/error-handling.html
 
 import { Request, Response, NextFunction } from "express";
-import { DatabaseConnectionError } from "../Errors/DatabaseConnectionError";
-import { RequestValidationError } from "../Errors/RequestValidationError";
 import { CustomErrorBase } from "../Errors/CustomErrorBase";
 
+// error handling middleware accepts 4 args, with Error arg being the additional one
 export const errorHandler = (
   err: Error,
   req: Request,
