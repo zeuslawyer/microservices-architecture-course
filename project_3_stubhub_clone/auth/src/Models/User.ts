@@ -1,5 +1,5 @@
 import mongoose, { MongooseDocument } from "mongoose";
-import { Password } from "../services/password";
+import { PasswordManager } from "../services/PasswordManager";
 
 export interface UserAttrs {
   email: string;
@@ -51,7 +51,7 @@ userSchema.pre("save", async function (done) {
   // only hash if the password field of the Document has been modified
   const doc = this; // since we are not using fat arrow func, this context is the Document
   if (doc.isModified("password")) {
-    const hashed = await Password.toHash(doc.get("password"));
+    const hashed = await PasswordManager.toHash(doc.get("password"));
     doc.set("password", hashed);
   }
 

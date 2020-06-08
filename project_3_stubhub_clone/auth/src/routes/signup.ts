@@ -46,7 +46,7 @@ router.post(
         id: newUser.id,
         email: newUser.email
       },
-      process.env.JWT_KEY!
+      process.env.JWT_KEY! // jwt secret
     );
 
     // @ts-ignore

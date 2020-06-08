@@ -4,7 +4,7 @@ import { promisify } from "util";
 // scrypt is call back based, and to use asyn await we need to promisify
 const scryptAsync = promisify(scrypt);
 
-export class Password {
+export class PasswordManager {
   static async toHash(password: string) {
     // 1:  generate salt
     const salt = randomBytes(8).toString("hex");
