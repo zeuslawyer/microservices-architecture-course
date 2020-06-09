@@ -39,12 +39,13 @@ router.post(
     await newUser.save();
 
     // generate and save JWT cookie session object
+    const secret = process.env.JWT_KEY!; // jwt secret
     const userJwt = jwt.sign(
       {
         id: newUser.id,
         email: newUser.email
       },
-      process.env.JWT_KEY! // jwt secret
+      secret
     );
 
     // @ts-ignore

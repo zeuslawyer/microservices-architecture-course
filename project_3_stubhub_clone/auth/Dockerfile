@@ -4,7 +4,8 @@ WORKDIR /app
 
 COPY package.json .
 
-RUN yarn install
+# exclude dev dependencies
+RUN yarn install --production=true 
 
 COPY . .
 
