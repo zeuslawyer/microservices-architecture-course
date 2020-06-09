@@ -1,36 +1,8 @@
-import express from "express";
-import "express-async-errors";
-import bodyParser from "body-parser";
 import mongoose from "mongoose";
-import cookieSession from "cookie-session";
-
-import { currentUserRouter } from "./routes/currentUser";
-import { signinRouter } from "./routes/signin";
-import { signoutRouter } from "./routes/signout";
-import { signupRouter } from "./routes/signup";
-import { errorHandler } from "./middleware/errorHandler";
+import { server } from "./server";
 import { DatabaseConnectionError } from "./Errors/DatabaseConnectionError";
 
 const PORT = 3010;
-const app = express();
-app.set("trust proxy", true); // trust incoming nginx proxy requests
-app.use(bodyParser.json());
-app.use(
-  // add a session property to all req objects
-  cookieSession({
-    signed: false,
-    secure: true // https only
-  })
-);
-app.use(currentUserRouter);
-app.use(signinRouter);
-app.use(signupRouter);
-app.use(signoutRouter);
-app.use(errorHandler); // goes last
-
-app.get("/test-path", (req, res) => {
-  res.json({});
-});
 
 const init = async () => {
   // check env vars
@@ -48,7 +20,7 @@ const init = async () => {
   }
 
   // server
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.info("Auth Service Listening On Port", PORT);
   });
 };

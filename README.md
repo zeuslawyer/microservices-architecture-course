@@ -11,6 +11,7 @@ A course designed to understand:
 - JavaScript & TypeScript
 - ReactJs / NextJs (server-side rendering)
 - NodeJs, Express, MongoDb/Mongoose
+- Jest for testing
 - Docker, Kubernetes, Skaffold
 - Google Cloud Platform (nitrous developments account) - Kubernetes, Google Cloud Build, Google Cloud VM,
 - Redis
