@@ -21,11 +21,12 @@ beforeAll(async () => {
 beforeEach(async () => {
   const collections = await mongoose.connection.db.collections();
   for (let coll of collections) {
-    await coll.deleteMany({}, () => console.log(`deleted collection - ${coll.collectionName}`));
+    await coll.deleteMany({}, () => {}); // confirm that coll deleted
   }
 });
 
 // cleanup and disconnect
 afterAll(async () => {
   await mongo.stop();
+  console.log("*** In memory database stopped. ***");
 });
