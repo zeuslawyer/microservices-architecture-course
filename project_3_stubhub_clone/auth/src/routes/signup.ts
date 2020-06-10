@@ -50,6 +50,7 @@ router.post(
 
     // @ts-ignore
     // apply the jwt to the session cookie
+    // send back on response header
     req.session.jwt = userJwt; // ! means we are sure we checked (check is in index.ts)
 
     res.status(201).send(newUser);

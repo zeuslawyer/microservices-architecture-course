@@ -1,7 +1,7 @@
 import { CustomErrorBase } from "./CustomErrorBase";
 
 export class BadRequestError extends CustomErrorBase {
-  statusCode = 402;
+  statusCode = 400;
   message: string;
 
   constructor(message: string) {

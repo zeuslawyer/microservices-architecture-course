@@ -18,7 +18,7 @@ server.use(
   // add a session property to all req objects
   cookieSession({
     signed: false,
-    secure: true // https only
+    secure: process.env.NODE_ENV !== "test" // in prod or dev, set cookie session data over https only
   })
 );
 server.use(currentUserRouter);
