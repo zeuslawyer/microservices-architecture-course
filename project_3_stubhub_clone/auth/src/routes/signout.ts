@@ -7,7 +7,8 @@ const router = express.Router();
  * Destroys the session.
  */
 router.post("/api/users/signout", async (req: Request, res: Response) => {
-  req.session = null; // see cookie-sesions docs for destroying session
+  // see cookie-sessions docs for destroying session
+  req.session = null; // the cookie expiry gets set to way in the past
 
   res.status(200).send("Signed out.");
 });
