@@ -19,5 +19,5 @@ it(" tests current user endpoint returns the logged in user", async () => {
 
 it("tests current user endpoint returns null current user", async () => {
   const testResp = await request(server).get("/api/users/currentuser").set("Cookie", "fake-cookie").expect(200);
-  expect(testResp.body.currentUser).toBeNull();
+  expect(testResp.body.currentUser).toEqual(null);
 });
