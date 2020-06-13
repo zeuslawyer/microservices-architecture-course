@@ -3,7 +3,7 @@ import axios from "axios";
 const Signup = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [error, setError] = React.useState("");
+  const [errors, setErrors] = React.useState([]);
 
   const submitForm = async event => {
     event.preventDefault();
@@ -14,17 +14,33 @@ const Signup = () => {
         email,
         password
       });
-      console.log("RESPONSE", res);
+      // clear fields
+      setEmail("");
+      setPassword("");
+      setErrors([]);
     } catch (error) {
       if (error.response) {
-        const err = error.response.data.errors[0];
-        setError(err.message);
+        const errs = error.response.data.errors;
+        setErrors(errs);
       }
-    } finally {
-      setPassword("");
-      setEmail("");
     }
   };
+
+  const renderErrors = () => {
+    if (errors.length === 0) return null;
+
+    return (
+      <div className="alert alert-danger">
+        <h3>Ooops...</h3>
+        <ul>
+          {errors.map((e, idx) => (
+            <li key={idx + e.message}>{e.message}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <>
       <form onSubmit={submitForm}>
@@ -41,9 +57,9 @@ const Signup = () => {
             onChange={e => setPassword(e.target.value)}
           />
         </div>
+        {renderErrors()}
         <button className="btn btn-primary">Sign up</button>
       </form>
-      {error ? <p style={{ color: "red" }}> {error}</p> : null}
     </>
   );
 };
