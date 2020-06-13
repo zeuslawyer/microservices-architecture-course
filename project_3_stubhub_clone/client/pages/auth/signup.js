@@ -1,46 +1,16 @@
 import React from "react";
 import axios from "axios";
+
+import useRequest from "../../hooks/useRequest";
+
 const Signup = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [errors, setErrors] = React.useState([]);
+  const [makeRequest, errorsJsx] = useRequest("/api/users/signup", "post", { email, password });
 
   const submitForm = async event => {
     event.preventDefault();
-    const PATH = "/api/users/signup";
-    let res;
-    try {
-      res = await axios.post(PATH, {
-        email,
-        password
-      });
-      // clear fields
-      setEmail("");
-      setPassword("");
-      setErrors([]);
-    } catch (error) {
-      if (error.response) {
-        const errs = error.response.data.errors;
-        setErrors(errs);
-      } else {
-        setErrors([{ message: "Unknown response error." }]);
-      }
-    }
-  };
-
-  const renderErrors = () => {
-    if (errors.length === 0) return null;
-
-    return (
-      <div className="alert alert-danger">
-        <h3>Ooops...</h3>
-        <ul>
-          {errors.map((e, idx) => (
-            <li key={idx + e.message}>{e.message}</li>
-          ))}
-        </ul>
-      </div>
-    );
+    makeRequest();
   };
 
   return (
@@ -59,7 +29,7 @@ const Signup = () => {
             onChange={e => setPassword(e.target.value)}
           />
         </div>
-        {renderErrors()}
+        {errorsJsx}
         <button className="btn btn-primary">Sign up</button>
       </form>
     </>
