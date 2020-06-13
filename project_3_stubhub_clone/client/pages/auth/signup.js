@@ -22,6 +22,8 @@ const Signup = () => {
       if (error.response) {
         const errs = error.response.data.errors;
         setErrors(errs);
+      } else {
+        setErrors([{ message: "Unknown response error." }]);
       }
     }
   };
