@@ -18,3 +18,11 @@ build:
         manual:
           - src: "src/**/*.ts" # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
             dest: .
+    - image: zeuslawyer/nextclient # us.gcr.io/eastern-team-278907/auth # standard google cloud project name + project directory
+      context: client # name of the directory to find the Dockerfile in
+      docker:
+        dockerfile: Dockerfile # file to build image from
+      sync:
+        manual:
+          - src: "**/*.js" # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
+            dest: .

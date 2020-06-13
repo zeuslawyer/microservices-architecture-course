@@ -93,26 +93,26 @@ module.exports =
 /************************************************************************/
 /******/ ({
 
-/***/ "./pages/random.tsx":
-/*!**************************!*\
-  !*** ./pages/random.tsx ***!
-  \**************************/
+/***/ "./pages/random.js":
+/*!*************************!*\
+  !*** ./pages/random.js ***!
+  \*************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\nvar _jsxFileName = \"/Users/zubinpratap/Documents/DevProjects/Practice_Projects/microservices_course/project_3_stubhub_clone/client/pages/random.tsx\";\n\nvar __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;\n\nconst random = props => {\n  return __jsx(\"h3\", {\n    __self: undefined,\n    __source: {\n      fileName: _jsxFileName,\n      lineNumber: 2,\n      columnNumber: 10\n    }\n  }, \"This is a random page\");\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (random);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9wYWdlcy9yYW5kb20udHN4PzVlOTEiXSwibmFtZXMiOlsicmFuZG9tIiwicHJvcHMiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFBQSxNQUFNQSxNQUFNLEdBQUdDLEtBQUssSUFBSTtBQUN0QixTQUFPO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsNkJBQVA7QUFDRCxDQUZEOztBQUllRCxxRUFBZiIsImZpbGUiOiIuL3BhZ2VzL3JhbmRvbS50c3guanMiLCJzb3VyY2VzQ29udGVudCI6WyJjb25zdCByYW5kb20gPSBwcm9wcyA9PiB7XG4gIHJldHVybiA8aDM+VGhpcyBpcyBhIHJhbmRvbSBwYWdlPC9oMz47XG59O1xuXG5leHBvcnQgZGVmYXVsdCByYW5kb207XG4iXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./pages/random.tsx\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);\nvar _jsxFileName = \"/Users/zubinpratap/Documents/DevProjects/Practice_Projects/microservices_course/project_3_stubhub_clone/client/pages/random.js\";\n\nvar __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;\n\nconst random = props => {\n  return __jsx(\"h3\", {\n    __self: undefined,\n    __source: {\n      fileName: _jsxFileName,\n      lineNumber: 2,\n      columnNumber: 10\n    }\n  }, \"This is a random page\");\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (random);//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9wYWdlcy9yYW5kb20uanM/NTVkNyJdLCJuYW1lcyI6WyJyYW5kb20iLCJwcm9wcyJdLCJtYXBwaW5ncyI6Ijs7Ozs7OztBQUFBLE1BQU1BLE1BQU0sR0FBR0MsS0FBSyxJQUFJO0FBQ3RCLFNBQU87QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSw2QkFBUDtBQUNELENBRkQ7O0FBSWVELHFFQUFmIiwiZmlsZSI6Ii4vcGFnZXMvcmFuZG9tLmpzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiY29uc3QgcmFuZG9tID0gcHJvcHMgPT4ge1xuICByZXR1cm4gPGgzPlRoaXMgaXMgYSByYW5kb20gcGFnZTwvaDM+O1xufTtcblxuZXhwb3J0IGRlZmF1bHQgcmFuZG9tO1xuIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./pages/random.js\n");
 
 /***/ }),
 
 /***/ 4:
-/*!********************************!*\
-  !*** multi ./pages/random.tsx ***!
-  \********************************/
+/*!*******************************!*\
+  !*** multi ./pages/random.js ***!
+  \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/zubinpratap/Documents/DevProjects/Practice_Projects/microservices_course/project_3_stubhub_clone/client/pages/random.tsx */"./pages/random.tsx");
+module.exports = __webpack_require__(/*! /Users/zubinpratap/Documents/DevProjects/Practice_Projects/microservices_course/project_3_stubhub_clone/client/pages/random.js */"./pages/random.js");
 
 
 /***/ }),

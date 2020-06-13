@@ -1,1 +1,1 @@
-{"name":"nextjs-client","version":"1.0.0","main":"index.js","license":"MIT","scripts":{"dev":"next"},"dependencies":{"next":"^9.4.4","react":"^16.13.1","react-dom":"^16.13.1"},"devDependencies":{"@types/react":"^16.9.36","typescript":"^3.9.5"},"readme":"ERROR: No README data found!","_id":"nextjs-client@1.0.0"}
+{"name":"nextjs-client","version":"1.0.0","main":"index.js","license":"MIT","scripts":{"dev":"next"},"dependencies":{"next":"^9.4.4","react":"^16.13.1","react-dom":"^16.13.1"},"readme":"ERROR: No README data found!","_id":"nextjs-client@1.0.0"}

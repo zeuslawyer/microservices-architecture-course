@@ -9,7 +9,7 @@ spec:
   rules:
     - host: mystubhub.dev # set in the /etc/hosts file on local machine to route requests to this domain to localhost
       http:
-        paths: # this specifies the routing config for a nginx
+        paths: # this specifies the routing config for a nginx - path matching is done in order
           - path: /test-path # the path in the auth service that will receive data
             backend:
               serviceName: auth-clusterip # the ipcluster service that handle io for this service
@@ -18,4 +18,8 @@ spec:
             backend:
               serviceName: auth-clusterip # the ipcluster service that handle io for this service
               servicePort: 3010 # port for the auth service
+          - path: /?(.*) # the path in the nextjs client service. 
+            backend:
+              serviceName: nextclient-clusterip # the ipcluster service that handle io for this service
+              servicePort: 3000 # port for the nextjs client service
 

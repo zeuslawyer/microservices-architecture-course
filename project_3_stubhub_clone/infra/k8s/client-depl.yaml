@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextclient-depl # name of this deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nextclient # name of the container (pod) this deployment relates to
+  template: # the pod config starts here
+    metadata:
+      labels:
+        app: nextclient # name of the container this deployment relates to
+    spec:
+      containers: # array of containers inside a pod
+        - name: nextclient
+          image: zeuslawyer/nextclient
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextclient-clusterip
+spec:
+  type: ClusterIP # default service object type.  can be left out for Cluster IP
+  selector:
+    app: nextclient # reference to the deployment pod and containers to attach the kube service object to
+  ports:
+    - name: nextclient
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
