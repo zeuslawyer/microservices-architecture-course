@@ -1,5 +1,5 @@
-const random = props => {
-  return <h3>This is a random page</h3>;
+const Random = props => {
+  return <h3>This is a random PAGE mate...</h3>;
 };
 
-export default random;
+export default Random;
