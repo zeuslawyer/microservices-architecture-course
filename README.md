@@ -9,7 +9,7 @@ A course designed to understand:
 ## `TECHNOLOGY STACK`
 
 - JavaScript & TypeScript
-- ReactJs / NextJs (server-side rendering)
+- ReactJs / NextJs (server-side rendering) + Bootstrap
 - NodeJs, Express, MongoDb/Mongoose
 - Jest for testing
 - Docker, Kubernetes, Skaffold
@@ -48,6 +48,8 @@ Containerizes `Project 1`. Adds kubernetes and ends with adding Skaffold as a de
 
 Build a [stubhub.com](stubhub.com) clone using microservices and event-driven architecture.
 To run the app, in the root folder for Project 3, run `skaffold dev`
+
+**IMPORTANT** The app is served on a custom host address `mystubhub.dev`. This is set via the `/etc/hosts` file on the mac. This host is also set in the `ingress-nginx-srv.yaml` file which handles the routing and ingress into the Kube cluster.
 
 ##### `App Overview`
 

@@ -6,11 +6,13 @@ import React from "react";
  * @param {string} url endpoint relative to the hostname. Example: 'api/users/{:id}
  * @param {string} method the HTTP method
  * @param {any} body data object
+ * @param {function} onSuccess callback to invoke on success - redirect
  * @returns {Array} - first item is the makeRequest function, and the second is the errors JSX string to render
  */
-const useRequest = (url, method, body = null) => {
+const useRequest = (url, method, body = null, onSuccess) => {
   const [errorsJsx, setErrorsJsx] = React.useState(null);
 
+  // helper func to return
   const makeRequest = async () => {
     try {
       // reset errors state on UI on submit
@@ -18,7 +20,10 @@ const useRequest = (url, method, body = null) => {
 
       // make request
       const response = await axios[method](url, body);
-      return response.data;
+      // if successful, check callback exists
+      if (onSuccess) {
+        onSuccess(response.data);
+      }
     } catch (error) {
       const errs = error.response.data.errors;
       return setErrorsJsx(

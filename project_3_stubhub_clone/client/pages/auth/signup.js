@@ -1,16 +1,18 @@
 import React from "react";
-import axios from "axios";
+import Router from "next/router";
 
 import useRequest from "../../hooks/useRequest";
 
 const Signup = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
-  const [makeRequest, errorsJsx] = useRequest("/api/users/signup", "post", { email, password });
+
+  const successRedirect = () => Router.push("/");
+  const [makeRequest, errorsJsx] = useRequest("/api/users/signup", "post", { email, password }, successRedirect);
 
   const submitForm = async event => {
     event.preventDefault();
-    makeRequest();
+    await makeRequest();
   };
 
   return (
