@@ -1,10 +1,7 @@
-import axios from "axios";
 import customAxios from "../api/customAxios";
 
 const LandingPage = ({ currentUser }) => {
-  console.log("props", currentUser);
-
-  return currentUser ? <h1>You are signed in!</h1> : <h1>You need to sign in...</h1>;
+  return currentUser ? <h1>You are signed in {currentUser.email}!</h1> : <h1>You need to sign in...</h1>;
 };
 
 // custom NextJs API to do some work while NextJs is building up the HTML to render back
