@@ -20,7 +20,8 @@ const useRequest = (url, method, body = null, onSuccess) => {
 
       // make request
       const response = await axios[method](url, body);
-      // if successful, check callback exists
+
+      // if success callback exists, then call it
       if (onSuccess) {
         onSuccess(response.data);
       }
