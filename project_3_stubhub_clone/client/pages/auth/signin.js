@@ -3,12 +3,13 @@ import Router from "next/router";
 
 import useRequest from "../../hooks/useRequest";
 
-const Signup = () => {
+const Signin = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
   const successRedirect = () => Router.push("/");
-  const [makeRequest, errorsJsx] = useRequest("/api/users/signup", "post", { email, password }, successRedirect);
+
+  const [makeRequest, errorsJsx] = useRequest("/api/users/signin", "post", { email, password }, successRedirect);
 
   const submitForm = async event => {
     event.preventDefault();
@@ -18,7 +19,7 @@ const Signup = () => {
   return (
     <>
       <form onSubmit={submitForm}>
-        <h1>Sign up</h1>
+        <h1>Sign in</h1>
 
         <div className="form-group">
           <label>Email Address</label>
@@ -34,10 +35,10 @@ const Signup = () => {
           />
         </div>
         {errorsJsx}
-        <button className="btn btn-primary">Sign up</button>
+        <button className="btn btn-primary">Sign in</button>
       </form>
     </>
   );
 };
 
-export default Signup;
+export default Signin;
