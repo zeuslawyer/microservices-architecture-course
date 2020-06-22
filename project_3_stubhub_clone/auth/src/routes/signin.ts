@@ -2,9 +2,8 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
-import { handleRequestValidation } from "../middleware/handleRequestValidation";
+import { handleRequestValidation, BadRequestError } from "@zeuscoder-public/microservices-course-shared";
 import { User } from "../Models/User";
-import { BadRequestError } from "../Errors/BadRequestError";
 import { PasswordManager } from "../services/PasswordManager";
 
 const router = express.Router();

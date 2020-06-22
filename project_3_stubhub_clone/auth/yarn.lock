@@ -769,6 +769,19 @@
   dependencies:
     "@types/yargs-parser" "*"
 
+"@zeuscoder-public/microservices-course-shared@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@zeuscoder-public/microservices-course-shared/-/microservices-course-shared-1.0.5.tgz#05c5700a87a3a3ab0c159ace27c88d0eff9af5fd"
+  integrity sha512-JOg11qTzxJQg/aV+PKxhbxQDaN0OEw/zsIvqa3DtjOOPBth5U4nkS3ZmiDnbh6hC2YvA1L1ZNNv/QTB0t1DVLA==
+  dependencies:
+    "@types/cookie-session" "^2.0.40"
+    "@types/express" "^4.17.6"
+    "@types/jsonwebtoken" "^8.5.0"
+    cookie-session "^1.4.0"
+    express "^4.17.1"
+    express-validator "^6.6.0"
+    jsonwebtoken "^8.5.1"
+
 abab@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.3.tgz#623e2075e02eb2d3f2475e49f99c91846467907a"
@@ -1760,6 +1773,14 @@ express-validator@^6.5.0:
   dependencies:
     lodash "^4.17.15"
     validator "^13.0.0"
+
+express-validator@^6.6.0:
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/express-validator/-/express-validator-6.6.0.tgz#46b8327926e9b1752f9823ee0631e534b6ac41e8"
+  integrity sha512-xcephfzFbUssJph/nOSKIdx+I+8GRz5by/8rOIKL6gJikKKKJjnwYH5TG1nIDB6kEalUtZMbOFuSNOp/HHY84Q==
+  dependencies:
+    lodash "^4.17.15"
+    validator "^13.1.1"
 
 express@^4.17.1:
   version "4.17.1"
@@ -4811,6 +4832,11 @@ validator@^13.0.0:
   version "13.0.0"
   resolved "https://registry.yarnpkg.com/validator/-/validator-13.0.0.tgz#0fb6c6bb5218ea23d368a8347e6d0f5a70e3bcab"
   integrity sha512-anYx5fURbgF04lQV18nEQWZ/3wHGnxiKdG4aL8J+jEDsm98n/sU/bey+tYk6tnGJzm7ioh5FoqrAiQ6m03IgaA==
+
+validator@^13.1.1:
+  version "13.1.1"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-13.1.1.tgz#f8811368473d2173a9d8611572b58c5783f223bf"
+  integrity sha512-8GfPiwzzRoWTg7OV1zva1KvrSemuMkv07MA9TTl91hfhe+wKrsrgVN4H2QSFd/U/FhiU3iWPYVgvbsOGwhyFWw==
 
 vary@~1.1.2:
   version "1.1.2"

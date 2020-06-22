@@ -8,9 +8,9 @@ import { currentUserRouter } from "./routes/currentUser";
 import { signinRouter } from "./routes/signin";
 import { signoutRouter } from "./routes/signout";
 import { signupRouter } from "./routes/signup";
-import { errorHandler } from "./middleware/errorHandler";
+import { errorHandler, NotFoundError } from "@zeuscoder-public/microservices-course-shared";
 
-export const server = express();
+const server = express();
 
 server.set("trust proxy", true); // trust incoming nginx proxy requests
 server.use(bodyParser.json());
@@ -25,8 +25,11 @@ server.use(currentUserRouter);
 server.use(signinRouter);
 server.use(signupRouter);
 server.use(signoutRouter);
+
+server.all("*", async (req, res) => {
+  throw new NotFoundError();
+});
+
 server.use(errorHandler); // goes last
 
-server.get("/test-path", (req, res) => {
-  res.json({});
-});
+export { server };

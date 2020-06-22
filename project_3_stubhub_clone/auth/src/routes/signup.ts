@@ -3,8 +3,7 @@ import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 
 import { User } from "../Models/User";
-import { BadRequestError } from "../Errors/BadRequestError";
-import { handleRequestValidation } from "../middleware/handleRequestValidation";
+import { BadRequestError, handleRequestValidation } from "@zeuscoder-public/microservices-course-shared";
 
 const router = express.Router();
 

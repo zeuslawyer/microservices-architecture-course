@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 
-import { setCurrentUser } from "../middleware/setCurrentUser";
+import { setCurrentUser } from "@zeuscoder-public/microservices-course-shared";
 
 const router = express.Router();
 
