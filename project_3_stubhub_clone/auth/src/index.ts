@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { server } from "./server";
-import { DatabaseConnectionError } from "./Errors/DatabaseConnectionError";
+import { DatabaseConnectionError } from "@zeuscoder-public/microservices-course-shared";
 
 const PORT = 3010;
 

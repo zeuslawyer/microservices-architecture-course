@@ -22,15 +22,15 @@
     "express-async-errors": "^3.1.1",
     "express-validator": "^6.5.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.18",
+    "mongoose": "^5.9.7",
     "ts-node-dev": "^1.0.0-pre.44",
-    "typescript": "^3.9.3"
+    "@types/mongoose": "^5.7.8",
+    "typescript": "^3.8.3"
   },
   "devDependencies": {
     "@types/cookie-session": "^2.0.40",
     "@types/jest": "^25.2.3",
     "@types/jsonwebtoken": "^8.5.0",
-    "@types/mongoose": "^5.7.22",
     "@types/supertest": "^2.0.9",
     "jest": "^26.0.1",
     "mongodb-memory-server": "^6.6.1",
