@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { server } from "./server";
 import { DatabaseConnectionError } from "@zeuscoder-public/microservices-course-shared";
 
-const PORT = 3010;
+const PORT = 3020;
 
 const init = async () => {
   // check env vars

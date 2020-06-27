@@ -36,5 +36,5 @@ spec:
   ports:
     - name: tickets
       protocol: TCP
-      port: 3010
-      targetPort: 3010
+      port: 3020
+      targetPort: 3020
