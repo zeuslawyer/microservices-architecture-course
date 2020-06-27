@@ -6,8 +6,8 @@ const PORT = 3010;
 
 const init = async () => {
   // check env vars
-  if (!process.env.JWT_KEY) throw new Error(" MISSING ENV VAR JWT_KEY ");
-  if (!process.env.MONGO_URI) throw new Error(" MISSING ENV VAR MONGO_URI in AUTH ");
+  if (!process.env.JWT_KEY) throw new Error(" MISSING ENV VAR JWT_KEY "); // defined in the -depl yaml
+  if (!process.env.MONGO_URI) throw new Error(" MISSING ENV VAR MONGO_URI in TICKETS"); // defined in the -depl yaml
 
   // mongoose
   try {
@@ -22,7 +22,7 @@ const init = async () => {
 
   // server
   server.listen(PORT, () => {
-    console.info("Auth Service Listening On Port", PORT);
+    console.info("Tickets Service Listening On Port", PORT);
   });
 };
 

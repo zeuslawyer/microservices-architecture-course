@@ -16,6 +16,8 @@ spec:
         - name: auth
           image: zeuslawyer/project3-auth
           env:
+            - name: MONGO_URI
+              value: "mongodb://auth-mongo-clusterip:27017/auth"
             - name: JWT_KEY # name of this env
               valueFrom:
                 secretKeyRef:
