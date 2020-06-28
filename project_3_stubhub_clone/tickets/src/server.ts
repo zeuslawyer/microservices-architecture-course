@@ -6,6 +6,7 @@ import cookieSession from "cookie-session";
 
 import { errorHandler, NotFoundError, setCurrentUser } from "@zeuscoder-public/microservices-course-shared";
 import { createTicketRouter } from "./routes/newTicket";
+import { showTicketRouter } from "./routes/show";
 
 const server = express();
 
@@ -24,6 +25,7 @@ server.use(setCurrentUser);
 
 // routes
 server.use(createTicketRouter);
+server.use(showTicketRouter);
 
 server.all("*", async (req, res) => {
   throw new NotFoundError();

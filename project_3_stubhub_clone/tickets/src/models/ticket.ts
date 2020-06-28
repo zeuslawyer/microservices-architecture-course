@@ -8,7 +8,7 @@ interface TicketAttrs {
 
 // interface that describes the properties of each Ticket instance (the mongo document)
 // which includes the additional props that mongo will add
-interface TicketDoc extends mongoose.Document {
+export interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
   userId: string;
