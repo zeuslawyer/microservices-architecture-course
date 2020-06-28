@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken";
 // set up by creating the in mem db and mongoose connection
 let mongo: any;
 
-jest.setTimeout(30000);
 declare global {
   namespace NodeJS {
     interface Global {

@@ -1,0 +1,57 @@
+import request from "supertest";
+import { server } from "../../server";
+
+it("has a valid route handler at /api/tickets for post requests ", async () => {
+  const response = await request(server).post("/api/tickets").send({});
+
+  expect(response.status).not.toEqual(404);
+});
+
+it("checks user is authenticated before handling request ", async () => {
+  return await request(server).post("/api/tickets").send({}).expect(401); // check common/src/Errors/NoAuth
+});
+
+it("Returns status other than 401 if user signed in ", async () => {
+  const response = await request(server).post("/api/tickets").set("Cookie", global.signin()).send({});
+
+  expect(response.status).not.toEqual(401); // check common/src/Errors/NoAuth for status code
+});
+
+it("returns error if invalid title provided ", async () => {
+  const responseEmptyTitle = await request(server).post("/api/tickets").set("Cookie", global.signin()).send({
+    title: "",
+    price: 10
+  });
+
+  const responseNoTitle = await request(server).post("/api/tickets").set("Cookie", global.signin()).send({
+    price: 10
+  });
+  // common/RequestValidationError - 400
+  expect(responseEmptyTitle.status).toEqual(400);
+  expect(responseNoTitle.status).toEqual(400);
+});
+
+it("returns error if invalid price provided", async () => {
+  const responseInvalidPrice = await request(server).post("/api/tickets").set("Cookie", global.signin()).send({
+    title: "This is a bad movie",
+    price: -10
+  });
+  const responseNoPrice = await request(server).post("/api/tickets").set("Cookie", global.signin()).send({
+    title: "This is a bad movie"
+  });
+
+  // common/RequestValidationError - 400
+  expect(responseInvalidPrice.status).toEqual(400);
+  expect(responseNoPrice.status).toEqual(400);
+});
+
+it("creates a ticket with valid inputs ", async () => {
+  return await request(server)
+    .post("/api/tickets")
+    .set("Cookie", global.signin())
+    .send({
+      title: "This is a good movie",
+      price: 20.5
+    })
+    .expect(201);
+});

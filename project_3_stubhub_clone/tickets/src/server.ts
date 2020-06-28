@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import cookieSession from "cookie-session";
 
 import { errorHandler, NotFoundError, setCurrentUser } from "@zeuscoder-public/microservices-course-shared";
-import { createTicketRouter } from "./routes/new";
+import { createTicketRouter } from "./routes/newTicket";
 
 const server = express();
 

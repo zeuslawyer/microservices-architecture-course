@@ -1,4 +1,4 @@
-import mongoose, { MongooseDocument } from "mongoose";
+import mongoose from "mongoose";
 import { PasswordManager } from "../services/PasswordManager";
 
 export interface UserAttrs {
