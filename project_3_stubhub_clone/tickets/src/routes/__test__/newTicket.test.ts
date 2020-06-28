@@ -1,5 +1,6 @@
 import request from "supertest";
 import { server } from "../../server";
+import { Ticket } from "../../models/ticket";
 
 it("has a valid route handler at /api/tickets for post requests ", async () => {
   const response = await request(server).post("/api/tickets").send({});
@@ -46,7 +47,12 @@ it("returns error if invalid price provided", async () => {
 });
 
 it("creates a ticket with valid inputs ", async () => {
-  return await request(server)
+  let tickets = await Ticket.find({}); // find all
+  const initialLength = 0;
+
+  expect(tickets.length).toEqual(initialLength); // in setup.js, after every test we empty all collections
+
+  await request(server)
     .post("/api/tickets")
     .set("Cookie", global.signin())
     .send({
@@ -54,4 +60,8 @@ it("creates a ticket with valid inputs ", async () => {
       price: 20.5
     })
     .expect(201);
+
+  tickets = await Ticket.find({}); // find all
+  expect(tickets.length).toEqual(initialLength + 1);
+  expect(tickets[0].price).toEqual(20.5);
 });
