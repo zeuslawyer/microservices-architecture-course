@@ -14,9 +14,9 @@ A course designed to understand:
 - Jest for testing
 - Docker, Kubernetes, Skaffold
 - Google Cloud Platform (nitrous developments account) - Kubernetes, Google Cloud Build, Google Cloud VM,
-- Redis
 - custom NPM module/library called `common`
 - NATS streaming event-bus
+- Redis
 
 ## `FOLDER STRUCTURE`
 
