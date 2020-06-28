@@ -6,22 +6,21 @@ export interface UserAttrs {
   password: string;
 }
 
-// interface that describes the properties of the User Schema ( the model )
-// i.e. the typescript description of the mongo Schema for a User model
-// this includes the custom "build" method that we will add on to the Mongo User Schema
-interface UserModel extends mongoose.Model<UserInstance> {
-  build(userAttrs: UserAttrs): UserInstance;
-}
-
 // interface that describes the properties of each User instance (the mongo document)
 // which includes the additional props that mongo will add
-interface UserInstance extends mongoose.Document {
+interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
 }
 
-// options to remove certain fields from the returned mongo doc
-const schemaopts: mongoose.SchemaOptions = {
+// interface that describes the properties of the User Schema ( the model )
+// this includes the custom "build" method that we will add on to the Mongo User Schema
+interface UserModel extends mongoose.Model<UserDoc> {
+  build(userAttrs: UserAttrs): UserDoc;
+}
+
+// options to remove certain fields from the returned mongo doc when it is built
+const schemaOpts: mongoose.SchemaOptions = {
   toJSON: {
     transform(doc, returned) {
       returned.id = returned._id;
@@ -35,7 +34,7 @@ const schemaopts: mongoose.SchemaOptions = {
 const userSchema = new mongoose.Schema(
   {
     email: {
-      type: String, // not typescript. Mongoose string
+      type: String, // not typescript. Mongoose string (JS)
       required: true
     },
     password: {
@@ -43,7 +42,7 @@ const userSchema = new mongoose.Schema(
       required: true
     }
   },
-  schemaopts
+  schemaOpts
 );
 
 // pre save hook/middleware to hash password whenever mongo .save() api is called
@@ -59,8 +58,9 @@ userSchema.pre("save", async function (done) {
 });
 
 // custom method called build to add typing to mongo api
-userSchema.statics.build = (user: UserAttrs) => {
-  return new User(user);
+userSchema.statics.build = (attrs: UserAttrs) => {
+  return new User(attrs);
 };
 
+// the User model
 export const User = mongoose.model<any, UserModel>("User", userSchema);
