@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nats-depl # name of this deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nats # name of the container (pod) this deployment relates to
+  template: # the pod template
+    metadata:
+      labels:
+        app: nats # name of the container this deployment relates to
+    spec: # the pod specs
+      containers: # array of containers inside a pod
+        - name: nats
+          image: nats-streaming:0.17.0 # https://hub.docker.com/_/nats-streaming
+          args: # command line options + value pairs.  taken from nats-streaming
+            [
+              "-p",
+              "4222",
+              "-m",
+              "8222",
+              "-hbi",
+              "5s",
+              "-hbt",
+              "5s",
+              "-hbf",
+              "2",
+              "-SD",
+              "-cid",
+              "project_3_stubhub_clone",
+            ]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nats-clusterip
+spec:
+  type: ClusterIP # default service object type.  can be left out for Cluster IP
+  selector:
+    app: nats # reference to the deployment pod and containers to attach the kube service object to
+  ports:
+    - name: nats-client
+      protocol: TCP
+      port: 4222
+      targetPort: 4222
+    - name: nats-monitoring
+      protocol: TCP
+      port: 8222
+      targetPort: 8222
