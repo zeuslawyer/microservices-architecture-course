@@ -4,6 +4,19 @@ import { NotFoundError, BadRequestError } from "@zeuscoder-public/microservices-
 
 const router = express.Router();
 
+/**
+ * get all tickets
+ */
+router.get("/api/tickets", async (req: Request, res: Response) => {
+  const all = await Ticket.find({});
+  if (!all) throw new NotFoundError();
+
+  res.status(200).send(all);
+});
+
+/**
+ * Get ticket by id
+ */
 router.get("/api/tickets/:id", async (req: Request, res: Response) => {
   const ticket = await Ticket.findById(req.params.id);
 
