@@ -1,6 +1,5 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
-import { server } from "../server";
 import jwt from "jsonwebtoken";
 
 // set up by creating the in mem db and mongoose connection
@@ -19,7 +18,7 @@ global.signin = () => {
   // Build a mock JWT payload
   const payload = {
     email: "test@test-tickets.com",
-    id: "random-2353453terg"
+    id: mongoose.Types.ObjectId().toHexString() // make fake uid
   };
 
   // create the JWT with the .sign() function

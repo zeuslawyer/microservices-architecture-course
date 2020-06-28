@@ -15,7 +15,7 @@ async function createMockTicket() {
 }
 
 it("returns 404 if ticket not found ", async () => {
-  const mockId = mongoose.Types.ObjectId().toHexString(); // generate a valid mongo mock di
+  const mockId = mongoose.Types.ObjectId().toHexString(); // generate a valid mongo mock id
 
   const resp = await request(server).get(`/api/tickets/${mockId}`).send();
   expect(resp.status).toEqual(404);
