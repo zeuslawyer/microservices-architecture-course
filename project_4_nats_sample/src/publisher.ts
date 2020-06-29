@@ -4,7 +4,7 @@ import { randomBytes } from "crypto";
 console.clear();
 const clientId = randomBytes(4).toString("hex");
 // docs call client stan (!?)
-const client = nats.connect("project_3_stubhub_clone", clientId, {
+const client = nats.connect("project_3_stubhub_clone", "zubin", {
   url: "http://zubinmac.local:4222"
 });
 

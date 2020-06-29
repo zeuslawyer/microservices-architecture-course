@@ -10,19 +10,33 @@ const client = nats.connect("project_3_stubhub_clone", clientId, {
 
 client.on("connect", () => {
   console.log("*** listener now connected on NATS ***");
+
+  // close event handler
+  client.on("close", () => {
+    console.log("*** closting NATS connection....***");
+    process.exit();
+  });
   // set options, manual acknowledgement
   const options = client.subscriptionOptions().setManualAckMode(true);
 
   // create topic subscription, add queue group, add options
   const subscription = client.subscribe("ticket:created", "orders-service-qGroup", options);
 
-  // add listener
+  // add subscription listener
   // documentation for Message type best accessed from type def file
   subscription.on("message", (msg: Message) => {
     console.log(`Message # ${msg.getSequence()} received by listener: `, msg.getData());
 
     // do something
-
-    msg.ack(); //acknowledge
+    msg.ack(); // acknowledge
   });
+});
+
+process.on("SIGINT", () => {
+  "interrupted.....";
+  client.close();
+});
+process.on("SIGTERM", () => {
+  "terminated...";
+  client.close();
 });

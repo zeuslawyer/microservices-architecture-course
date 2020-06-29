@@ -21,11 +21,11 @@ spec:
               "4222",
               "-m",
               "8222",
-              "-hbi",
+              "-hbi",  # heartbeat - interval
               "5s",
-              "-hbt",
+              "-hbt", # heartbeat - time to respond
               "5s",
-              "-hbf",
+              "-hbf",  # heartbeat - failure count before assumed dead
               "2",
               "-SD",
               "-cid",
