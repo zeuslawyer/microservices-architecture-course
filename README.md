@@ -150,4 +150,4 @@ Each service in this app gets its own mongo db instance to avoid sync communicat
 
 sample mini project to play with nats-streaming and the nats streaming node client. Does not use Kube initially. but does access services inside of Kube. Specifically we need to access the `nats-depl` service.
 
-We do this ** strictly in development mode ** by running a kube port forward command: `kubectl port-forward <deployment name> port1 : port 2` where port 1 is the local machine port, and port 2 is target port on the pod.
+We do this ** strictly in development mode ** by running a kube port forward command: `kubectl port-forward <deployment name> fromport1 : toport 2` where port 1 is the local machine port, and port 2 is target port on the pod.
