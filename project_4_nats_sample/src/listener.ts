@@ -17,7 +17,11 @@ client.on("connect", () => {
     process.exit();
   });
   // set options, manual acknowledgement
-  const options = client.subscriptionOptions().setManualAckMode(true);
+  const options = client
+    .subscriptionOptions()
+    .setManualAckMode(true)
+    .setDeliverAllAvailable() // fetch all unprocessed events
+    .setDurableName("mock-listener-01"); // create a durable subscription
 
   // create topic subscription, add queue group, add options
   const subscription = client.subscribe("ticket:created", "orders-service-qGroup", options);

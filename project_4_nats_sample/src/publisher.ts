@@ -1,10 +1,9 @@
 import nats from "node-nats-streaming";
 import { randomBytes } from "crypto";
 
-console.clear();
 const clientId = randomBytes(4).toString("hex");
 // docs call client stan (!?)
-const client = nats.connect("project_3_stubhub_clone", "zubin", {
+const client = nats.connect("project_3_stubhub_clone", clientId, {
   url: "http://zubinmac.local:4222"
 });
 
