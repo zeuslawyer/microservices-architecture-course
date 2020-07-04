@@ -28,8 +28,8 @@ spec:
               "-hbf",  # heartbeat - failure count before assumed dead
               "2",
               "-SD",
-              "-cid",
-              "project_3_stubhub_clone",
+              "-cid", # NATS cluster id flag
+              "tickets", # NATS cluster id 
             ]
 ---
 apiVersion: v1

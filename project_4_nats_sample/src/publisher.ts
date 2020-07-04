@@ -1,6 +1,6 @@
 import nats from "node-nats-streaming";
 import { randomBytes } from "crypto";
-import { SubjectsEnum } from "./events/Subjects";
+
 import { TicketCreatedPublisher } from "./events/TicketCreatedPublisher";
 
 const clientId = randomBytes(4).toString("hex");
