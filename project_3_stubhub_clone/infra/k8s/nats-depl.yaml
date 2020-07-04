@@ -21,15 +21,15 @@ spec:
               "4222",
               "-m",
               "8222",
-              "-hbi",  # heartbeat - interval
+              "-hbi", # heartbeat - interval
               "5s",
               "-hbt", # heartbeat - time to respond
               "5s",
-              "-hbf",  # heartbeat - failure count before assumed dead
+              "-hbf", # heartbeat - failure count before assumed dead
               "2",
               "-SD",
               "-cid", # NATS cluster id flag
-              "tickets", # NATS cluster id 
+              "tickets", # NATS cluster id
             ]
 ---
 apiVersion: v1

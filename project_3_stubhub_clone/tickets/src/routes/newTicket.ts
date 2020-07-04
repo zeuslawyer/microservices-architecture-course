@@ -4,6 +4,7 @@ import { requireAuth, handleRequestValidation } from "@zeuscoder-public/microser
 import { Ticket } from "../models/ticket";
 
 import { TicketCreatedPublisher } from "../events/publishers/ticketCreatedPublisher";
+import { natsWrapper } from "../nats-wrapper";
 
 const validate = [
   body("title").not().isEmpty().withMessage("Please enter a title."), // not provided and empty string
@@ -21,12 +22,12 @@ router.post("/api/tickets", requireAuth, validate, handleRequestValidation, asyn
   ticket.save();
 
   // emit event
-  // const publisher = new TicketCreatedPublisher(stan).publish({
-  //   id: ticket.id,
-  //   userId: ticket.userId,
-  //   price: ticket.price,
-  //   title: ticket.title
-  // });
+  const publisher = new TicketCreatedPublisher(natsWrapper.client).publish({
+    id: ticket.id,
+    userId: ticket.userId,
+    price: ticket.price,
+    title: ticket.title
+  });
   res.status(201).send(ticket);
 });
 

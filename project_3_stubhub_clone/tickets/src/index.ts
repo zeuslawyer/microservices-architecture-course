@@ -13,18 +13,28 @@ const init = async () => {
   if (!process.env.MONGO_URI) throw new Error(" MISSING ENV VAR MONGO_URI in TICKETS"); // defined in the -depl yaml
 
   try {
+    // NATS server
+    const clientId = randomBytes(4).toString("hex");
+    const clusterId = "tickets"; // taken from the nats-depl config -cid
+    const url = "http://nats-clusterip:4222"; // taken from depl service name
+
+    natsWrapper.connect(clusterId, clientId, url);
+
+    // handle process exits
+    process.on("SIGINT", () => natsWrapper.client.close());
+    process.on("SIGTERM", () => natsWrapper.client.close());
+
+    natsWrapper.client.on("close", () => {
+      console.log("*** closting NATS connection....***");
+      process.exit();
+    });
+
     // mongoose
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true
     });
-
-    // NATS server
-    const clientId = randomBytes(4).toString("hex");
-    const clusterId = "tickets"; // taken from the nats-depl config -cid
-    const url = "http://nats-clusterip:4222"; // taken from depl service name
-    natsWrapper.connect(clusterId, clientId, url);
   } catch (error) {
     throw new DatabaseConnectionError();
   }
