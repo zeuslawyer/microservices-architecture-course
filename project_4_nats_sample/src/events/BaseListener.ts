@@ -1,9 +1,14 @@
 import { Message, Stan } from "node-nats-streaming";
+import { SubjectsEnum } from "./Subjects";
 
-export abstract class Listener {
-  abstract subject: string;
+export interface EventData {
+  subject: SubjectsEnum;
+  data: any;
+}
+export abstract class Listener<T extends EventData> {
+  abstract subject: T["subject"];
   abstract qGroupName: string;
-  abstract handleMessage(messageData: any, msg: Message): void;
+  abstract handleMessage(messageData: T["data"], msg: Message): void;
 
   private client: Stan;
   protected ackWait = 5 * 1000; // protected so subclasses can access and modify

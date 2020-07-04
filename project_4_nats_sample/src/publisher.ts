@@ -1,7 +1,6 @@
 import nats from "node-nats-streaming";
 import { randomBytes } from "crypto";
-
-export const CHANNEL = "ticket:created";
+import { SubjectsEnum } from "./events/Subjects";
 
 const clientId = randomBytes(4).toString("hex");
 // docs call client stan (!?)
@@ -20,7 +19,7 @@ stan.on("connect", () => {
     price: 20
   };
 
-  stan.publish(CHANNEL, JSON.stringify(message), () => {
+  stan.publish(SubjectsEnum.TicketCreated, JSON.stringify(message), () => {
     console.log("event published...");
   }); // stringify as NATS only accepts strings
 });
