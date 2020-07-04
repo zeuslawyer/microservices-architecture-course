@@ -15,11 +15,16 @@ export abstract class Publisher<T extends EventData> {
     this.client = client;
   }
 
-  publish(data: T["data"]) {
+  async publish(data: T["data"]): Promise<void> {
     data = JSON.stringify(data); // stringify for nats
 
-    this.client.publish(this.subject, data, () => {
-      console.log(`*** data published in channel ${this.subject}***`);
+    return new Promise((res, rej) => {
+      this.client.publish(this.subject, data, err => {
+        if (err) return rej(err);
+
+        console.log(`*** data published in channel ${this.subject}***`);
+        res();
+      });
     });
   }
 }

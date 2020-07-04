@@ -12,8 +12,8 @@ const stan = nats.connect("project_3_stubhub_clone", clientId, {
 console.clear();
 
 // no async-await. take event driven approach, so listen for event
-stan.on("connect", () => {
-  new TicketCreatedPublisher(stan).publish({
+stan.on("connect", async () => {
+  await new TicketCreatedPublisher(stan).publish({
     id: "234534",
     title: "mock concert ticket",
     price: 20
