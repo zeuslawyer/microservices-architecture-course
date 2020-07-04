@@ -1,7 +1,7 @@
 import { Message, Stan } from "node-nats-streaming";
 import { SubjectsEnum } from "./Subjects";
 
-export interface EventData {
+interface EventData {
   subject: SubjectsEnum;
   data: any;
 }

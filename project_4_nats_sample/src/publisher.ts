@@ -1,6 +1,7 @@
 import nats from "node-nats-streaming";
 import { randomBytes } from "crypto";
 import { SubjectsEnum } from "./events/Subjects";
+import { TicketCreatedPublisher } from "./events/TicketCreatedPublisher";
 
 const clientId = randomBytes(4).toString("hex");
 // docs call client stan (!?)
@@ -12,14 +13,9 @@ console.clear();
 
 // no async-await. take event driven approach, so listen for event
 stan.on("connect", () => {
-  console.log(" *** publisher connected to NATS ***");
-  const message = {
+  new TicketCreatedPublisher(stan).publish({
     id: "234534",
     title: "mock concert ticket",
     price: 20
-  };
-
-  stan.publish(SubjectsEnum.TicketCreated, JSON.stringify(message), () => {
-    console.log("event published...");
-  }); // stringify as NATS only accepts strings
+  });
 });
