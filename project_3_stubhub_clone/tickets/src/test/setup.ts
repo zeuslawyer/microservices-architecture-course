@@ -52,6 +52,8 @@ beforeAll(async () => {
 
 // flush out the db before each test
 beforeEach(async () => {
+  jest.clearAllMocks(); // reset state in mock functions
+
   const collections = await mongoose.connection.db.collections();
   for (let coll of collections) {
     await coll.deleteMany({}, () => {}); // confirm that coll deleted

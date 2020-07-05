@@ -1,6 +1,7 @@
 import request from "supertest";
 import { server } from "../../server";
 import { Ticket } from "../../models/ticket";
+import { natsWrapper } from "../../nats-wrapper";
 
 it("has a valid route handler at /api/tickets for post requests ", async () => {
   const response = await request(server).post("/api/tickets").send({});
@@ -64,4 +65,14 @@ it("creates a ticket with valid inputs ", async () => {
   tickets = await Ticket.find({}); // find all
   expect(tickets.length).toEqual(initialLength + 1);
   expect(tickets[0].price).toEqual(20.5);
+});
+
+it("Publishes an event", async () => {
+  await request(server).post("/api/tickets").set("Cookie", global.signin()).send({
+    title: "Publishing an event",
+    price: 25.5
+  });
+
+  // test event published
+  expect(natsWrapper.client.publish).toHaveBeenCalled(); // natsWrapper here will be the one in __mock__
 });

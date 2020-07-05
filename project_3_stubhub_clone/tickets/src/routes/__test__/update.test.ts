@@ -2,6 +2,7 @@ import request from "supertest";
 import mongoose from "mongoose";
 
 import { server } from "../../server";
+import { natsWrapper } from "../../nats-wrapper";
 
 it("shows 404 if id does not exist ", async () => {
   const mockId = mongoose.Types.ObjectId().toHexString(); // generate a valid mongo mock id
@@ -81,4 +82,20 @@ it("updates ticket if valid inputs", async () => {
 
   expect(updated.body.title).toEqual("some new title");
   expect(updated.body.price).toEqual(100);
+});
+
+it("publishes event on update", async () => {
+  // create ticket
+  const cookie = global.signin();
+  const response = await request(server)
+    .post("/api/tickets")
+    .set("Cookie", cookie)
+    .send({ title: "Publish on Ticket Update", price: 10.75 });
+
+  await request(server).put(`/api/tickets/${response.body.id}`).set("Cookie", cookie).send({
+    title: "some new title on Ticket Update",
+    price: 23.5
+  });
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled(); // natsWrapper here will be the one in __mock__
 });
