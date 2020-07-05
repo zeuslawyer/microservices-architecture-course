@@ -4,7 +4,7 @@ import { TicketCreatedListener } from "./events/TicketCreatedListener";
 import { TicketUpdatedListener } from "./events/TicketUpdatedListener";
 
 const clientId = randomBytes(4).toString("hex");
-const stan = nats.connect("tickets", clientId, {
+const stan = nats.connect("tickets-natscluster", clientId, {
   url: "http://localhost:4222"
 });
 
@@ -15,7 +15,7 @@ stan.on("connect", () => {
 
   // close event handler
   stan.on("close", () => {
-    console.log("*** closting NATS connection....***");
+    console.log("*** ENDING NATS connection....***");
     process.exit();
   });
 

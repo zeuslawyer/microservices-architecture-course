@@ -5,7 +5,7 @@ import { TicketCreatedPublisher } from "./events/TicketCreatedPublisher";
 
 const clientId = randomBytes(4).toString("hex");
 // docs call client stan (!?)
-const stan = nats.connect("tickets", clientId, {
+const stan = nats.connect("tickets-natscluster", clientId, {
   url: "http://zubinmac.local:4222"
 });
 

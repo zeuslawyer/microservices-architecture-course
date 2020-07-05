@@ -24,12 +24,18 @@ const init = async () => {
     natsWrapper.connect(clusterId, clientId, url);
 
     // handle process exits
-    process.on("SIGINT", () => natsWrapper.client.close());
-    process.on("SIGTERM", () => natsWrapper.client.close());
-
     natsWrapper.client.on("close", () => {
-      console.log("*** closting NATS connection....***");
+      console.log("*** closing NATS connection....***");
       process.exit();
+    });
+
+    process.on("SIGINT", () => {
+      console.log(" ##### SIGINT #### ");
+      natsWrapper.client.close();
+    });
+    process.on("SIGTERM", () => {
+      console.log(" ##### SIGTERM #### ");
+      natsWrapper.client.close();
     });
 
     // mongoose

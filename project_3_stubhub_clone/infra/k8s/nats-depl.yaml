@@ -29,7 +29,7 @@ spec:
               "2",
               "-SD",
               "-cid", # NATS cluster id flag
-              "tickets", # NATS cluster id
+              "tickets-natscluster", # NATS cluster id- same as the tickets-depl ENV VAR
             ]
 ---
 apiVersion: v1
