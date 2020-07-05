@@ -7,6 +7,8 @@ import {
   NoAuthError
 } from "@zeuscoder-public/microservices-course-shared";
 import { Ticket } from "../models/ticket";
+import { natsWrapper } from "../nats-wrapper";
+import { TicketUpdatedPublisher } from "../events/publishers/ticketUpdatedPublisher";
 
 const router = express.Router();
 
@@ -29,9 +31,17 @@ router.put("/api/tickets/:id", requireAuth, validate, handleRequestValidation, a
 
   // update db
   // calling .save() in mongoose also updates all references to the ticket object, so doesnt need to be refetched
-  await ticket.save();
+  const updated = await ticket.save();
 
-  res.sendStatus(200);
+  // emit event
+  new TicketUpdatedPublisher(natsWrapper.client).publish({
+    id: updated.id,
+    userId: updated.userId,
+    price: updated.price,
+    title: updated.title
+  });
+
+  res.status(200).send(updated);
 });
 
 export { router as UpdateTicketRouter };

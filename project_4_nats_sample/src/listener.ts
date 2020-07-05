@@ -1,9 +1,10 @@
 import nats from "node-nats-streaming";
 import { randomBytes } from "crypto";
 import { TicketCreatedListener } from "./events/TicketCreatedListener";
+import { TicketUpdatedListener } from "./events/TicketUpdatedListener";
 
 const clientId = randomBytes(4).toString("hex");
-const stan = nats.connect("project_3_stubhub_clone", clientId, {
+const stan = nats.connect("tickets", clientId, {
   url: "http://localhost:4222"
 });
 
@@ -20,6 +21,7 @@ stan.on("connect", () => {
 
   // set up listener
   new TicketCreatedListener(stan).listen();
+  new TicketUpdatedListener(stan).listen();
 });
 
 process.on("SIGINT", () => {

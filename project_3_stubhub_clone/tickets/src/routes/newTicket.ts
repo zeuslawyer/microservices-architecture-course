@@ -22,7 +22,7 @@ router.post("/api/tickets", requireAuth, validate, handleRequestValidation, asyn
   ticket.save();
 
   // emit event
-  const publisher = new TicketCreatedPublisher(natsWrapper.client).publish({
+  new TicketCreatedPublisher(natsWrapper.client).publish({
     id: ticket.id,
     userId: ticket.userId,
     price: ticket.price,
