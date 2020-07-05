@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken";
 // set up by creating the in mem db and mongoose connection
 let mongo: any;
 
+jest.mock("../nats-wrapper.ts"); // path to real file that needs to be mocked
+
 declare global {
   namespace NodeJS {
     interface Global {
