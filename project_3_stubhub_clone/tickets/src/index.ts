@@ -5,7 +5,7 @@ import { randomBytes } from "crypto";
 import { natsWrapper } from "./nats-wrapper";
 import { server } from "./server";
 
-const PORT = 3020;
+const PORT = 3000;
 
 const init = async () => {
   // check env vars
