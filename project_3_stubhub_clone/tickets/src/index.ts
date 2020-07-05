@@ -11,12 +11,15 @@ const init = async () => {
   // check env vars
   if (!process.env.JWT_KEY) throw new Error(" MISSING ENV VAR JWT_KEY "); // defined in the -depl yaml
   if (!process.env.MONGO_URI) throw new Error(" MISSING ENV VAR MONGO_URI in TICKETS"); // defined in the -depl yaml
+  if (!process.env.NATS_CLUSTER_ID) throw new Error(" MISSING ENV VAR NATS_CLUESTER_ID in TICKETS"); // defined in the -depl yaml
+  if (!process.env.NATS_CLIENT_ID) throw new Error(" MISSING ENV VAR NATS_CLIENT_ID in TICKETS"); // defined in the -depl yaml
+  if (!process.env.NATS_URL) throw new Error(" MISSING ENV VAR NATS_URL in TICKETS"); // defined in the -depl yaml
 
   try {
     // NATS server
-    const clientId = randomBytes(4).toString("hex");
-    const clusterId = "tickets"; // taken from the nats-depl config -cid
-    const url = "http://nats-clusterip:4222"; // taken from depl service name
+    const clientId = process.env.NATS_CLIENT_ID; // unique for every nats client. Set in tickets-depl
+    const clusterId = process.env.NATS_CLUSTER_ID; // taken from the nats-depl config -cid
+    const url = process.env.NATS_URL;
 
     natsWrapper.connect(clusterId, clientId, url);
 

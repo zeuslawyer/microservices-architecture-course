@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nats-depl # name of this deployment
+  name: nats-depl # prefix name of this deployment
 spec:
   replicas: 1
   selector:
