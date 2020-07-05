@@ -33,8 +33,8 @@ router.put("/api/tickets/:id", requireAuth, validate, handleRequestValidation, a
   // calling .save() in mongoose also updates all references to the ticket object, so doesnt need to be refetched
   const updated = await ticket.save();
 
-  // emit event
-  new TicketUpdatedPublisher(natsWrapper.client).publish({
+  // emit event - await
+  await new TicketUpdatedPublisher(natsWrapper.client).publish({
     id: updated.id,
     userId: updated.userId,
     price: updated.price,

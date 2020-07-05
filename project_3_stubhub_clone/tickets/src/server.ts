@@ -28,11 +28,11 @@ server.use(setCurrentUser);
 server.use(createTicketRouter);
 server.use(showTicketRouter);
 server.use(UpdateTicketRouter);
-
 server.all("*", async (req, res) => {
+  // catch all route handler
   throw new NotFoundError();
 });
 
-server.use(errorHandler); // goes last
+server.use(errorHandler); // generic error handler goes last
 
 export { server };

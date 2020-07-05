@@ -21,13 +21,14 @@ router.post("/api/tickets", requireAuth, validate, handleRequestValidation, asyn
   const ticket = Ticket.build({ title, price, userId: req.currentUser!.id }); // we know currentUser will be defined at this stage, because requireAuth runs before we get this far
   ticket.save();
 
-  // emit event
-  new TicketCreatedPublisher(natsWrapper.client).publish({
+  // emit event- await
+  await new TicketCreatedPublisher(natsWrapper.client).publish({
     id: ticket.id,
     userId: ticket.userId,
     price: ticket.price,
     title: ticket.title
   });
+
   res.status(201).send(ticket);
 });
 
