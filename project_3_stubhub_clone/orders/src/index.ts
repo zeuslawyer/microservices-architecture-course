@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import { DatabaseConnectionError } from "@zeuscoder-public/microservices-course-shared";
-import { randomBytes } from "crypto";
 
 import { natsWrapper } from "./nats-wrapper";
 import { server } from "./server";

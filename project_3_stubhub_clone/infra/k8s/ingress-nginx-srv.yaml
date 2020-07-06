@@ -18,6 +18,10 @@ spec:
             backend:
               serviceName: tickets-clusterip # the ipcluster service that handle io for this service
               servicePort: 3000 # port for the ticket service
+          - path: /api/orders/?(.*) # the path in the tickets service that will receive data
+            backend:
+              serviceName: orders-clusterip # the ipcluster service that handle io for this service
+              servicePort: 3000 # port for the ticket service
           - path: /?(.*) # the path in the nextjs client service.
             backend:
               serviceName: nextclient-clusterip # the ipcluster service that handle io for this service

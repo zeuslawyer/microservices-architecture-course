@@ -5,9 +5,9 @@ import bodyParser from "body-parser";
 import cookieSession from "cookie-session";
 
 import { errorHandler, NotFoundError, setCurrentUser } from "@zeuscoder-public/microservices-course-shared";
-import { createTicketRouter } from "./routes/newTicket";
-import { showTicketRouter } from "./routes/show";
-import { UpdateTicketRouter } from "./routes/update";
+import { createOrderRouter } from "./routes/create";
+import { deleteOrderRouter } from "./routes/delete";
+import { showOrderRouter } from "./routes/show";
 
 const server = express();
 
@@ -25,9 +25,9 @@ server.use(
 server.use(setCurrentUser);
 
 // routes
-server.use(createTicketRouter);
-server.use(showTicketRouter);
-server.use(UpdateTicketRouter);
+server.use(createOrderRouter);
+server.use(showOrderRouter);
+server.use(deleteOrderRouter);
 server.all("*", async (req, res) => {
   // catch all route handler
   throw new NotFoundError();
