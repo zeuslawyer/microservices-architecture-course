@@ -17,12 +17,13 @@ const init = async () => {
       useCreateIndex: true
     });
   } catch (error) {
+    console.error("AUTH ERROR:   Failed to Connect to Database");
     throw new DatabaseConnectionError();
   }
 
   // server
   server.listen(PORT, () => {
-    console.info("Auth Service Listening On Port", PORT);
+    console.info("*** Auth Service Listening On Port", PORT);
   });
 };
 

@@ -24,12 +24,12 @@ Each project represents a discrete chunk of code, and stages in the learning jou
 
 Each stage of the course is also reflected in a branch, whose name should correlate with the folder associated with each stage in the course.
 
-## KEY THINGS TO NOTE
+## KEY SETUP STEPS
 
 1. ensure Skaffold is installed - so you can run `skaffold dev`
-2. ensure ingress-nginx is installed by running the following: `docker ps --all` or `kubectl get namespace` and see if ingress-nginx is there. Otherwise install it from `kubernetes.github.io/ingress-nginx`
+2. ensure ingress-nginx is installed by running the following: `docker ps --all` or `kubectl get namespace` and see if ingress-nginx is there. Shortcut to list all pods in all namespaces is `kubectl get pods -A`. Otherwise install it from `kubernetes.github.io/ingress-nginx`. REMEMBER TO WAIT UNTIL THIS POD IS RUNNING. check with `kubectl get pods -n ingress-nginx`
 3. if Kubernetes on Docker Desktop is erroring, reset it. you will then need to re create the Kubernetes secrets service for the env variable for the `/auth` service. This can be set using the following command: `kubectl create secret generic <<name of secret>> --from-literal=<KEY_NAME>=<KEY VALUE>`.  
-   The actual command **for this project** will be `kubectl create secret generic auth-jwt --from-literal=JWT_KEY=<INSERT RANDOM STRING>`.
+   The actual command **for this project** will be `kubectl create secret generic auth-jwt --from-literal=JWT_KEY=<INSERT RANDOM STRING>`. Use the random string from the test setup if needed.
 
 #### `Project 1`
 

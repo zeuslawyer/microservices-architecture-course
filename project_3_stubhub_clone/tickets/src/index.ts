@@ -45,6 +45,8 @@ const init = async () => {
       useCreateIndex: true
     });
   } catch (error) {
+    console.error("TICKETS ERROR:   Failed to Connect to Database");
+
     throw new DatabaseConnectionError();
   }
 

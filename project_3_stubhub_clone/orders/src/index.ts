@@ -29,11 +29,11 @@ const init = async () => {
     });
 
     process.on("SIGINT", () => {
-      console.log(" ##### SIGINT #### ");
+      console.log(" #### SIGINT #### ");
       natsWrapper.client.close();
     });
     process.on("SIGTERM", () => {
-      console.log(" ##### SIGTERM #### ");
+      console.log(" #### SIGTERM #### ");
       natsWrapper.client.close();
     });
 
@@ -44,6 +44,8 @@ const init = async () => {
       useCreateIndex: true
     });
   } catch (error) {
+    console.error("ORDERS ERROR:   Failed to Connect to Database");
+
     throw new DatabaseConnectionError();
   }
 
