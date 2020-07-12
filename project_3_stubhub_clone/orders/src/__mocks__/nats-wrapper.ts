@@ -3,6 +3,7 @@ const publishMock = (subject: string, data: string, cb: () => void) => {
   cb();
 };
 
+// import statements for the natsWrapper singleton get re-routed to this object when tests
 export const natsWrapper = {
   client: {
     publish: jest.fn().mockImplementation(publishMock)

@@ -6,6 +6,7 @@ import { Ticket } from "../../Models/Ticket";
 import { Order } from "../../Models/Order";
 import { OrderStatus } from "@zeuscoder-public/microservices-course-shared";
 import { EXPIRATION_SECS } from "../create";
+import { natsWrapper } from "../../nats-wrapper";
 
 it("Fails without auth", async () => {
   await request(server)
@@ -66,4 +67,15 @@ it("reserves ticket and checks the order returned from db", async () => {
   expect(order.body.status).toBe(OrderStatus.Created);
 });
 
-it.todo("emits an order created event");
+it("emits an order created event", async () => {
+  const ticket = Ticket.build({ title: "Test Ticket", price: 123 });
+  await ticket.save();
+
+  // reserves ticket against order
+  const order = await request(server)
+    .post("/api/orders")
+    .set("Cookie", global.signin())
+    .send({ ticketId: ticket.id });
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
+});

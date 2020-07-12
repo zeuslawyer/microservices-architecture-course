@@ -7,6 +7,9 @@ import {
 } from "@zeuscoder-public/microservices-course-shared";
 
 import { Order } from "../Models/Order";
+import { OrderCanceledPublisher } from "../Events/Publishers/OrderCanceledPublisher";
+import { natsWrapper } from "../nats-wrapper";
+import { Ticket } from "../Models/Ticket";
 
 const router = express.Router();
 
@@ -24,6 +27,15 @@ router.put(
     // cancel order
     order.status = OrderStatus.Canceled;
     await order.save();
+
+    // send EVENT
+    new OrderCanceledPublisher(natsWrapper.client).publish({
+      id: order.id,
+      userId: req.currentUser!.id,
+      status: order.status,
+      expiresAt: order.expiresAt.toISOString(),
+      ticket: { id: order.ticket.id, price: order.ticket.price }
+    });
 
     res.status(200).send(order);
   }

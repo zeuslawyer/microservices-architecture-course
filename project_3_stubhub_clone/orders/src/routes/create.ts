@@ -11,6 +11,8 @@ import mongoose from "mongoose";
 
 import { Ticket } from "../Models/Ticket";
 import { Order } from "../Models/Order";
+import { OrderCreatedPublisher } from "../Events/Publishers/OrderCreatedPublisher";
+import { natsWrapper } from "../nats-wrapper";
 
 const router = express.Router();
 export const EXPIRATION_SECS = 15 * 60; // 15 mins
@@ -21,6 +23,7 @@ const validation = [
     .custom((input: string) => mongoose.Types.ObjectId.isValid(input)) // is valid mongoose id.  but causes coupling between db and orders service
 ];
 
+/**  create a new order given a ticket Id */
 router.post(
   "/api/orders",
   requireAuth,
@@ -53,7 +56,16 @@ router.post(
     });
 
     await order.save();
-    // emit event
+    new OrderCreatedPublisher(natsWrapper.client).publish({
+      id: order.id,
+      userId: req.currentUser!.id,
+      ticket: {
+        id: ticket.id,
+        price: ticket.price
+      },
+      status: order.status,
+      expiresAt: order.expiresAt.toISOString()
+    });
 
     res.status(201).send(order);
   }
