@@ -3,16 +3,7 @@ import request from "supertest";
 import { server } from "../../server";
 import { Ticket } from "../../Models/Ticket";
 import mongoose from "mongoose";
-
-const makeTicket = async () => {
-  const ticket = Ticket.build({
-    title: "meh 1",
-    price: 12
-  });
-
-  await ticket.save();
-  return ticket;
-};
+import { makeTicket } from "../../test/setup";
 
 it("shows Not Auth Error", async () => {
   const user = global.signin();

@@ -4,9 +4,13 @@ import "express-async-errors";
 import bodyParser from "body-parser";
 import cookieSession from "cookie-session";
 
-import { errorHandler, NotFoundError, setCurrentUser } from "@zeuscoder-public/microservices-course-shared";
+import {
+  errorHandler,
+  NotFoundError,
+  setCurrentUser
+} from "@zeuscoder-public/microservices-course-shared";
 import { createOrderRouter } from "./routes/create";
-import { deleteOrderRouter } from "./routes/delete";
+import { cancelOrderRouter } from "./routes/cancel";
 import { showOrderRouter } from "./routes/show";
 
 const server = express();
@@ -27,7 +31,7 @@ server.use(setCurrentUser);
 // routes
 server.use(createOrderRouter);
 server.use(showOrderRouter);
-server.use(deleteOrderRouter);
+server.use(cancelOrderRouter);
 server.all("*", async (req, res) => {
   // catch all route handler
   throw new NotFoundError();
