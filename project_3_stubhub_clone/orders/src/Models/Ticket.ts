@@ -27,7 +27,7 @@ interface TicketModel extends mongoose.Model<TicketDoc> {
 const schemaOpts: mongoose.SchemaOptions = {
   toJSON: {
     transform(doc, returned) {
-      returned.id = doc._id;
+      returned.id = returned._id;
       delete returned._id;
     }
   }

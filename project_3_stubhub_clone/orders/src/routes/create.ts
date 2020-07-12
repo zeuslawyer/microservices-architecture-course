@@ -3,8 +3,8 @@ import {
   requireAuth,
   handleRequestValidation,
   NotFoundError,
-  OrderStatus,
-  BadRequestError
+  BadRequestError,
+  OrderStatus
 } from "@zeuscoder-public/microservices-course-shared";
 import { body } from "express-validator";
 import mongoose from "mongoose";
@@ -20,6 +20,7 @@ const validation = [
     .notEmpty()
     .custom((input: string) => mongoose.Types.ObjectId.isValid(input)) // is valid mongoose id.  but causes coupling between db and orders service
 ];
+
 router.post(
   "/api/orders",
   requireAuth,

@@ -1,6 +1,7 @@
 import request from "supertest";
-import { server } from "../../server";
 import mongoose from "mongoose";
+
+import { server } from "../../server";
 import { Ticket } from "../../Models/Ticket";
 import { Order } from "../../Models/Order";
 import { OrderStatus } from "@zeuscoder-public/microservices-course-shared";
@@ -64,3 +65,5 @@ it("reserves ticket and checks the order returned from db", async () => {
   expect(order.body).toHaveProperty("status");
   expect(order.body.status).toBe(OrderStatus.Created);
 });
+
+it.todo("emits an order created event");
