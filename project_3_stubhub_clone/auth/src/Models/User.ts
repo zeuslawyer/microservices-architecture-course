@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { PasswordManager } from "../services/PasswordManager";
 
+// attributes for creating the object via the custom build method below
 export interface UserAttrs {
   email: string;
   password: string;
@@ -8,6 +9,7 @@ export interface UserAttrs {
 
 // interface that describes the properties of each User instance (the mongo document)
 // which includes the additional props that mongo will add
+// these are the attributes in the stored version of the object
 interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
