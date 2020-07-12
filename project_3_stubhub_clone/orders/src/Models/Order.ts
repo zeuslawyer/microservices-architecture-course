@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
+import { OrderStatus } from "@zeuscoder-public/microservices-course-shared";
+import { TicketDoc } from "./Ticket";
 
 // attributes for creating an object via the custom build method below
 export interface OrderAttrs {
   userId: string;
-  status: string;
+  status: OrderStatus;
   expiresAt: Date;
   ticket: TicketDoc; // associated Ticket data type
 }
@@ -13,7 +15,7 @@ export interface OrderAttrs {
 // these are the attributes in the stored version of the object
 interface OrderDoc extends mongoose.Document {
   userId: string;
-  status: string;
+  status: OrderStatus;
   expiresAt: Date;
   ticket: TicketDoc; // reference to the Mongoose Ticket Id
 }
@@ -42,7 +44,9 @@ const orderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      required: true
+      required: true,
+      enum: Object.values(OrderStatus), // ensure the string is one of these enum values
+      default: OrderStatus.Created // defaults
     },
     expiresAt: {
       type: mongoose.Schema.Types.Date,
@@ -63,4 +67,4 @@ orderSchema.statics.build = (attrs: OrderAttrs) => {
 };
 
 // the Order model
-export const Order = mongoose.model<any, OrderModel>("Order", orderSchema);
+export const Order = mongoose.model<OrderDoc, OrderModel>("Order", orderSchema);
