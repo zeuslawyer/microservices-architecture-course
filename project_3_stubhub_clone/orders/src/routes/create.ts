@@ -13,7 +13,7 @@ import { Ticket } from "../Models/Ticket";
 import { Order } from "../Models/Order";
 
 const router = express.Router();
-const EXPIRATION_SECS = 15 * 60; // 15 mins
+export const EXPIRATION_SECS = 15 * 60; // 15 mins
 
 const validation = [
   body("ticketId")
