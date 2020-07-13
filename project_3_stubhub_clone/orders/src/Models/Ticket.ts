@@ -10,6 +10,7 @@ import { OrderStatus } from "@zeuscoder-public/microservices-course-shared";
 interface TicketAttrs {
   title: string;
   price: number;
+  id: string;
 }
 
 // properties of an instance of Ticket mongo doc
@@ -48,7 +49,12 @@ const ticketSchema = new mongoose.Schema(
 );
 
 // add method to collection
-ticketSchema.statics.build = (attrs: TicketAttrs) => new Ticket(attrs); // add method to the mongo collection
+ticketSchema.statics.build = (attrs: TicketAttrs) => {
+  const ticket = { ...attrs, _id: attrs.id }; // mongo objects use _id in db, so must conform.  in this project gets converted to id only when converting to JSON in schemaOpts
+  delete ticket.id;
+
+  new Ticket(ticket);
+};
 
 // add method to each document
 ticketSchema.methods.isReserved = async function () {

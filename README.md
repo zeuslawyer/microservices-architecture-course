@@ -86,7 +86,7 @@ To set up Docker and Kube for a given (auth, by example) service follow these st
 
 1. You need a Docker image for the service. So create a `Dockerfile` in the root of the service folder
 2. Create the `dockerignore` and ignore `node_modules` and others
-3. run `docker build zeuslawyer/<image name> .`
+3. run `docker build -t zeuslawyer/<image name> .` - dont forget the `.` at the end. Then run `docker push zeuslawyer/<docker-image name>`
 4. Check that you have the `ingress-nginx` controller for network i/o running on docker. you can run `docker ps --all` to check if its running. Otherwise install it from `kubernetes.github.io/ingress-nginx`
 
 **Kubernetes**
