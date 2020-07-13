@@ -26,7 +26,7 @@ const init = async () => {
     const clusterId = process.env.NATS_CLUSTER_ID; // taken from the nats-depl config -cid
     const url = process.env.NATS_URL;
 
-    natsWrapper.connect(clusterId, clientId, url);
+    await natsWrapper.connect(clusterId, clientId, url);
 
     // handle process exits
     natsWrapper.client.on("close", () => {
@@ -46,9 +46,6 @@ const init = async () => {
     // NATS listeners
     new TicketCreatedListener(natsWrapper.client).listen();
     new TicketUpdatedListener(natsWrapper.client).listen();
-
-    console.log(" LOOK FOR NEXT LINE \n");
-    new TicketCreatedListener(natsWrapper.client).getSubject();
 
     // mongoose
     await mongoose.connect(process.env.MONGO_URI, {

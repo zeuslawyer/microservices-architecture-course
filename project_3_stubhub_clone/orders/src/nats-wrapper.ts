@@ -7,7 +7,10 @@ class Wrapper {
   private _client?: Stan; // singleton so only can be accessed from this class
 
   get client() {
-    if (!this._client) throw new Error(" NATS client not instantiated. Is null. Call connect().");
+    if (!this._client)
+      throw new Error(
+        " NATS client not instantiated. Is null. Call connect()."
+      );
     // else
     return this._client;
   }
@@ -20,7 +23,7 @@ class Wrapper {
 
     return new Promise((res, rej) => {
       this.client.on("connect", () => {
-        console.log("NATS Singleton Server Connected");
+        console.log("ORDERS: NATS Singleton Server Connected");
         return res();
       });
 

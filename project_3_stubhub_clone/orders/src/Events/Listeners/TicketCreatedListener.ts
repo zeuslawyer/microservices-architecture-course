@@ -9,7 +9,7 @@ import { Ticket } from "../../Models/Ticket";
 import { qGroupName } from "./qGroupName";
 
 export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
-  subject: SubjectsEnum.TicketCreated = SubjectsEnum.TicketCreated;
+  readonly subject: SubjectsEnum.TicketCreated = SubjectsEnum.TicketCreated;
   qGroupName: string = qGroupName; // needed for listeners so the same message doesnt get received in parallel by multiple instances of the listening app
 
   async handleMessage(messageData: TicketCreatedEvent["data"], msg: Message) {
@@ -20,8 +20,7 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
       price
     });
 
-    await ticket.save;
-
+    await ticket.save();
     msg.ack();
   }
 }

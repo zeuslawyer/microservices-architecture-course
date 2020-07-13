@@ -53,7 +53,7 @@ ticketSchema.statics.build = (attrs: TicketAttrs) => {
   const ticket = { ...attrs, _id: attrs.id }; // mongo objects use _id in db, so must conform.  in this project gets converted to id only when converting to JSON in schemaOpts
   delete ticket.id;
 
-  new Ticket(ticket);
+  return new Ticket(ticket);
 };
 
 // add method to each document

@@ -5,8 +5,8 @@ import {
 } from "@zeuscoder-public/microservices-course-shared";
 import { Message } from "node-nats-streaming";
 
-import { Ticket } from "../../Models/Ticket";
 import { qGroupName } from "./qGroupName";
+import { Ticket } from "../../Models/Ticket";
 
 export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
   subject: SubjectsEnum.TicketUpdated = SubjectsEnum.TicketUpdated;
