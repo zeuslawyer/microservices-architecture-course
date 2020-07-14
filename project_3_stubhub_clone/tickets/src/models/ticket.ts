@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 interface TicketAttrs {
   title: string;
@@ -12,6 +13,7 @@ export interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
   userId: string;
+  version: number;
 }
 
 // interface that describes the properties of the Ticket Schema ( the model )
@@ -47,6 +49,11 @@ const ticketSchema = new mongoose.Schema(
   },
   schemaOpts
 );
+
+// use custom version field instead of __v
+ticketSchema.set("versionKey", "version");
+// add versioning plugin
+ticketSchema.plugin(updateIfCurrentPlugin);
 
 // custom method called build to add typing to mongo api
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
