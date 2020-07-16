@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { Order } from "./Order";
 import { OrderStatus } from "@zeuscoder-public/microservices-course-shared";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 /**
  * This Ticket model is created ONLY for user by Orders.
@@ -17,6 +18,7 @@ interface TicketAttrs {
 export interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
+  version: number;
   isReserved(): Promise<boolean>;
 }
 
@@ -47,6 +49,10 @@ const ticketSchema = new mongoose.Schema(
   },
   schemaOpts
 );
+
+// set version property on the mongoose document object
+ticketSchema.set("versionKey", "version");
+ticketSchema.plugin(updateIfCurrentPlugin);
 
 // add method to collection
 ticketSchema.statics.build = (attrs: TicketAttrs) => {

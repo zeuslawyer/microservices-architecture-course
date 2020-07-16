@@ -31,6 +31,7 @@ router.put(
     // send EVENT
     new OrderCanceledPublisher(natsWrapper.client).publish({
       id: order.id,
+      version: order.version,
       userId: req.currentUser!.id,
       status: order.status,
       expiresAt: order.expiresAt.toISOString(),

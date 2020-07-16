@@ -14,6 +14,7 @@ export interface OrderAttrs {
 // which includes the additional props that mongo will add
 // these are the attributes in the stored version of the object
 interface OrderDoc extends mongoose.Document {
+  version: number;
   userId: string;
   status: OrderStatus;
   expiresAt: Date;
