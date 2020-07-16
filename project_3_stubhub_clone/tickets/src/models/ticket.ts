@@ -22,7 +22,7 @@ interface TicketModel extends mongoose.Model<TicketDoc> {
   build(ticketAttrs: TicketAttrs): TicketDoc;
 }
 
-// options to remove certain fields from the returned mongo doc when it is built
+// options to remove certain fields from the RETURNED mongo doc when it is built
 const schemaOpts: mongoose.SchemaOptions = {
   toJSON: {
     transform(doc, returned) {
@@ -50,7 +50,7 @@ const ticketSchema = new mongoose.Schema(
   schemaOpts
 );
 
-// use custom version field instead of __v
+// on mongo doc object set custom version field instead of __v
 ticketSchema.set("versionKey", "version");
 // add versioning plugin
 ticketSchema.plugin(updateIfCurrentPlugin);

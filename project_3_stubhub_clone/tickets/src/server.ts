@@ -4,8 +4,12 @@ import "express-async-errors";
 import bodyParser from "body-parser";
 import cookieSession from "cookie-session";
 
-import { errorHandler, NotFoundError, setCurrentUser } from "@zeuscoder-public/microservices-course-shared";
-import { createTicketRouter } from "./routes/newTicket";
+import {
+  errorHandler,
+  NotFoundError,
+  setCurrentUser
+} from "@zeuscoder-public/microservices-course-shared";
+import { createTicketRouter } from "./routes/create";
 import { showTicketRouter } from "./routes/show";
 import { UpdateTicketRouter } from "./routes/update";
 
