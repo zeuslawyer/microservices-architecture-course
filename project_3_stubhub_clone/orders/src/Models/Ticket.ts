@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import { Order } from "./Order";
 import { OrderStatus } from "@zeuscoder-public/microservices-course-shared";
-import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 /**
  * This Ticket model is created ONLY for user by Orders.
@@ -56,7 +55,15 @@ const ticketSchema = new mongoose.Schema(
 
 // set version property on the mongoose document object
 ticketSchema.set("versionKey", "version");
-ticketSchema.plugin(updateIfCurrentPlugin);
+
+// pre save hook, needs old school function, as uses 'this'
+ticketSchema.pre("save", function (done) {
+  // @ts-ignore
+  this.$where = {
+    version: this.get("version") - 1 // save  pre hook  where the doc being updated is v N-1
+  };
+  done();
+});
 
 // add method at collection level
 ticketSchema.statics.build = (attrs: TicketAttrs) => {

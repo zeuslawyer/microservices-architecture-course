@@ -13,11 +13,15 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
   qGroupName = qGroupName;
 
   async handleMessage(messageData: TicketUpdatedEvent["data"], msg: Message) {
-    const ticket = await Ticket.findFromEvent(messageData); // find from event is a custom static method on the Tickets model for Orders
+    const ticket = await Ticket.findById(messageData.id);
 
     if (!ticket) throw new Error("Ticket not found in Orders Update listener");
 
-    ticket.set({ title: messageData.title, price: messageData.price });
+    ticket.set({
+      title: messageData.title,
+      price: messageData.price,
+      version: messageData.version // save the new version that came through on the event
+    });
     await ticket.save();
 
     msg.ack();
