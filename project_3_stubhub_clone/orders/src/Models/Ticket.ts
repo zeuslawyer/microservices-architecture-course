@@ -22,9 +22,13 @@ export interface TicketDoc extends mongoose.Document {
   isReserved(): Promise<boolean>;
 }
 
-// The mongo model for Ticket
+// The mongo model for Ticket, with custom functions
 interface TicketModel extends mongoose.Model<TicketDoc> {
   build(attrs: TicketAttrs): TicketDoc;
+  findFromEvent(event: {
+    id: string;
+    version: number;
+  }): Promise<TicketDoc | null>;
 }
 
 const schemaOpts: mongoose.SchemaOptions = {
@@ -54,7 +58,7 @@ const ticketSchema = new mongoose.Schema(
 ticketSchema.set("versionKey", "version");
 ticketSchema.plugin(updateIfCurrentPlugin);
 
-// add method to collection
+// add method at collection level
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
   const ticket = { ...attrs, _id: attrs.id }; // mongo objects use _id in db, so must conform.  in this project gets converted to id only when converting to JSON in schemaOpts
   delete ticket.id;
@@ -62,7 +66,14 @@ ticketSchema.statics.build = (attrs: TicketAttrs) => {
   return new Ticket(ticket);
 };
 
-// add method to each document
+ticketSchema.statics.findFromEvent = (event: {
+  id: string;
+  version: number;
+}) => {
+  return Ticket.findOne({ _id: event.id, version: event.version - 1 });
+};
+
+// add method at the document level
 ticketSchema.methods.isReserved = async function () {
   // add method to the individual document.... MUST use function keyword in assignment in order to access this context
   //  check reserved status - i.e. order status is NOT canceled
