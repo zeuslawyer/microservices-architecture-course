@@ -56,7 +56,7 @@ ticketSchema.set("versionKey", "version");
 ticketSchema.pre("save", function (done) {
   // @ts-ignore
   this.$where = {
-    version: this.get("version") - 1 // save  pre hook  where the doc being updated is v N-1
+    version: this.get("version") - 1 // save  pre hook  checks that the current ticket doc being saved is only 1+ version in db
   };
 
   done();

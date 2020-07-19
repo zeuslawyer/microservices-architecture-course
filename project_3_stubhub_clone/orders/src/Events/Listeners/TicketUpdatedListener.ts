@@ -22,8 +22,10 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
       price: ticketData.price,
       version: ticketData.version // save the new version that came through on the event
     });
+
     await ticket.save();
 
+    // ack will only end if ticket saves.  Ticket will not save if the pre hook finds version number mismatch.
     msg.ack();
   }
 }
