@@ -12,8 +12,8 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
   readonly subject: SubjectsEnum.TicketCreated = SubjectsEnum.TicketCreated;
   qGroupName: string = qGroupName; // needed for listeners so the same message doesnt get received in parallel by multiple instances of the listening app
 
-  async handleMessage(messageData: TicketCreatedEvent["data"], msg: Message) {
-    const { id, title, price } = messageData;
+  async handleMessage(ticketData: TicketCreatedEvent["data"], msg: Message) {
+    const { id, title, price } = ticketData;
     const ticket = Ticket.build({
       id,
       title,
@@ -21,6 +21,7 @@ export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
     });
 
     await ticket.save();
+
     msg.ack();
   }
 }

@@ -12,15 +12,15 @@ export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
   subject: SubjectsEnum.TicketUpdated = SubjectsEnum.TicketUpdated;
   qGroupName = qGroupName;
 
-  async handleMessage(messageData: TicketUpdatedEvent["data"], msg: Message) {
-    const ticket = await Ticket.findById(messageData.id);
+  async handleMessage(ticketData: TicketUpdatedEvent["data"], msg: Message) {
+    const ticket = await Ticket.findById(ticketData.id);
 
     if (!ticket) throw new Error("Ticket not found in Orders Update listener");
 
     ticket.set({
-      title: messageData.title,
-      price: messageData.price,
-      version: messageData.version // save the new version that came through on the event
+      title: ticketData.title,
+      price: ticketData.price,
+      version: ticketData.version // save the new version that came through on the event
     });
     await ticket.save();
 

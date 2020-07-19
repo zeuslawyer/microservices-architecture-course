@@ -24,10 +24,6 @@ export interface TicketDoc extends mongoose.Document {
 // The mongo model for Ticket, with custom functions
 interface TicketModel extends mongoose.Model<TicketDoc> {
   build(attrs: TicketAttrs): TicketDoc;
-  findFromEvent(event: {
-    id: string;
-    version: number;
-  }): Promise<TicketDoc | null>;
 }
 
 const schemaOpts: mongoose.SchemaOptions = {
@@ -62,6 +58,7 @@ ticketSchema.pre("save", function (done) {
   this.$where = {
     version: this.get("version") - 1 // save  pre hook  where the doc being updated is v N-1
   };
+
   done();
 });
 
@@ -71,13 +68,6 @@ ticketSchema.statics.build = (attrs: TicketAttrs) => {
   delete ticket.id;
 
   return new Ticket(ticket);
-};
-
-ticketSchema.statics.findFromEvent = (event: {
-  id: string;
-  version: number;
-}) => {
-  return Ticket.findOne({ _id: event.id, version: event.version - 1 });
 };
 
 // add method at the document level
