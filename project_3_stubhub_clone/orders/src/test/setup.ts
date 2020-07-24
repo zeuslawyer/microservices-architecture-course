@@ -9,10 +9,10 @@ let mongo: any;
 jest.mock("../nats-wrapper.ts"); // path to real file that needs to be mocked
 
 export const makeTicket = async () => {
-  // @ts-ignore
   const ticket = Ticket.build({
     title: "meh 1",
-    price: 12
+    price: 12,
+    id: mongoose.Types.ObjectId().toHexString()
   });
 
   await ticket.save();

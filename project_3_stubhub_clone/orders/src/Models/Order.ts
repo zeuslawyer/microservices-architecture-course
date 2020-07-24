@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { OrderStatus } from "@zeuscoder-public/microservices-course-shared";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
+
 import { TicketDoc } from "./Ticket";
 
 // attributes for creating an object via the custom build method below
@@ -30,7 +32,7 @@ interface OrderModel extends mongoose.Model<OrderDoc> {
 // options to remove certain fields from the returned mongo doc when it is built
 const schemaOpts: mongoose.SchemaOptions = {
   toJSON: {
-    transform(doc, returned) {
+    transform(_, returned) {
       returned.id = returned._id;
       delete returned._id;
     }
@@ -61,6 +63,10 @@ const orderSchema = new mongoose.Schema(
   },
   schemaOpts
 );
+
+// setup for the mongoose-update-if-current package
+orderSchema.set("versionKey", "version");
+orderSchema.plugin(updateIfCurrentPlugin);
 
 // custom method called build to add typing to mongo api
 orderSchema.statics.build = (attrs: OrderAttrs) => {

@@ -2,11 +2,11 @@ import request from "supertest";
 import mongoose from "mongoose";
 
 import { server } from "../../server";
-import { Ticket } from "../../Models/Ticket";
 import { Order } from "../../Models/Order";
 import { OrderStatus } from "@zeuscoder-public/microservices-course-shared";
 import { EXPIRATION_SECS } from "../create";
 import { natsWrapper } from "../../nats-wrapper";
+import { makeTicket } from "../../test/setup";
 
 it("Fails without auth", async () => {
   await request(server)
@@ -27,8 +27,7 @@ it("Returns error if ticket does not exist", async () => {
 
 it("Returns error if ticket reserved", async () => {
   // create ticket
-  const ticket = Ticket.build({ title: "Test Ticket", price: 123 });
-  await ticket.save();
+  const ticket = await makeTicket();
 
   // create order and associate ticket
 
@@ -53,8 +52,7 @@ it("Returns error if ticket reserved", async () => {
 
 it("reserves ticket and checks the order returned from db", async () => {
   // create ticket
-  const ticket = Ticket.build({ title: "Test Ticket", price: 123 });
-  await ticket.save();
+  const ticket = await makeTicket();
 
   // reserves ticket against order
   const order = await request(server)
@@ -68,8 +66,7 @@ it("reserves ticket and checks the order returned from db", async () => {
 });
 
 it("emits an order created event", async () => {
-  const ticket = Ticket.build({ title: "Test Ticket", price: 123 });
-  await ticket.save();
+  const ticket = await makeTicket();
 
   // reserves ticket against order
   const order = await request(server)
