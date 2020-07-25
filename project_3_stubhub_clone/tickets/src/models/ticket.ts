@@ -14,6 +14,7 @@ export interface TicketDoc extends mongoose.Document {
   price: number;
   userId: string;
   version: number;
+  orderId?: string;
 }
 
 // interface that describes the properties of the Ticket Schema ( the model )
@@ -45,6 +46,10 @@ const ticketSchema = new mongoose.Schema(
     userId: {
       type: String,
       required: true
+    },
+    orderId: {
+      type: String,
+      required: false
     }
   },
   schemaOpts
