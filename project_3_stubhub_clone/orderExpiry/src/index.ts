@@ -1,9 +1,4 @@
-
-import { DatabaseConnectionError } from "@zeuscoder-public/microservices-course-shared";
-
 import { natsWrapper } from "./nats-wrapper";
-
-const PORT = 3000;
 
 const init = async () => {
   // check env vars
@@ -36,6 +31,12 @@ const init = async () => {
       console.log(" ##### SIGTERM #### ");
       natsWrapper.client.close();
     });
+  } catch (error) {
+    console.error(
+      "ORDER-EXPIRY SERVICE ERROR:   Failed to Connect to Database : ",
+      error.message
+    );
+    throw error;
+  }
 };
-
 init();

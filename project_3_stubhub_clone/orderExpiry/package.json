@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node-dev src/index.ts",
+    "start": "nodemon src/index.ts",
     "test": "jest --watchAll --no-cache"
   },
   "jest": {
@@ -19,7 +19,8 @@
     "@zeuscoder-public/microservices-course-shared": "^1.0.25",
     "bull": "^3.16.0",
     "node-nats-streaming": "^0.3.2",
-    "ts-node-dev": "^1.0.0-pre.44",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
     "typescript": "^3.8.3"
   },
   "devDependencies": {
