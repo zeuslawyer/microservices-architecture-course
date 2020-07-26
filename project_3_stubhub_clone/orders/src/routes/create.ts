@@ -1,10 +1,10 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import {
   requireAuth,
   handleRequestValidation,
   NotFoundError,
   BadRequestError,
-  OrderStatus
+  OrderStatus,
 } from "@zeuscoder-public/microservices-course-shared";
 import { body } from "express-validator";
 import mongoose from "mongoose";
@@ -20,7 +20,7 @@ export const EXPIRATION_SECS = 15 * 60; // 15 mins
 const validation = [
   body("ticketId")
     .notEmpty()
-    .custom((input: string) => mongoose.Types.ObjectId.isValid(input)) // is valid mongoose id.  but causes coupling between db and orders service
+    .custom((input: string) => mongoose.Types.ObjectId.isValid(input)), // is valid mongoose id.  but causes coupling between db and orders service
 ];
 
 /**  create a new order given a ticket Id */
@@ -52,7 +52,7 @@ router.post(
       userId: req.currentUser!.id,
       status: OrderStatus.Created,
       expiresAt: expiration,
-      ticket
+      ticket,
     });
 
     await order.save();
@@ -62,10 +62,10 @@ router.post(
       userId: req.currentUser!.id,
       ticket: {
         id: ticket.id,
-        price: ticket.price
+        price: ticket.price,
       },
       status: order.status,
-      expiresAt: order.expiresAt.toISOString()
+      expiresAt: order.expiresAt.toISOString(),
     });
 
     res.status(201).send(order);
