@@ -1,34 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: order-expiry-redis-depl
-spec:
+  name: expiry-redis-depl
+spec:  
   replicas: 1
   selector:
     matchLabels:
-      app: order-expiry-redis
-  
+      app: expiry-redis
   template:
     metadata:
       labels:
-        app: order-expiry-redis
-    
+        app: expiry-redis
     spec:
       containers:
-        - name: order-expiry-redis
+        - name: expiry-redis
           image: redis # from docker hub
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: order-expiry-redis-clusterip
+  name: expiry-redis-clusterip
 spec:
   type: ClusterIP
   selector:
-    app: order-expiry-redis
-
+    app: expiry-redis
   ports:
-    - name: order-expiry-redis
-      protocol: TCP
+    - name: redis-db
       port: 6379
+      protocol: TCP
       targetPort: 6379

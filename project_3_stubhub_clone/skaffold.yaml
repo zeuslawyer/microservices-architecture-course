@@ -40,3 +40,12 @@ build:
         manual:
           - src: "src/**/*.ts" # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
             dest: .
+    - image: zeuslawyer/project3-order-expiry # Docker Image
+      context: orderExpiry # name of the directory to find the Dockerfile in
+      docker:
+        dockerfile: Dockerfile # file to build image from
+      sync:
+        manual:
+          - src: "src/**/*.ts" # changes inside this matcher are simply copied into pod. Outside this image triggers a full rebuild of the image.
+            dest: .
+           
