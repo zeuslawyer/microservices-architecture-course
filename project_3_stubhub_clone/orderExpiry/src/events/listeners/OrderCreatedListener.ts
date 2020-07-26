@@ -12,7 +12,10 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   qGroupName: string = qGroupName;
 
   async handleMessage(messageData: OrderCreatedEvent["data"], msg: Message) {
-    await expirationQ.add({ orderId: messageData.id });
+    const delay =
+      new Date(messageData.expiresAt).getTime() - new Date().getTime();
+    console.log(`waiting '${delay}' millis to expire....`);
+    await expirationQ.add({ orderId: messageData.id }, { delay });
 
     msg.ack();
   }
