@@ -1,4 +1,5 @@
 import { natsWrapper } from "./nats-wrapper";
+import { OrderCreatedListener } from "./events/listeners/OrderCreatedListener";
 
 const init = async () => {
   // check env vars
@@ -28,15 +29,17 @@ const init = async () => {
       natsWrapper.client.close();
     });
     process.on("SIGTERM", () => {
-      console.log(" ##### SIGTERM #### ");
+      console.log(" ### SIGTERM ### ");
       natsWrapper.client.close();
     });
+
+    // listeners
+    new OrderCreatedListener(natsWrapper.client).listen();
   } catch (error) {
-    console.error(
-      "ORDER-EXPIRY SERVICE ERROR:   Failed to Connect to Database : ",
-      error.message
-    );
+    console.error("ORDER-EXPIRY SERVICE ERROR: ", error.message);
     throw error;
+  } finally {
+    console.log("ENV VAR ???? ", process.env.REDIS_HOST);
   }
 };
 init();

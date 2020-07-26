@@ -25,6 +25,6 @@ spec:
             - name: NATS_URL # name of env var
               value: "http://nats-clusterip:4222" # taken from nats-depl Service name
             - name: REDIS_HOST
-              value: expiry-redis-clusterip # the redis service depl
+              value: order-expiry-redis-clusterip # the redis service depl
 
 # no service for IP network comms as expiry service is not exposed to other services, and only runs the NATs server

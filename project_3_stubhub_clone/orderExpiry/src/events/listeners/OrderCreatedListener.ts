@@ -5,6 +5,7 @@ import {
 } from "@zeuscoder-public/microservices-course-shared";
 import { Message } from "node-nats-streaming";
 import { qGroupName } from "./qGroupName";
+import { expirationQ } from "../../queues/queue";
 
 export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   subject: SubjectsEnum.OrderCreated = SubjectsEnum.OrderCreated;
@@ -14,6 +15,7 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
     messageData: OrderCreatedEvent["data"],
     msg: Message
   ): Promise<void> {
-    throw new Error("Method not implemented.");
+    await expirationQ.add({ orderId: messageData.id });
+    msg.ack();
   }
 }
