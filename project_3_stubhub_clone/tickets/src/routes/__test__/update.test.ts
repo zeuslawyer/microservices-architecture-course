@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 import { server } from "../../server";
 import { natsWrapper } from "../../nats-wrapper";
+import { Ticket } from "../../models/ticket";
 
 it("shows 404 if id does not exist ", async () => {
   const mockId = mongoose.Types.ObjectId().toHexString(); // generate a valid mongo mock id
@@ -17,7 +18,10 @@ it("shows 404 if id does not exist ", async () => {
 it("returns 401 not authorized  ", async () => {
   const mockId = mongoose.Types.ObjectId().toHexString(); // generate a valid mongo mock id
 
-  await request(server).put(`/api/tickets/${mockId}`).send({ title: "does not exist", price: 13.5 }).expect(401);
+  await request(server)
+    .put(`/api/tickets/${mockId}`)
+    .send({ title: "does not exist", price: 13.5 })
+    .expect(401);
 });
 
 it("returns 401 not authorized if user does not own ticket", async () => {
@@ -72,13 +76,15 @@ it("updates ticket if valid inputs", async () => {
     .set("Cookie", cookie)
     .send({
       title: "some new title",
-      price: 100
+      price: 100,
     })
     .expect(200);
 
   // fetch the ticket
 
-  const updated = await request(server).get(`/api/tickets/${response.body.id}`).send();
+  const updated = await request(server)
+    .get(`/api/tickets/${response.body.id}`)
+    .send();
 
   expect(updated.body.title).toEqual("some new title");
   expect(updated.body.price).toEqual(100);
@@ -92,10 +98,41 @@ it("publishes event on update", async () => {
     .set("Cookie", cookie)
     .send({ title: "Publish on Ticket Update", price: 10.75 });
 
-  await request(server).put(`/api/tickets/${response.body.id}`).set("Cookie", cookie).send({
-    title: "some new title on Ticket Update",
-    price: 23.5
-  });
+  // update ticket
+  await request(server)
+    .put(`/api/tickets/${response.body.id}`)
+    .set("Cookie", cookie)
+    .send({
+      title: "some new title on Ticket Update",
+      price: 23.5,
+    });
 
   expect(natsWrapper.client.publish).toHaveBeenCalled(); // natsWrapper here will be the one in __mock__
+});
+
+it("fails update if ticket reserved (has orderId)", async () => {
+  const cookie = global.signin();
+
+  // create ticket
+  const response = await request(server)
+    .post("/api/tickets")
+    .set("Cookie", cookie)
+    .send({ title: "Publish on Ticket Update", price: 10.75 });
+
+  const ticket = await Ticket.findById(response.body.id);
+
+  // set reserved status
+  ticket!.set({ orderId: mongoose.Types.ObjectId().toHexString() });
+
+  await ticket!.save();
+
+  // update and expect bad data
+  await request(server)
+    .put(`/api/tickets/${response.body.id}`)
+    .set("Cookie", cookie)
+    .send({
+      title: "some new title on Ticket Update",
+      price: 23.5,
+    })
+    .expect(400);
 });

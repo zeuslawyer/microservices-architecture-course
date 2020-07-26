@@ -4,7 +4,8 @@ import {
   requireAuth,
   handleRequestValidation,
   NotFoundError,
-  NoAuthError
+  NoAuthError,
+  BadRequestError,
 } from "@zeuscoder-public/microservices-course-shared";
 import { Ticket } from "../models/ticket";
 import { natsWrapper } from "../nats-wrapper";
@@ -17,7 +18,7 @@ const validate = [
   body("price").not().isEmpty().withMessage("Please enter a price."), // not provided and empty string
   body("price")
     .isFloat({ gt: 0 })
-    .withMessage("Please enter a price greater than zero.") // not provided and empty string
+    .withMessage("Please enter a price greater than zero."), // not provided and empty string
 ];
 
 router.put(
@@ -29,6 +30,12 @@ router.put(
     const ticket = await Ticket.findById(req.params.id);
 
     if (!ticket) throw new NotFoundError();
+
+    if (ticket.orderId) {
+      throw new BadRequestError(
+        `Ticket is reserved. Cannot edit. Ticket has orderId of '${ticket.orderId}'`
+      );
+    }
 
     // check that user has the right to update this ticket
     if (ticket.userId !== req.currentUser!.id) throw new NoAuthError();
@@ -46,7 +53,7 @@ router.put(
       userId: ticket.userId,
       price: ticket.price,
       title: ticket.title,
-      version: ticket.version // version will auto update on save(), because of  "mongoose-update-if-current" package
+      version: ticket.version, // version will auto update on save(), because of  "mongoose-update-if-current" package
     });
 
     res.status(200).send(ticket);

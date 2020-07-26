@@ -1,6 +1,6 @@
 import {
   Listener,
-  OrderCreatedEvent,
+  OrderCanceledEvent,
   SubjectsEnum,
 } from "@zeuscoder-public/microservices-course-shared";
 import { Message } from "node-nats-streaming";
@@ -8,34 +8,33 @@ import { qGroupName } from "./qGroupName";
 import { Ticket } from "../../models/ticket";
 import { TicketUpdatedPublisher } from "../publishers/ticketUpdatedPublisher";
 
-export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
-  subject: SubjectsEnum.OrderCreated = SubjectsEnum.OrderCreated;
-  qGroupName: string = qGroupName;
+export class OrderCanceledListener extends Listener<OrderCanceledEvent> {
+  subject: SubjectsEnum.OrderCanceled = SubjectsEnum.OrderCanceled;
+  qGroupName = qGroupName;
 
   async handleMessage(
-    messageData: OrderCreatedEvent["data"],
+    messageData: OrderCanceledEvent["data"],
     msg: Message
   ): Promise<void> {
     const ticket = await Ticket.findById(messageData.ticket.id);
 
     if (!ticket)
-      throw new Error(`Ticket with id '${messageData.ticket.id}' not found.`);
+      throw new Error(`Ticket not found: '${messageData.ticket.id}'`);
 
-    // to show that this ticket is "locked" add the orderId prop to it
-    ticket.set({ orderId: messageData.id });
+    // order canceled
+    ticket.set({ orderId: undefined });
     await ticket.save();
 
     // emit event
     await new TicketUpdatedPublisher(this.client).publish({
       id: ticket.id,
+      userId: ticket.userId,
       title: ticket.title,
       price: ticket.price,
-      userId: ticket.userId,
       version: ticket.version,
-      orderId: ticket.id,
+      orderId: ticket.orderId,
     });
 
-    // ack
     msg.ack();
   }
 }
