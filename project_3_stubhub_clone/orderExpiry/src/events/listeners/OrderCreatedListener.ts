@@ -11,11 +11,9 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   subject: SubjectsEnum.OrderCreated = SubjectsEnum.OrderCreated;
   qGroupName: string = qGroupName;
 
-  async handleMessage(
-    messageData: OrderCreatedEvent["data"],
-    msg: Message
-  ): Promise<void> {
+  async handleMessage(messageData: OrderCreatedEvent["data"], msg: Message) {
     await expirationQ.add({ orderId: messageData.id });
+
     msg.ack();
   }
 }

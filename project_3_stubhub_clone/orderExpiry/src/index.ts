@@ -22,12 +22,14 @@ const init = async () => {
       console.log("NATS connection in Order-Expiry Service closed!");
       process.exit();
     });
+
     process.on("SIGINT", () => natsWrapper.client.close());
     process.on("SIGTERM", () => natsWrapper.client.close());
 
+    // listeners
     new OrderCreatedListener(natsWrapper.client).listen();
   } catch (err) {
-    console.error(err);
+    console.error("ERROR in Order Expiry Service", err.message);
   }
 };
 

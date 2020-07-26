@@ -17,13 +17,13 @@ class Wrapper {
   connect(clusterId: string, clientId: string, url: string) {
     // docs call client stan (!?)
     const stan = nats.connect(clusterId, clientId, {
-      url
+      url,
     });
     this._client = stan;
 
     return new Promise((res, rej) => {
       this.client.on("connect", () => {
-        console.log("TICKETS: NATS Singleton Server Connected");
+        console.log("Order Expiry Service: NATS Singleton Server Connected");
         return res();
       });
 
