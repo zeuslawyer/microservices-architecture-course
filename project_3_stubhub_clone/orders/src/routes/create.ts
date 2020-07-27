@@ -15,7 +15,7 @@ import { OrderCreatedPublisher } from "../Events/Publishers/OrderCreatedPublishe
 import { natsWrapper } from "../nats-wrapper";
 
 const router = express.Router();
-export const EXPIRATION_SECS = 1 * 60; // 15 mins
+export const EXPIRATION_SECS = 2 * 60; // 2 mins
 
 const validation = [
   body("ticketId")

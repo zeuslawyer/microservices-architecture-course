@@ -14,7 +14,6 @@ export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   async handleMessage(messageData: OrderCreatedEvent["data"], msg: Message) {
     const delay =
       new Date(messageData.expiresAt).getTime() - new Date().getTime();
-    console.log(`waiting '${delay}' millis to expire....`);
     await expirationQ.add({ orderId: messageData.id }, { delay });
 
     msg.ack();
