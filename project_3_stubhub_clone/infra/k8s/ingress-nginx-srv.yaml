@@ -14,6 +14,10 @@ spec:
             backend:
               serviceName: auth-clusterip # the ipcluster service that handle io for this service
               servicePort: 3000 # port for the auth service
+          - path: /api/payments/?(.*) # the path in the auth service that will receive data
+            backend:
+              serviceName: payments-clusterip # the ipcluster service that handle io for this service
+              servicePort: 3000 # port for the auth service
           - path: /api/tickets/?(.*) # the path in the tickets service that will receive data
             backend:
               serviceName: tickets-clusterip # the ipcluster service that handle io for this service
