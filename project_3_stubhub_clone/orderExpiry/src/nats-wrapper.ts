@@ -23,7 +23,7 @@ class Wrapper {
 
     return new Promise((res, rej) => {
       this.client.on("connect", () => {
-        console.log("Order Expiry Service: NATS Singleton Server Connected");
+        console.log("ORDER EXPIRY Service: NATS Singleton Server Connected");
         return res();
       });
 

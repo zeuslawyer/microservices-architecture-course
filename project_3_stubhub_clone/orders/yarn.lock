@@ -772,9 +772,9 @@
     "@types/yargs-parser" "*"
 
 "@zeuscoder-public/microservices-course-shared@^1.0.17":
-  version "1.0.29"
-  resolved "https://registry.yarnpkg.com/@zeuscoder-public/microservices-course-shared/-/microservices-course-shared-1.0.29.tgz#986ac4f7c942087f98bdb5d0cf9fb4c1cfaa18c8"
-  integrity sha512-lmOv9qoRtiX3MK78zH1Rp2Mzypoyj6rypBMdDSgCCF6lpGZzO4+RDf8V9DtGHCRvV9eNL4kPxD2gqBAGxy9deA==
+  version "1.0.30"
+  resolved "https://registry.yarnpkg.com/@zeuscoder-public/microservices-course-shared/-/microservices-course-shared-1.0.30.tgz#6e88d1298a4b7b73552831895ec7cf87a18c5c5a"
+  integrity sha512-zz80dqbtcp+S7b2F1yc9jaKSmDccFst2pATiwdRqSTsOF3+5Odm0BnzQ99zLxJzAjTyGaBtbfXv6fZPhcM3ZUw==
   dependencies:
     "@types/cookie-session" "^2.0.40"
     "@types/express" "^4.17.6"
