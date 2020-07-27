@@ -10,17 +10,17 @@ jest.mock("../nats-wrapper.ts"); // path to real file that needs to be mocked
 declare global {
   namespace NodeJS {
     interface Global {
-      signin(): string[];
+      signin(id?: string): string[];
     }
   }
 }
 
 // mock up cookie creation for route requests
-global.signin = () => {
+global.signin = (id?: string) => {
   // Build a mock JWT payload
   const payload = {
     email: "test@test-tickets.com",
-    id: mongoose.Types.ObjectId().toHexString() // make fake uid
+    id: id || mongoose.Types.ObjectId().toHexString(), // make fake uid
   };
 
   // create the JWT with the .sign() function
@@ -46,7 +46,7 @@ beforeAll(async () => {
 
   await mongoose.connect(mongoUri, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   });
 });
 

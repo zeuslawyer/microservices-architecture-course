@@ -31,7 +31,11 @@ spec:
                 secretKeyRef:
                   name: auth-jwt # name of the auth key - use the same one
                   key: JWT_KEY # key name of the secr et, which will be found on process.env inside the deployment
-
+            - name:  STRIPE_KEY # name of this env
+              valueFrom: # derive value from the secret service in K8s
+                secretKeyRef:
+                  name: stripe-secret # name of the stripe key - use the same one
+                  key: STRIPE_KEY # key name of the secr et, which will be found on process.env inside the deployment      
 ---
 apiVersion: v1
 kind: Service

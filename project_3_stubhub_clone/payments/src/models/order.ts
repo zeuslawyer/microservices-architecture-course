@@ -30,22 +30,23 @@ const schemaOpts: mongoose.SchemaOptions = {
     },
   },
 };
-const orderSchema = new mongoose.Schema({
-  status: {
-    type: String,
-    required: true,
-    enum: Object.values(OrderStatus),
+const orderSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
   },
-  userId: {
-    type: String,
-    required: true,
-  },
-  price: {
-    type: String,
-    required: true,
-  },
-  schemaOpts,
-});
+  schemaOpts
+);
 
 orderSchema.set("versionKey", "version");
 orderSchema.plugin(updateIfCurrentPlugin);
@@ -53,9 +54,10 @@ orderSchema.plugin(updateIfCurrentPlugin);
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order({
     _id: attrs.id,
-    version: attrs.price,
+    version: attrs.version,
     status: attrs.status,
     userId: attrs.userId,
+    price: attrs.price,
   });
 };
 
