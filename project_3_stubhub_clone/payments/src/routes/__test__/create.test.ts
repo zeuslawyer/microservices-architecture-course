@@ -4,6 +4,9 @@ import mongoose from "mongoose";
 import { Order } from "../../models/Order";
 import { OrderStatus } from "@zeuscoder-public/microservices-course-shared";
 
+import { stripe } from "../../stripe";
+jest.mock("../../stripe.ts");
+
 it("returns a 404 when purchasing an order that does not exist", async () => {
   await request(server)
     .post("/api/payments")
@@ -56,4 +59,34 @@ it("returns a 400 when purchasing a cancelled order", async () => {
     .expect(400);
 });
 
-it("errors with invalid stripe token", async () => {});
+it("test stripe mock - return 201", async () => {
+  const userId = mongoose.Types.ObjectId().toHexString();
+  const order = Order.build({
+    id: mongoose.Types.ObjectId().toHexString(),
+    userId,
+    version: 0,
+    price: 20,
+    status: OrderStatus.Created,
+  });
+
+  await order.save();
+
+  await request(server)
+    .post("/api/payments")
+    .set("Cookie", global.signin(userId))
+    .send({
+      orderId: order.id,
+      token: "tok_amex",
+    })
+    .expect(201);
+
+  const invocationNum = 0;
+  const argNum = 0;
+  const chargeOpts = (stripe.charges.create as jest.Mock).mock.calls[
+    invocationNum
+  ][argNum];
+
+  expect(chargeOpts.source).toEqual("tok_amex");
+  expect(chargeOpts.amount).toEqual(order.price * 100);
+  expect(chargeOpts.currency).toEqual("usd");
+});

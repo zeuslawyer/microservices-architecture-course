@@ -49,7 +49,7 @@ router.post(
       description: `Order charge applied for order id '${order.id}'`,
     });
 
-    res.send("DONE");
+    res.status(201).send({ success: true });
   }
 );
 
