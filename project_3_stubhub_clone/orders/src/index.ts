@@ -5,6 +5,7 @@ import { natsWrapper } from "./nats-wrapper";
 import { server } from "./server";
 import { TicketCreatedListener } from "./Events/Listeners/TicketCreatedListener";
 import { TicketUpdatedListener } from "./Events/Listeners/TicketUpdatedListener";
+import { OrderExpiredListener } from "./Events/Listeners/OrderExpiredListener";
 
 const PORT = 3000;
 
@@ -46,12 +47,13 @@ const init = async () => {
     // NATS listeners
     new TicketCreatedListener(natsWrapper.client).listen();
     new TicketUpdatedListener(natsWrapper.client).listen();
+    new OrderExpiredListener(natsWrapper.client).listen();
 
     // mongoose
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      useCreateIndex: true
+      useCreateIndex: true,
     });
   } catch (error) {
     console.error(

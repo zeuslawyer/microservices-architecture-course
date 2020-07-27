@@ -20,11 +20,17 @@ export class OrderExpiredListener extends Listener<OrderExpiredEvent> {
       throw new Error(`Order with id '${messageData.orderId}' not found.`);
     }
 
+    // ensure order isnt already complete
+    if (order.status === OrderStatus.Complete) {
+      msg.ack();
+      return;
+    }
+
     // update order status
     order.set({ status: OrderStatus.Canceled }); // the Ticket model has isReserved() checker which derives ticket status from the orderStatus enum. So this change is enough.
     await order.save();
 
-    const publisher = new OrderCanceledPublisher(this.client).publish({
+    new OrderCanceledPublisher(this.client).publish({
       id: order.id,
       version: order.version,
       ticket: {
