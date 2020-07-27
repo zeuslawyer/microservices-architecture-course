@@ -6,9 +6,9 @@ import {
 } from "@zeuscoder-public/microservices-course-shared";
 import { Message } from "node-nats-streaming";
 import { qGroupName } from "./qGroupName";
-import { Order } from "../../models/order";
+import { Order } from "../../models/Order";
 
-export class OrderCanceled extends Listener<OrderCanceledEvent> {
+export class OrderCanceledListener extends Listener<OrderCanceledEvent> {
   subject: SubjectsEnum.OrderCanceled = SubjectsEnum.OrderCanceled;
   qGroupName = qGroupName;
 

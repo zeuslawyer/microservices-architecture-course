@@ -5,7 +5,7 @@ import {
 } from "@zeuscoder-public/microservices-course-shared";
 import { Message } from "node-nats-streaming";
 import { qGroupName } from "./qGroupName";
-import { Order } from "../../models/order";
+import { Order } from "../../models/Order";
 
 export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   subject: SubjectsEnum.OrderCreated = SubjectsEnum.OrderCreated;

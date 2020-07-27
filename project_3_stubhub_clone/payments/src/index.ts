@@ -3,6 +3,8 @@ import { DatabaseConnectionError } from "@zeuscoder-public/microservices-course-
 
 import { natsWrapper } from "./nats-wrapper";
 import { server } from "./server";
+import { OrderCreatedListener } from "./events/listeners/OrderCreatedListener";
+import { OrderCanceledListener } from "./events/listeners/OrderCanceledListener";
 
 const PORT = 3000;
 
@@ -47,6 +49,10 @@ const init = async () => {
       useUnifiedTopology: true,
       useCreateIndex: true,
     });
+
+    // listeners
+    new OrderCreatedListener(natsWrapper.client).listen();
+    new OrderCanceledListener(natsWrapper.client).listen();
   } catch (error) {
     console.error("TICKETS ERROR:   Failed to Connect to Database");
 
