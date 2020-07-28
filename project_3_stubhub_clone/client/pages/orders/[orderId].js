@@ -4,8 +4,7 @@ import useRequest from "../../hooks/useRequest";
 import Router from "next/router";
 
 const onSuccess = payment => {
-  console.log("PAYMENT", payment);
-  Router.push("/");
+  Router.push("/orders");
 };
 const OrderShow = ({ order, currentUser }) => {
   const [timeLeft, setTimeLeft] = React.useState(0);
