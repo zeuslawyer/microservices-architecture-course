@@ -10,12 +10,12 @@ const customAxios = ({ req }) => {
     // return axios object
     return axios.create({
       baseURL: `http://${srvName}.${namespace}.${suffix}`,
-      headers: req.headers
+      headers: req.headers,
     });
   } else {
     // browser side
     return axios.create({
-      baseURL: "/" // empty base url - but optional. can be left off
+      baseURL: "/", // empty base url - but optional. can be left off
       // no need for headers as this is coming entirely browser side and getInitialProps wont receive a headers object. it will come directly from browser
     });
   }

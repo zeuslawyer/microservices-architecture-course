@@ -8,7 +8,7 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
   return (
     <div>
       <Header currentUser={currentUser}></Header>
-      <Component {...pageProps} />
+      <Component currentUser={currentUser} {...pageProps} />
     </div>
   );
 };
@@ -21,12 +21,16 @@ AppComponent.getInitialProps = async appContext => {
   // call get initial props on whichever component is being rendered by Next JS
   let pageProps = {};
   if (appContext.Component.getInitialProps) {
-    pageProps = await appContext.Component.getInitialProps(appContext.ctx);
+    pageProps = await appContext.Component.getInitialProps(
+      appContext.ctx,
+      axiosClient,
+      data.currentUser
+    );
   }
 
   return {
     pageProps,
-    ...data // includes the currentUser property
+    ...data, // includes the currentUser property
   };
 };
 
