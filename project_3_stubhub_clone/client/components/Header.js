@@ -4,20 +4,19 @@ const Header = ({ currentUser }) => {
   const menuOptions = [
     !currentUser && {
       label: "Sign up",
-      href: "/auth/signup"
+      href: "/auth/signup",
     },
     !currentUser && {
       label: "Sign in",
-      href: "/auth/signin"
+      href: "/auth/signin",
     },
-    currentUser && {
-      label: "Sign out",
-      href: "/auth/signout"
-    }
+    currentUser && { label: "Sell Tickets", href: "/tickets/new" },
+    currentUser && { label: "My Orders", href: "/orders" },
+    currentUser && { label: "Sign out", href: "/auth/signout" },
   ];
 
   const links = menuOptions
-    // filter out options tht evaluate to true
+    // filter for options that evaluate to true
     .filter(opt => !!opt)
     // return a jsx list of li elements
     .map(({ label, href }) => (
