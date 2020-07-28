@@ -6,7 +6,7 @@ import React from "react";
  * @param {string} url endpoint relative to the hostname. Example: 'api/users/{:id}
  * @param {string} method the HTTP method
  * @param {any} body data object
- * @param {function} onSuccess callback to invoke on success - redirect
+ * @param {function} onSuccess callback to invoke on success. Takes an argument that is the data retrieved.
  * @returns {Array} - first item is the makeRequest function, and the second is the errors JSX string to render
  */
 const useRequest = (url, method, body = null, onSuccess) => {
