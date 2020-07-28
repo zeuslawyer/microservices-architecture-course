@@ -1,9 +1,11 @@
 import React from "react";
 import StripeCheckout from "react-stripe-checkout";
 import useRequest from "../../hooks/useRequest";
+import Router from "next/router";
 
 const onSuccess = payment => {
   console.log("PAYMENT", payment);
+  Router.push("/");
 };
 const OrderShow = ({ order, currentUser }) => {
   const [timeLeft, setTimeLeft] = React.useState(0);
@@ -51,7 +53,7 @@ const OrderShow = ({ order, currentUser }) => {
       </h5>
       <StripeCheckout
         token={token => {
-          makeRequest({ token: token.id });
+          makeRequest({ token: token.id }).catch(console.error);
         }}
         stripeKey="pk_test_51DuUKTHkJBsa8PceDIjyuK9FfQJfhF16bT9ANNpEHJQn6X96Y55Btflyctok7qjswpaqJ9XLCERN5DOpWCzvftxZ00iHeNZYI2"
         amount={order.ticket.price * 100}
