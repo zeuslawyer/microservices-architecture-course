@@ -13,13 +13,13 @@ const useRequest = (url, method, body = null, onSuccess) => {
   const [errorsJsx, setErrorsJsx] = React.useState(null);
 
   // helper func to return
-  const makeRequest = async () => {
+  const makeRequest = async (props = {}) => {
     try {
       // reset errors state on UI on submit
       setErrorsJsx(null);
 
       // make request
-      const response = await axios[method](url, body);
+      const response = await axios[method](url, { ...body, ...props });
 
       // if success callback exists, then call it
       if (onSuccess) {
@@ -27,7 +27,7 @@ const useRequest = (url, method, body = null, onSuccess) => {
       }
     } catch (error) {
       const errs = error.response.data.errors;
-      return setErrorsJsx(
+      setErrorsJsx(
         <div className="alert alert-danger">
           <h3>Ooops...</h3>
           <ul>

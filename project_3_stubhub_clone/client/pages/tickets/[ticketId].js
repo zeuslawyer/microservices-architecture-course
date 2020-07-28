@@ -3,7 +3,6 @@ import Router from "next/router";
 
 const TicketShow = ({ ticket }) => {
   const onSuccess = order => {
-    console.log("ORDER", order);
     Router.push("/orders/[orderId]", `/orders/${order.id}`);
   };
   const [makeRequest, errorsJsx] = useRequest(
@@ -17,7 +16,7 @@ const TicketShow = ({ ticket }) => {
       <h1>{ticket.title}</h1>
       <h4>Price: ${ticket.price}</h4>
       {errorsJsx}
-      <button className="btn btn-primary" onClick={makeRequest}>
+      <button className="btn btn-primary" onClick={() => makeRequest()}>
         Purchase
       </button>
     </>
