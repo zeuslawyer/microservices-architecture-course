@@ -1,12 +1,13 @@
 import React from "react";
 import useRequest from "../../hooks/useRequest";
+import Router from "next/router";
 
 const NewTicket = () => {
   const [title, setTitle] = React.useState("");
   const [price, setPrice] = React.useState("");
 
-  const successRedirect = data => {
-    console.log("RETRIEVED, ", data);
+  const successRedirect = ticket => {
+    Router.push("/");
   };
 
   const [makeRequest, errorsJsx] = useRequest(

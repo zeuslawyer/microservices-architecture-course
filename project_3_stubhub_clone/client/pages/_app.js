@@ -22,6 +22,8 @@ AppComponent.getInitialProps = async appContext => {
 
   // call get initial props on whichever component is being rendered by Next JS
   let pageProps = {};
+  // if the child component being rendered has the getInitialProps function
+  // ensure that it gets passed these three arguments, all throughout the app
   if (appContext.Component.getInitialProps) {
     pageProps = await appContext.Component.getInitialProps(
       appContext.ctx,
