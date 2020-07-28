@@ -6,6 +6,7 @@ import { server } from "./server";
 import { TicketCreatedListener } from "./Events/Listeners/TicketCreatedListener";
 import { TicketUpdatedListener } from "./Events/Listeners/TicketUpdatedListener";
 import { OrderExpiredListener } from "./Events/Listeners/OrderExpiredListener";
+import { PaymentCreatedListener } from "./Events/Listeners/PaymentCreatedListener";
 
 const PORT = 3000;
 
@@ -48,6 +49,7 @@ const init = async () => {
     new TicketCreatedListener(natsWrapper.client).listen();
     new TicketUpdatedListener(natsWrapper.client).listen();
     new OrderExpiredListener(natsWrapper.client).listen();
+    new PaymentCreatedListener(natsWrapper.client).listen();
 
     // mongoose
     await mongoose.connect(process.env.MONGO_URI, {

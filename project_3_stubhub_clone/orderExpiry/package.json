@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@types/bull": "^3.14.0",
-    "@zeuscoder-public/microservices-course-shared": "^1.0.25",
+    "@zeuscoder-public/microservices-course-shared": "1.0.31",
     "bull": "^3.16.0",
     "node-nats-streaming": "^0.3.2",
     "nodemon": "^2.0.4",
