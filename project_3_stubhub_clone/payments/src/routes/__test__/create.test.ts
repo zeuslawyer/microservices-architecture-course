@@ -5,6 +5,7 @@ import { Order } from "../../models/Order";
 import { OrderStatus } from "@zeuscoder-public/microservices-course-shared";
 
 import { stripe } from "../../stripe";
+import { Payment } from "../../models/Payment";
 jest.mock("../../stripe.ts");
 
 it("returns a 404 when purchasing an order that does not exist", async () => {
@@ -90,3 +91,5 @@ it("test stripe mock - return 201", async () => {
   expect(chargeOpts.amount).toEqual(order.price * 100);
   expect(chargeOpts.currency).toEqual("usd");
 });
+
+it("should ", async () => {});

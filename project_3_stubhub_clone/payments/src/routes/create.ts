@@ -42,12 +42,19 @@ router.post(
       );
     }
 
-    await stripe.charges.create({
+    const charge = await stripe.charges.create({
       amount: order.price * 100, // cents
       currency: "usd",
       source: token,
       description: `Order charge applied for order id '${order.id}'`,
     });
+
+    const payment = new Payment({
+      orderId,
+      stripeId: charge.id,
+    });
+
+    await payment.save();
 
     res.status(201).send({ success: true });
   }
