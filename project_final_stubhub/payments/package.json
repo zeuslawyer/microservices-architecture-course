@@ -1,12 +1,11 @@
 {
-  "name": "orders",
+  "name": "payments",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "nodemon src/index.ts",
-    "test": "jest --watchAll --no-cache",
-    "test:ci": "jest"
+    "test": "jest --watchAll --no-cache"
   },
   "jest": {
     "preset": "ts-jest",
@@ -28,6 +27,7 @@
     "mongoose-update-if-current": "^1.4.0",
     "node-nats-streaming": "^0.3.2",
     "nodemon": "^2.0.4",
+    "stripe": "^8.79.0",
     "ts-node": "^8.10.2",
     "typescript": "^3.8.3"
   },
