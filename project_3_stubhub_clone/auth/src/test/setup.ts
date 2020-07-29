@@ -13,7 +13,7 @@ beforeAll(async () => {
 
   await mongoose.connect(mongoUri, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   });
 });
 
@@ -26,7 +26,8 @@ beforeEach(async () => {
 });
 
 // cleanup and disconnect
-afterAll(async () => {
+afterAll(async done => {
   await mongo.stop();
   console.log("*** In memory database stopped. ***");
+  done();
 });
