@@ -1,0 +1,14 @@
+name: orders-tests
+
+on:
+  pull_request:
+    path:
+      - project_final_stubhub/orders/**    # only run when changes are in this directory
+
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd project_final_stubhub/orders && yarn install && yarn run test:ci
