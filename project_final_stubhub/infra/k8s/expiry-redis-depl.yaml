@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiry-redis-depl
+spec:  
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expiry-redis
+  template:
+    metadata:
+      labels:
+        app: expiry-redis
+    spec:
+      containers:
+        - name: expiry-redis
+          image: redis # from docker hub
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: expiry-redis-clusterip
+spec:
+  type: ClusterIP
+  selector:
+    app: expiry-redis
+  ports:
+    - name: redis-db
+      port: 6379
+      protocol: TCP
+      targetPort: 6379

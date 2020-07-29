@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-depl # prefix name of this deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth # name of the container (pod) this deployment relates to
+  template: # the pod config starts here
+    metadata:
+      labels:
+        app: auth # name of the container this deployment relates to
+    spec:
+      containers: # array of containers inside a pod
+        - name: auth
+          image: zeuslawyer/project3-auth
+          env:
+            - name: MONGO_URI
+              value: "mongodb://auth-mongo-clusterip:27017/auth"
+            - name: JWT_KEY # name of this env
+              valueFrom:
+                secretKeyRef:
+                  name: auth-jwt # name of the kube secret object created
+                  key: JWT_KEY # key name of the secret, which will be found on process.env inside the deployment
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-clusterip
+spec:
+  type: ClusterIP # default service object type.  can be left out for Cluster IP
+  selector:
+    app: auth # reference to the deployment pod and containers to attach the kube service object to
+  ports:
+    - name: auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

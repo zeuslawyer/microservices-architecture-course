@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-stubhub-srv
+  annotations: # tells the ingress controller we will feed it some routing rules
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true" # regex needed as ingress doesnt handle path variables except with regex
+spec:
+  rules:
+    - host: mystubhub.dev # set in the /etc/hosts file on local machine to route requests to this domain to localhost
+      http:
+        paths: # this specifies the routing config for a nginx - path matching is done in order
+          - path: /api/users/?(.*) # the path in the auth service that will receive data
+            backend:
+              serviceName: auth-clusterip # the ipcluster service that handle io for this service
+              servicePort: 3000 # port for the auth service
+          - path: /api/payments/?(.*) # the path in the auth service that will receive data
+            backend:
+              serviceName: payments-clusterip # the ipcluster service that handle io for this service
+              servicePort: 3000 # port for the auth service
+          - path: /api/tickets/?(.*) # the path in the tickets service that will receive data
+            backend:
+              serviceName: tickets-clusterip # the ipcluster service that handle io for this service
+              servicePort: 3000 # port for the ticket service
+          - path: /api/orders/?(.*) # the path in the tickets service that will receive data
+            backend:
+              serviceName: orders-clusterip # the ipcluster service that handle io for this service
+              servicePort: 3000 # port for the ticket service
+          - path: /?(.*) # the path in the nextjs client service.
+            backend:
+              serviceName: nextclient-clusterip # the ipcluster service that handle io for this service
+              servicePort: 3000 # port for the nextjs client service
+
