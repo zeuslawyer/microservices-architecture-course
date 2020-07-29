@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment # Type of Kube Object
+metadata:
+  name: posts-depl # Name of this Kube Deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts # name of the container: see spec below
+  template:
+    metadata:
+      labels:
+        app: posts # name of the container : see spec below
+    spec:
+      containers:
+        - name: posts
+          image: zeuslawyer/posts:latest # docker image to use for the container, with the version chosen
+---
+# Add a ClusterIP Service for this post deployment
+apiVersion: v1
+kind: Service
+metadata:
+  name: posts-clusterip # name of this Cluster IP Service.
+spec:
+  type: ClusterIP
+  selector:
+    app: posts
+  ports:
+    - name: posts
+      protocol: TCP
+      targetPort: 5001
+      port: 5001

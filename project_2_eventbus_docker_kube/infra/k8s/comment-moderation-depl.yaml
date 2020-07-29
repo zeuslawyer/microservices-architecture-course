@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comment-moderation-depl
+spec:
+  selector:
+    matchLabels:
+      app: comment-moderation
+  template:
+    metadata:
+      labels:
+        app: comment-moderation
+    spec:
+      containers:
+        - name: comment-moderation
+          image: zeuslawyer/moderation
+
+---
+# add a Cluster IP service object to this event-bus deployment object
+apiVersion: v1
+kind: Service
+metadata:
+  name: comment-moderation-clusterip # name of this Cluster IP Service.
+spec:
+  type: ClusterIP
+  selector:
+    app: comment-moderation
+  ports:
+    - name: comment-moderation
+      protocol: TCP
+      port: 5003
+      targetPort: 5003

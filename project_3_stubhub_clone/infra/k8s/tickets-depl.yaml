@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tickets-depl # prefix name of this deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tickets # name of the container (pod) this deployment relates to
+  template: # the pod config starts here
+    metadata:
+      labels:
+        app: tickets # name of the container this deployment relates to
+    spec:
+      containers: # array of containers inside a pod
+        - name: tickets
+          image: zeuslawyer/project3-tickets
+          env:
+            - name: MONGO_URI # name of env var
+              value: "mongodb://tickets-mongo-clusterip:27017/tickets"
+            - name: NATS_CLUSTER_ID # name of env var
+              value: "tickets-natscluster"
+            - name: NATS_CLIENT_ID # name of env var
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name # use this pods id in NATS client ID
+            - name: NATS_URL # name of env var
+              value: "http://nats-clusterip:4222" # taken from nats-depl Service name
+            - name: JWT_KEY # name of this env
+              valueFrom: # derive value from the secret service in K8s
+                secretKeyRef:
+                  name: auth-jwt # name of the auth key - use the same one
+                  key: JWT_KEY # key name of the secr et, which will be found on process.env inside the deployment
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tickets-clusterip
+spec:
+  type: ClusterIP # default service object type.  can be left out for Cluster IP
+  selector:
+    app: tickets # reference to the deployment pod and containers to attach the kube service object to
+  ports:
+    - name: tickets
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

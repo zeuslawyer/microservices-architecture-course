@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-expiry-depl # prefix name of this deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-expiry # name of the container (pod) this deployment relates to
+  template: # the pod config starts here
+    metadata:
+      labels:
+        app: order-expiry # name of the container this deployment relates to
+    spec:
+      containers: # array of containers inside a pod
+        - name: order-expiry
+          image: zeuslawyer/project3-order-expiry
+          env:
+            - name: NATS_CLUSTER_ID # name of env var
+              value: "tickets-natscluster"
+            - name: NATS_CLIENT_ID # name of env var
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name # use this pods id in NATS client ID
+            - name: NATS_URL # name of env var
+              value: "http://nats-clusterip:4222" # taken from nats-depl Service name
+            - name: REDIS_HOST
+              value: expiry-redis-clusterip # expiry-redis service
