@@ -69,7 +69,7 @@ const init = async () => {
 
   // server
   server.listen(PORT, () => {
-    console.info("Orders Service Listening On Port", PORT);
+    console.info("*** Orders Service Listening On Port ->", PORT);
   });
 };
 
