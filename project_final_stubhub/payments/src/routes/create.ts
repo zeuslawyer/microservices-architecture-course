@@ -9,11 +9,11 @@ import {
   OrderStatus,
 } from "@zeuscoder-public/microservices-course-shared";
 
-import { Order } from "../models/Order";
 import { stripe } from "../stripe";
 import { PaymentCreatedPublisher } from "../events/publishers/PaymentCreatedPublisher";
 import { natsWrapper } from "../nats-wrapper";
 import { Payment } from "../models/Payment";
+import { Order } from "../models/Order";
 
 const router = express.Router();
 
