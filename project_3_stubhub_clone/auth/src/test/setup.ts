@@ -4,14 +4,6 @@ import request from "supertest";
 
 import { server } from "../server";
 
-declare global {
-  namespace NodeJS {
-    interface Global {
-      signin(): Promise<string[]>;
-    }
-  }
-}
-
 // set up by creating the in mem db and mongoose connection
 let mongo: any;
 beforeAll(async () => {
@@ -41,20 +33,3 @@ afterAll(async done => {
   console.log("*** In memory database stopped. ***");
   await mongoose.connection.close();
 });
-
-global.signin = async () => {
-  const email = "test@test.com";
-  const password = "password";
-
-  const response = await request(server)
-    .post("/api/users/signup")
-    .send({
-      email,
-      password,
-    })
-    .expect(201);
-
-  const cookie = response.get("Set-Cookie");
-
-  return cookie;
-};
