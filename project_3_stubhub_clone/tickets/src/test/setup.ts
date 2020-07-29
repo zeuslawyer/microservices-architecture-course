@@ -20,7 +20,7 @@ global.signin = () => {
   // Build a mock JWT payload
   const payload = {
     email: "test@test-tickets.com",
-    id: mongoose.Types.ObjectId().toHexString() // make fake uid
+    id: mongoose.Types.ObjectId().toHexString(), // make fake uid
   };
 
   // create the JWT with the .sign() function
@@ -46,7 +46,7 @@ beforeAll(async () => {
 
   await mongoose.connect(mongoUri, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   });
 });
 
@@ -64,4 +64,5 @@ beforeEach(async () => {
 afterAll(async () => {
   await mongo.stop();
   console.log("*** In memory database stopped. ***");
+  await mongoose.connection.close();
 });
