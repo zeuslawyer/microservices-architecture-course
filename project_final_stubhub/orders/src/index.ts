@@ -22,6 +22,8 @@ const init = async () => {
   if (!process.env.NATS_URL)
     throw new Error(" MISSING ENV VAR NATS_URL in TICKETS"); // defined in the -depl yaml
 
+  console.info("*** all ENV VARS loaded ***");
+
   try {
     // NATS server
     const clientId = process.env.NATS_CLIENT_ID; // unique for every nats client. Set in tickets-depl
