@@ -4,6 +4,7 @@ deploy:
   kubectl:
     manifests:
       - ./infra/k8s/* # tell skaffold to watch the config files for kube
+      - ./infra/k8s-dev/*
 build:
   local:
     push: false # auto-push changes to image to dockerhub?
