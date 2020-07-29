@@ -24,7 +24,7 @@ const init = async () => {
 
   // server
   server.listen(PORT, () => {
-    console.info("-> *** Auth Service Listening On Port...->", PORT);
+    console.info("*** Auth Service Listening On Port ->", PORT);
   });
 };
 
