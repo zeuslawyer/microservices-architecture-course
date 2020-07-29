@@ -6,9 +6,9 @@ const PORT = 3000;
 
 const init = async () => {
   // check env vars
-  if (!process.env.JWT_KEY) throw new Error(" MISSING ENV VAR JWT_KEY ");
+  if (!process.env.JWT_KEY) throw new Error(" MISSING ENV VAR -> JWT_KEY ");
   if (!process.env.MONGO_URI)
-    throw new Error(" MISSING ENV VAR MONGO_URI in AUTH ");
+    throw new Error(" MISSING ENV VAR -> MONGO_URI in AUTH ");
 
   // mongoose
   try {
