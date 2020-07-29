@@ -5,10 +5,10 @@ on:
     path:
       - project_final_stubhub/orders/**    # only run when changes are in this directory
 
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: cd project_final_stubhub/orders && yarn install && yarn run test:ci
-  
