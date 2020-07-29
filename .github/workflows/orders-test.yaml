@@ -1,0 +1,12 @@
+name: orders-tests
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: cd project_3_stubhub_clone/orders && yarn install && yarn run test:ci
+  
