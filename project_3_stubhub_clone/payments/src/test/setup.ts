@@ -64,4 +64,5 @@ beforeEach(async () => {
 afterAll(async () => {
   await mongo.stop();
   console.log("*** In memory database stopped. ***");
+  await mongoose.connection.close();
 });

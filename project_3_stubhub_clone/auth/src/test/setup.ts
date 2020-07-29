@@ -1,5 +1,7 @@
 import { MongoMemoryServer } from "mongodb-memory-server";
 import mongoose from "mongoose";
+import request from "supertest";
+
 import { server } from "../server";
 
 // set up by creating the in mem db and mongoose connection
@@ -13,7 +15,7 @@ beforeAll(async () => {
 
   await mongoose.connect(mongoUri, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   });
 });
 
@@ -21,12 +23,12 @@ beforeAll(async () => {
 beforeEach(async () => {
   const collections = await mongoose.connection.db.collections();
   for (let coll of collections) {
-    await coll.deleteMany({}, () => {}); // confirm that coll deleted
+    await coll.deleteMany({}); // confirm that coll deleted
   }
 });
 
 // cleanup and disconnect
 afterAll(async () => {
   await mongo.stop();
-  console.log("*** In memory database stopped. ***");
+  await mongoose.connection.close();
 });
