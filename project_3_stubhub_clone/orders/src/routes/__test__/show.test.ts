@@ -23,7 +23,7 @@ it("shows Not Auth Error", async () => {
     .expect(401);
 });
 
-it("shows Not Found Error", async () => {
+xit("shows Not Found Error", async () => {
   const orderId = mongoose.Types.ObjectId();
 
   await request(server)
