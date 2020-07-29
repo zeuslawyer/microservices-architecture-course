@@ -10,8 +10,6 @@ const init = async () => {
   if (!process.env.MONGO_URI)
     throw new Error(" MISSING ENV VAR MONGO_URI in AUTH ");
 
-  console.log(" ENV VARS LOADED ...");
-
   // mongoose
   try {
     await mongoose.connect(process.env.MONGO_URI, {
